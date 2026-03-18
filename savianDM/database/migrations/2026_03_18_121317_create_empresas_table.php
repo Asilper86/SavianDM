@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('empresas', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre')->unique();
+            $table->foreignId('centroTrabajo_id')->constrained()->cascadeOnDelete();
+            $table->float('hectarea');
             $table->timestamps();
         });
     }
