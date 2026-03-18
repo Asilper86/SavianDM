@@ -9,4 +9,14 @@ class Empresa extends Model
 {
     /** @use HasFactory<\Database\Factories\EmpresaFactory> */
     use HasFactory;
+
+    protected $fillable = ['nombre', 'centroTrabajo_id', 'hectarea'];
+
+    public function centroTrabajos():HasFactory{
+        return $this->hasMany(CentroTrabajo::class);
+    }
+
+    public function Historial():HasFactory{
+        return $this->hasMany(Historial::class);
+    }
 }
