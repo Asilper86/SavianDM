@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Empresa extends Model
 {
@@ -12,11 +13,11 @@ class Empresa extends Model
 
     protected $fillable = ['nombre', 'centroTrabajo_id', 'hectarea'];
 
-    public function centroTrabajos():HasFactory{
+    public function centroTrabajos():HasMany{
         return $this->hasMany(CentroTrabajo::class);
     }
 
-    public function Historial():HasFactory{
+    public function Historial():HasMany{
         return $this->hasMany(Historial::class);
     }
 }
