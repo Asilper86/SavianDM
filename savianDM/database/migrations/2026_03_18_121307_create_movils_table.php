@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('movils', function (Blueprint $table) {
-            $table->id();
+            $table->id('codigo');
+            $table->enum('tipoCompra' , ['Propio' , 'Alquilado']);
+            $table->enum('estado' , ['Bien' , 'Roto']);
+            $table->foreignId('modelo_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('empresa_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('proveedor_id')->constrained()->cascadeOnDelete();
+            $table->text('comentario')->nullable();
             $table->timestamps();
         });
     }
