@@ -1,6 +1,8 @@
 <?php
 
 use App\Livewire\Movil\IndexMoviles;
+use App\Models\Historial;
+use App\Models\Movil;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,7 +15,11 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        $moviles = Movil::count();
+        $empresa = '';
+        $historial = Historial::count();
+        $centro_trabajo = '';
+        return view('dashboard', compact('moviles', 'historial'));
     })->name('dashboard');
     Route::get('movil' , IndexMoviles::class)->name('moviles');
 });

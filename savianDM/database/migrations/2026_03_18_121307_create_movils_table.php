@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('empresa_id')->constrained('empresas')->noActionOnDelete();
             $table->foreignId('proveedor_id')->constrained('proveedors')->noActionOnDelete();
             $table->text('comentario')->nullable();
+            $table->foreignId('centro_trabajo_id')->constrained('centro_trabajos')->noActionOnDelete();
             $table->timestamps();
         });
     }
