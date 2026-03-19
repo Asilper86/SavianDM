@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('historials', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('movil_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('empresa_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('movil_id')->constrained('movils')->cascadeOnDelete();
+            $table->foreignId('empresa_id')->constrained('empresas')->cascadeOnDelete();
             $table->string('estado');
-            $table->foreignId('albaran_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('albaran_id')->constrained('albarans')->cascadeOnDelete();
             $table->timestamps();
         });
     }

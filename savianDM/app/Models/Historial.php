@@ -15,7 +15,7 @@ class Historial extends Model
     public function albaran():BelongsTo{
         return $this->belongsTo(Albaran::class);
     }
-    public function empresa():BelongsTo{
+    public function empresas():BelongsTo{
         return $this->belongsTo(Empresa::class);
     }
 }
