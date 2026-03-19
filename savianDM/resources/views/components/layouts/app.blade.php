@@ -33,9 +33,13 @@
             @endif
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+            <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+                @livewire('navigation-menu')
+            
+                <main class="pl-64 transition-all duration-300">
+                    {{ $slot }}
+                </main>
+            </div>
         </div>
 
         @stack('modals')
