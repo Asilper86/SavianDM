@@ -12,7 +12,7 @@ class Empresa extends Model
 
     protected $fillable = ['nombre', 'centroTrabajo_id', 'hectarea'];
 
-    public function centroTrabajos():HasFactory{
+    public function centro_trabajos():HasFactory{
         return $this->hasMany(CentroTrabajo::class);
     }
 
