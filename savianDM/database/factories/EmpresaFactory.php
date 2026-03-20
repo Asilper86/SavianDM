@@ -18,7 +18,8 @@ class EmpresaFactory extends Factory
     public function definition(): array
     {
         return [
-            
+            'nombre' => fake()->company(),
+            'hectarea' => fake()->randomFloat(2, 1, 500),
         ];
     }
 }

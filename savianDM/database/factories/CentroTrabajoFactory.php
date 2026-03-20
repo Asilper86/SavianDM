@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\CentroTrabajo;
+use App\Models\Empresa;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +19,8 @@ class CentroTrabajoFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre'=> fake()->name()
+            'nombre' => 'Sede ' . fake()->city(),
+            'empresa_id' => Empresa::factory(),
         ];
     }
 }

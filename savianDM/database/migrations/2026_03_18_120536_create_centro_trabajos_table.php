@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('centro_trabajos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->foreignId('empresa_id')->constrained('empresas')->onDelete('cascade');
             $table->timestamps();
         });
     }

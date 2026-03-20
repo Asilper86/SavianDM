@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('empresas', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->unique();
-            $table->foreignId('centroTrabajo_id')->constrained('centro_trabajos')->cascadeOnDelete();
-            $table->float('hectarea');
+            $table->string('nombre');
+            $table->decimal('hectarea', 10, 2)->nullable();
+            // Solo creamos la columna, NO la relación todavía
+            $table->unsignedBigInteger('centroTrabajo_id')->nullable();
             $table->timestamps();
         });
     }
