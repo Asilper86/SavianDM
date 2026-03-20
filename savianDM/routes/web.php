@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Movil\IndexMoviles;
+use App\Livewire\Dashboard; // Importamos tu componente Livewire
 use App\Models\Historial;
 use App\Models\Movil;
 use Illuminate\Support\Facades\Route;
@@ -14,12 +15,12 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        $moviles = Movil::count();
-        $empresa = '';
-        $historial = Historial::count();
-        $centro_trabajo = '';
-        return view('dashboard', compact('moviles', 'historial'));
-    })->name('dashboard');
-    Route::get('movil' , IndexMoviles::class)->name('moviles');
+
+    // CAMBIO CLAVE: Ahora el dashboard es una clase Livewire, no una función anónima
+    // Esto permite que wire:model funcione y los números se actualicen solos.
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+
+    // Tu ruta de móviles existente
+    Route::get('/movil', IndexMoviles::class)->name('moviles');
+
 });

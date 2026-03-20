@@ -1,36 +1,42 @@
 <?php
+
 namespace App\Livewire\Graficos;
 
 use Livewire\Component;
 use App\Models\Empresa;
-use App\Models\CentroTrabajo;
+use Livewire\Attributes\On;
 
 class DashboardChart extends Component
 {
-    public $empresaId = '';
+    public $searchEmpresa = '';
+    public $searchCentro = '';
 
-    
+    /**
+     * Escucha el evento disparado desde el Dashboard principal
+     */
+    #[On('filterUpdated')]
+    public function updateFilters($empresa = '', $centro = '')
+    {
+        $this->searchEmpresa = $empresa;
+        $this->searchCentro = $centro;
+    }
+
     public function render()
     {
-        $empresas = Empresa::all();
+        // Obtenemos las empresas con el conteo de móviles para el gráfico
+        $empresas = Empresa::query()
+            ->when($this->searchEmpresa, function ($q) {
+                $q->where('nombre', 'like', "%{$this->searchEmpresa}%");
+            })
+            ->withCount(['movils' => function ($q) {
+                $q->when($this->searchCentro, function ($query) {
+                    $query->whereHas('centroTrabajo', fn($c) => 
+                        $c->where('nombre', 'like', "%{$this->searchCentro}%")
+                    );
+                });
+            }])
+            ->get();
 
-        // Obtenemos centros filtrados por empresa y contamos sus móviles
-        $centros = CentroTrabajo::query()
-            ->when($this->empresaId, fn($q) => $q->where('empresa_id', $this->empresaId))
-            ->withCount('movils')
-            ->get()
-            ->where('movils_count', '>', 0); // Solo centros con móviles
-
-        $labels = $centros->pluck('nombre');
-        $valores = $centros->pluck('movils_count');
-
-        // Notificamos al JS que los datos cambiaron
-        $this->dispatch('chartUpdated', labels: $labels, values: $valores);
-
-        return view('livewire.graficos.dashboard-chart', [
-            'empresas' => $empresas,
-            'labels' => $labels,
-            'valores' => $valores,
-        ]);
+        return view('livewire.graficos.dashboard-chart', compact('empresas'));
     }
 }

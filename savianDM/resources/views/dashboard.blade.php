@@ -1,88 +1,57 @@
-<x-mios.base>
-    <div class="min-h-screen bg-[#F3F4F9] dark:bg-gray-950 transition-colors duration-500 pb-12">
-        
-        <div class="sticky top-0 z-40 bg-[#07CBBB]/90 dark:bg-cyan-950/80 backdrop-blur-md border-b border-white/20 dark:border-white/5 shadow-xl">
-            <div class="max-w-[98%] mx-auto px-6 py-4 flex flex-col md:flex-row gap-6 justify-center items-center">
-                
-                <div class="relative group w-full md:w-72">
-                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 text-[10px] uppercase font-bold">Empresa</span>
-                    <input type="text" 
-                           wire:model.live.debounce.300ms="searchEmpresa"
-                           placeholder="Buscar..." 
-                           class="w-full pl-24 bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-2xl focus:ring-2 focus:ring-white/50 focus:bg-white/20 backdrop-blur-sm transition-all py-3 shadow-inner text-sm">
+<div> 
+    <div class="min-h-screen bg-slate-50 p-6">
+
+        <div class="max-w-7xl mx-auto mb-10">
+            <div class="bg-white border border-slate-200 rounded-[2.5rem] p-4 shadow-sm flex flex-col md:flex-row gap-4 items-center">
+
+                <div class="relative flex-1 group">
+                    <span class="absolute left-5 top-1/2 -translate-y-1/2 text-[10px] font-black text-cyan-600 uppercase tracking-widest">Empresa</span>
+                    <input type="text" wire:model.live="searchEmpresa"
+                        class="w-full pl-24 pr-4 py-3 bg-slate-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-cyan-500/20 transition-all"
+                        placeholder="Buscar...">
                 </div>
 
-                <div class="relative group w-full md:w-72">
-                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 text-[10px] uppercase font-bold">Centro</span>
-                    <input type="text" 
-                           wire:model.live.debounce.300ms="searchCentro"
-                           placeholder="Filtrar..." 
-                           class="w-full pl-24 bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-2xl focus:ring-2 focus:ring-white/50 focus:bg-white/20 backdrop-blur-sm transition-all py-3 shadow-inner text-sm">
+                <div class="relative flex-1 group">
+                    <span class="absolute left-5 top-1/2 -translate-y-1/2 text-[10px] font-black text-cyan-600 uppercase tracking-widest">Centro</span>
+                    <input type="text" wire:model.live="searchCentro"
+                        class="w-full pl-24 pr-4 py-3 bg-slate-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-cyan-500/20 transition-all"
+                        placeholder="Sede...">
                 </div>
 
-                <div class="relative group w-full md:w-72">
-                    <input type="date" 
-                           wire:model.live="searchFecha"
-                           class="w-full bg-white/10 border border-white/20 text-white rounded-2xl focus:ring-2 focus:ring-white/50 backdrop-blur-sm py-3 px-4 shadow-inner text-sm appearance-none">
+                <div class="w-full md:w-56">
+                    <input type="date" wire:model.live="searchFecha"
+                        class="w-full px-4 py-3 bg-slate-50 border-none rounded-2xl text-sm text-slate-400">
                 </div>
             </div>
         </div>
 
-        <main class="max-w-[98%] mx-auto px-4 mt-12">
-            
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-                
-                <div class="relative overflow-hidden bg-white dark:bg-gray-900 p-10 rounded-[3rem] shadow-2xl border border-white dark:border-white/5 flex flex-col justify-between transition-all hover:scale-[1.02] duration-500 group">
-                    <div class="absolute -right-8 -top-8 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl group-hover:bg-indigo-500/20 transition-colors"></div>
-                    <div>
-                        <p class="text-[10px] font-black text-indigo-500 dark:text-indigo-400 uppercase tracking-[0.3em] mb-2">Inventario Global</p>
-                        <h3 class="text-gray-400 dark:text-gray-500 text-sm font-medium">Total Móviles</h3>
-                    </div>
-                    <div class="my-8">
-                        <p class="text-8xl font-black text-gray-800 dark:text-white tracking-tighter leading-none">
-                            {{ number_format($moviles) }}
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-2 text-[10px] font-bold text-emerald-500 bg-emerald-500/10 w-fit px-3 py-1 rounded-full uppercase">
-                        <span class="animate-pulse">●</span> Datos Filtrados
-                    </div>
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+
+            <div class="md:col-span-3 bg-white p-10 rounded-[3rem] shadow-xl border border-white text-center flex flex-col justify-center">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4">Stock de Móviles</p>
+                <h2 class="text-8xl font-black text-slate-800 tracking-tighter">
+                    {{ $moviles }}
+                </h2>
+            </div>
+
+            <div class="md:col-span-6 bg-white p-8 rounded-[3rem] shadow-xl border border-white flex flex-col items-center">
+                <div class="w-full flex justify-between px-4 mb-6">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">🌍 Distribución</span>
+                    <span class="text-xs font-bold text-cyan-500">SAVIAN STOCK</span>
                 </div>
 
-                <div class="flex flex-col items-center justify-center min-h-[400px]">
+                <div class="relative w-full flex justify-center">
                     @livewire('graficos.dashboard-chart')
                 </div>
-
-                <div class="relative overflow-hidden bg-white dark:bg-gray-900 p-10 rounded-[3rem] shadow-2xl border border-white dark:border-white/5 flex flex-col justify-between transition-all hover:scale-[1.02] duration-500 group">
-                    <div class="absolute -right-8 -top-8 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl group-hover:bg-cyan-500/20 transition-colors"></div>
-                    <div>
-                        <p class="text-[10px] font-black text-cyan-500 dark:text-cyan-400 uppercase tracking-[0.3em] mb-2">Flujo de Activos</p>
-                        <h3 class="text-gray-400 dark:text-gray-500 text-sm font-medium">Movimientos Totales</h3>
-                    </div>
-                    <div class="my-8">
-                        <p class="text-8xl font-black text-gray-800 dark:text-white tracking-tighter leading-none">
-                            {{ number_format($historial) }}
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-2 text-[10px] font-bold text-cyan-500 bg-cyan-500/10 w-fit px-3 py-1 rounded-full uppercase">
-                        <span>●</span> Historial Registrado
-                    </div>
-                </div>
             </div>
 
-            <div class="mt-12 group relative">
-                <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-indigo-500 rounded-[3.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-                <div class="relative h-[600px] bg-white dark:bg-gray-900 rounded-[3.5rem] shadow-2xl border-[12px] border-white dark:border-gray-800 overflow-hidden">
-                    
-                    <div class="absolute inset-0 bg-[#FFC107]/10 dark:bg-amber-500/5 flex items-center justify-center">
-                        <h2 class="text-[15rem] font-black text-black/[0.03] dark:text-white/[0.03] select-none uppercase tracking-tighter">Explorar</h2>
-                    </div>
-
-                    <div class="absolute bottom-10 right-10 flex flex-col gap-3">
-                        <button class="w-14 h-14 bg-white dark:bg-gray-800 shadow-2xl rounded-2xl flex items-center justify-center text-2xl font-light hover:bg-[#07CBBB] hover:text-white transition-all transform active:scale-90 border border-gray-100 dark:border-white/5">+</button>
-                        <button class="w-14 h-14 bg-white dark:bg-gray-800 shadow-2xl rounded-2xl flex items-center justify-center text-2xl font-light hover:bg-[#07CBBB] hover:text-white transition-all transform active:scale-90 border border-gray-100 dark:border-white/5">-</button>
-                    </div>
-                </div>
+            <div class="md:col-span-3 bg-white p-10 rounded-[3rem] shadow-xl border border-white text-center flex flex-col justify-center">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4">Movimientos</p>
+                <h2 class="text-8xl font-black text-indigo-500 tracking-tighter">
+                    {{ $historial }}
+                </h2>
             </div>
-        </main>
+
+        </div>
     </div>
-</x-mios.base>
+</div> 
