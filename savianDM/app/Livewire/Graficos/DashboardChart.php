@@ -9,6 +9,7 @@ class DashboardChart extends Component
 {
     public $empresaId = '';
 
+    
     public function render()
     {
         $empresas = Empresa::all();
