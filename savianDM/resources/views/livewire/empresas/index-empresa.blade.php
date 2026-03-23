@@ -8,13 +8,7 @@
                 <p class="text-slate-400 text-sm font-medium">Gestiona y visualiza el estado de tus proyectos en tiempo
                     real.</p>
             </div>
-            <button
-                class="bg-[#07CBBB] hover:bg-cyan-500 text-white font-bold px-10 py-4 rounded-[1.5rem] transition-all shadow-xl shadow-cyan-200/50 hover:-translate-y-1 flex items-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                </svg>
-                Añadir Registro
-            </button>
+            @livewire('empresas.create-empresas')
         </div>
 
         <div class="overflow-x-auto">
