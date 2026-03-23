@@ -19,7 +19,7 @@
             <canvas id="movilesChart" wire:ignore></canvas>
 
             <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Centros</span>
+                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">{{ $empresaId ? 'Centros' : 'Empresas' }}</span>
             </div>
         </div>
     </div>
@@ -79,13 +79,19 @@
 
         // Dentro de tu script del gráfico
         window.addEventListener('chartDataUpdated', event => {
-            const labels = event.detail.labels;
-            const data = event.detail.data;
+            let detail = event.detail;
+            if (Array.isArray(detail)) {
+                detail = detail[0];
+            }
+            const labels = detail.labels;
+            const data = detail.data;
 
-            // Aquí actualizas tu instancia de Chart.js
-            myChart.data.labels = labels;
-            myChart.data.datasets[0].data = data;
-            myChart.update();
+            if (myChart && labels && data) {
+                // Aquí actualizas tu instancia de Chart.js
+                myChart.data.labels = Object.values(labels);
+                myChart.data.datasets[0].data = Object.values(data);
+                myChart.update();
+            }
         });
     </script>
 </div>

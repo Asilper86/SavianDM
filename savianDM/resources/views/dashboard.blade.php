@@ -30,7 +30,7 @@
             <div class="md:col-span-3 bg-white p-10 rounded-[3rem] shadow-xl border border-white text-center flex flex-col justify-center">
                 <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4">Stock de Móviles</p>
                 <h2 class="text-8xl font-black text-slate-800 tracking-tighter">
-                    {{ $moviles }}
+                    {{ $movilesCount }}
                 </h2>
             </div>
 
@@ -48,10 +48,10 @@
             <div class="md:col-span-3 bg-white p-10 rounded-[3rem] shadow-xl border border-white text-center flex flex-col justify-center">
                 <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4">Movimientos</p>
                 <h2 class="text-8xl font-black text-indigo-500 tracking-tighter">
-                    {{ $historial }}
+                    {{ $historialCount }}
                 </h2>
             </div>
 
         </div>
     </div>
-</div> 
+</div>

@@ -24,4 +24,9 @@ class Empresa extends Model
     {
         return $this->hasMany(Historial::class);
     }
+
+    public function movils(): HasMany
+    {
+        return $this->hasMany(Movil::class);
+    }
 }

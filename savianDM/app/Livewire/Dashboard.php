@@ -36,7 +36,7 @@ class Dashboard extends Component
             centro: $this->searchCentro
         );
         // USANDO COMPACT: Pasamos las variables a la vista
-        return view('livewire.dashboard', compact('movilesCount', 'historialCount'))
+        return view('dashboard', compact('movilesCount', 'historialCount'))
             ->layout('components.layouts.app');
     }
 }
