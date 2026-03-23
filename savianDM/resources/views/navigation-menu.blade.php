@@ -3,7 +3,8 @@
 
     <div class="flex items-center justify-center h-20 shrink-0 border-b border-white/10">
         <a href="{{ route('dashboard') }}">
-            <img src="{{ asset('storage/logo_savian_blanco_v2.fw.png') }}" class="block h-10 w-auto" /> </a>
+            <img src="{{ asset('assets/img/logo_savian_blanco_v2.fw.png') }}" class="block h-10 w-auto"/>
+        </a>
     </div>
 
     <div class="flex-grow overflow-y-auto py-6 px-4 space-y-2">
