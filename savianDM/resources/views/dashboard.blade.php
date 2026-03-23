@@ -17,10 +17,17 @@
 
                 <div class="relative flex-1 group">
                     <span
-                        class="absolute left-5 top-1/2 -translate-y-1/2 text-[10px] font-black text-cyan-600 uppercase tracking-widest">Centro</span>
-                    <input type="text" wire:model.live="searchCentro"
-                        class="w-full pl-24 pr-4 py-3 bg-slate-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-cyan-500/20 transition-all"
-                        placeholder="Sede...">
+                        class="absolute left-5 top-1/2 -translate-y-1/2 text-[10px] font-black text-cyan-600 uppercase tracking-widest z-10 pointer-events-none">
+                        Centro
+                    </span>
+
+                    <select wire:model.live="empresaId"
+                        class="w-full bg-white dark:bg-gray-800 border-none text-gray-600 dark:text-gray-300 rounded-2xl shadow-sm focus:ring-2 focus:ring-cyan-500 py-3 pl-24 pr-4 transition-all cursor-pointer text-sm font-medium">
+                        <option value="">🌍 Todas las Sedes</option>
+                        @foreach ($centros as $centro)
+                            <option value="{{ $centro->id }}">{{ $centro->nombre }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="w-full md:w-56">
@@ -62,4 +69,9 @@
 
         </div>
     </div>
+
+
+
+    
+
 </div>

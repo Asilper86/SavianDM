@@ -1,6 +1,7 @@
 <?php
 namespace App\Livewire;
 
+use App\Models\CentroTrabajo;
 use Livewire\Component;
 use App\Models\Movil;
 use App\Models\Historial;
@@ -16,7 +17,7 @@ class Dashboard extends Component
     {
         // Obtener la lista de empresas para el select
         $empresas = \App\Models\Empresa::all();
-
+        $centros = CentroTrabajo::all();
         // Lógica de filtrado para Móviles
         $movilesCount = Movil::query()
             ->when($this->empresaId, function($q) {
@@ -41,7 +42,7 @@ class Dashboard extends Component
         );
 
         // USANDO COMPACT: Pasamos las variables a la vista
-        return view('dashboard', compact('movilesCount', 'historialCount', 'empresas'))
+        return view('dashboard', compact('movilesCount', 'historialCount', 'empresas', 'centros'))
             ->layout('components.layouts.app');
     }
 }
