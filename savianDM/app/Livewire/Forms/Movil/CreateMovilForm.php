@@ -13,7 +13,7 @@ class CreateMovilForm extends Form
     public string $marca = "";
 
     #[Validate(['required' , 'exists:modelos,id'])]
-    public int $modelo_id = "";
+    public int $modelo_id = 0;
 
     #[Validate(["required"])]
     public int $codigo = 0;
