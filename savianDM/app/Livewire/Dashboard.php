@@ -8,16 +8,20 @@ use App\Models\Historial;
 class Dashboard extends Component
 {
     // Propiedades públicas para los filtros
-    public $searchEmpresa = '';
+    public $empresaId = '';
     public $searchCentro = '';
     public $searchFecha = '';
 
     public function render()
     {
+        // Obtener la lista de empresas para el select
+        $empresas = \App\Models\Empresa::all();
+
         // Lógica de filtrado para Móviles
         $movilesCount = Movil::query()
-            ->when($this->searchEmpresa, function($q) {
-                $q->whereHas('empresa', fn($e) => $e->where('nombre', 'like', "%{$this->searchEmpresa}%"));
+            ->when($this->empresaId, function($q) {
+                // Si Filtramos por empresa, aseguramos que el móvil pertenezca a esa empresa
+                $q->where('empresa_id', $this->empresaId);
             })
             ->when($this->searchCentro, function($q) {
                 $q->whereHas('centroTrabajo', fn($c) => $c->where('nombre', 'like', "%{$this->searchCentro}%"));
@@ -32,11 +36,12 @@ class Dashboard extends Component
             ->count();
     
         $this->dispatch('filterUpdated', 
-            empresa: $this->searchEmpresa, 
+            empresaId: $this->empresaId, 
             centro: $this->searchCentro
         );
+
         // USANDO COMPACT: Pasamos las variables a la vista
-        return view('dashboard', compact('movilesCount', 'historialCount'))
+        return view('dashboard', compact('movilesCount', 'historialCount', 'empresas'))
             ->layout('components.layouts.app');
     }
 }

@@ -8,7 +8,6 @@ use Livewire\Attributes\On;
 
 class DashboardChart extends Component
 {
-    public $searchEmpresa = '';
     public $searchCentro = '';
     public $empresaId = '';
 
@@ -16,9 +15,9 @@ class DashboardChart extends Component
      * Escucha el evento disparado desde el Dashboard principal
      */
     #[On('filterUpdated')]
-    public function updateFilters($empresa = '', $centro = '')
+    public function updateFilters($empresaId = '', $centro = '')
     {
-        $this->searchEmpresa = $empresa;
+        $this->empresaId = $empresaId;
         $this->searchCentro = $centro;
     }
 
@@ -41,9 +40,6 @@ class DashboardChart extends Component
         } else {
             // Mostrar todas las empresas
             $chartData = Empresa::query()
-                ->when($this->searchEmpresa, function ($q) {
-                    $q->where('nombre', 'like', "%{$this->searchEmpresa}%");
-                })
                 ->withCount(['movils' => function ($q) {
                     $q->when($this->searchCentro, function ($query) {
                         $query->whereHas('centroTrabajo', fn($c) => 
