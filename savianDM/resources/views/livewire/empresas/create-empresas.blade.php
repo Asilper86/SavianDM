@@ -1,102 +1,58 @@
-<div>
-    <button wire:click="$set('openCrear', true)"
-        class="bg-[#07CBBB] hover:bg-cyan-500 text-white font-bold px-10 py-4 rounded-[1.5rem] transition-all shadow-xl shadow-cyan-200/50 hover:-translate-y-1 flex items-center gap-2">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-        </svg>
-        Añadir Registro
+<div x-data="{ open: @entangle('openCrear') }">
+    <button @click="open = true" class="w-full sm:w-auto bg-[#E4F4F3] hover:bg-[#07B8AA] text-[#07B8AA] hover:text-white font-bold px-6 py-3 rounded-full transition-all flex items-center justify-center gap-2 text-sm">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+        Añadir Finca
     </button>
 
-    <x-dialog-modal wire:model="openCrear" maxWidth="2xl">
-        <x-slot name="title">
-            <div class="relative flex items-center gap-6 px-6 py-4 bg-gradient-to-r from-slate-50 to-white rounded-t-[3rem]">
-                <div class="relative">
-                    <div class="absolute inset-0 bg-cyan-200 blur-xl opacity-40 rounded-full"></div>
-                    <div class="relative w-16 h-16 rounded-[1.8rem] bg-white shadow-xl shadow-cyan-100/50 text-[#07CBBB] flex items-center justify-center border border-cyan-50">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="flex flex-col">
-                    <h3 class="text-3xl font-black text-slate-900 tracking-tight leading-none mb-1">Nueva Finca</h3>
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-[#07CBBB] animate-pulse"></span>
-                        <p class="text-[10px] text-slate-400 font-extrabold uppercase tracking-[0.3em]">Configuración de Activos</p>
-                    </div>
-                </div>
-            </div>
-        </x-slot>
-    
-        <x-slot name="content">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 px-6 py-8">
+    <div x-show="open" class="fixed inset-0 z-[100] overflow-hidden" style="display: none;">
+        <div x-show="open" x-transition:opacity @click="open = false" class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"></div>
+
+        <div class="fixed inset-y-0 right-0 max-w-full sm:max-w-xl w-full flex">
+            <div x-show="open" 
+                 x-transition:enter="transform transition duration-500" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+                 class="w-full bg-white shadow-2xl flex flex-col h-full sm:rounded-l-[3rem] overflow-hidden">
                 
-                <div class="md:col-span-2 space-y-3">
-                    <label class="flex items-center gap-2 ml-4 text-[11px] font-black text-slate-500 uppercase tracking-widest">
-                        <svg class="w-4 h-4 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 7h10M7 12h10M7 17h10" stroke-width="2" stroke-linecap="round"/></svg>
-                        Nombre de la empresa
-                    </label>
-                    <div class="relative group">
-                        <input type="text" wire:model="form.nombre" placeholder="Nombre descriptivo de la finca"
-                            class="w-full bg-slate-50/50 border-2 border-slate-100 rounded-[2rem] py-5 px-8 text-slate-700 font-bold text-lg shadow-sm focus:bg-white focus:border-[#07CBBB] focus:ring-4 focus:ring-cyan-50 transition-all duration-300 outline-none placeholder:text-slate-300">
-                        <div class="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-focus-within:opacity-100 transition-opacity">
-                            <span class="text-[10px] font-black text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full uppercase">Editando</span>
+                <div class="p-6 sm:p-10 border-b border-slate-50">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-[#F0FDFA] text-[#07CBBB] flex items-center justify-center shadow-sm">
+                            <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-width="1.5"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl sm:text-3xl font-black text-slate-800 tracking-tight">Nueva Finca</h3>
+                            <p class="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Configuración de Activos</p>
                         </div>
                     </div>
-                    <x-input-error for="form.nombre" class="mt-2 ml-6 text-xs font-bold text-red-500" />
                 </div>
-    
-                <div class="space-y-3">
-                    <label class="flex items-center gap-2 ml-4 text-[11px] font-black text-slate-500 uppercase tracking-widest">
-                        <svg class="w-4 h-4 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h7" stroke-width="2" stroke-linecap="round"/></svg>
-                        Superficie
-                    </label>
-                    <div class="relative group">
-                        <input type="number" step="0.01" wire:model="form.hectarea" placeholder="0.00"
-                            class="w-full bg-slate-50/50 border-2 border-slate-100 rounded-[2rem] py-5 px-8 text-slate-800 font-black text-2xl shadow-sm focus:bg-white focus:border-[#07CBBB] focus:ring-4 focus:ring-cyan-50 transition-all duration-300 outline-none">
-                        <span class="absolute right-8 top-1/2 -translate-y-1/2 text-sm font-black text-slate-300 group-focus-within:text-[#07CBBB]">ha</span>
+
+                <div class="flex-1 overflow-y-auto p-6 sm:p-10 space-y-8 custom-scrollbar">
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Nombre de la Finca</label>
+                        <input type="text"  wire:model.defer="cform.nombre" placeholder="Ej: Los Olivos" class="w-full bg-[#F9FAFB] border-2 border-[#E5E7EB] rounded-2xl py-4 px-6 text-lg font-bold outline-none focus:border-[#07CBBB] transition-all">
+                        <x-input-error for="cform.nombre" />
                     </div>
-                    <x-input-error for="form.hectarea" class="mt-2 ml-6 text-xs font-bold text-red-500" />
-                </div>
-    
-                <div class="space-y-3">
-                    <label class="flex items-center gap-2 ml-4 text-[11px] font-black text-slate-500 uppercase tracking-widest">
-                        Centro de Trabajo
-                    </label>
-                    <div class="h-[72px] bg-slate-100/50 rounded-[2rem] border-2 border-dashed border-slate-200 flex items-center justify-center text-slate-400 text-xs font-bold italic">
-                        Selección automática según perfil
+
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Superficie Total</label>
+                        <div class="relative max-w-[200px]">
+                            <input type="number" step="0.01" wire:model.defer="cform.hectarea" class="w-full bg-[#F9FAFB] border-2 border-[#E5E7EB] rounded-2xl py-5 px-6 text-3xl font-black outline-none focus:border-[#07CBBB]">
+                            <span class="absolute right-6 top-1/2 -translate-y-1/2 text-xs font-black text-slate-300">ha</span>
+                        </div>
+                        <x-input-error for="cform.hectarea" />
                     </div>
                 </div>
-    
+
+                <div class="p-6 sm:p-10 bg-[#F8FAFC] flex items-center justify-between border-t border-slate-100">
+                    <button @click="open = false" class="text-slate-400 hover:text-red-500 font-black text-[10px] uppercase tracking-widest flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">✕</span>
+                        Cancelar
+                    </button>
+                    
+                    <button wire:click="crearEmpresa" class="bg-[#111827] text-white font-bold px-8 py-4 rounded-2xl shadow-lg flex items-center gap-3 active:scale-95 transition-all text-sm">
+                        Guardar Registro
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-width="2.5"/></svg>
+                    </button>
+                </div>
             </div>
-        </x-slot>
-    
-        <x-slot name="footer">
-            <div class="flex items-center justify-between w-full px-6 pb-8">
-                <button wire:click="$set('openCrear', false)" 
-                    class="group flex items-center gap-2 text-slate-400 hover:text-slate-600 font-black text-xs uppercase tracking-widest transition-all">
-                    <span class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-slate-100 transition-colors">✕</span>
-                    Cancelar
-                </button>
-                
-                <button wire:click="save"
-                    class="relative overflow-hidden group bg-[#07CBBB] hover:bg-[#06b5a6] text-white font-black px-14 py-5 rounded-[2.2rem] transition-all shadow-[0_15px_30px_rgba(7,203,187,0.3)] hover:shadow-[0_20px_40px_rgba(7,203,187,0.4)] hover:-translate-y-1 active:scale-95">
-                    <span class="relative z-10 flex items-center gap-3">
-                        Crear Registro
-                        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
-                    </span>
-                    <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer"></div>
-                </button>
-            </div>
-        </x-slot>
-    </x-dialog-modal>
-    
-    <style>
-    @keyframes shimmer {
-        100% { transform: translateX(100%); }
-    }
-    .animate-shimmer {
-        animation: shimmer 1.5s infinite;
-    }
-    </style>
+        </div>
+    </div>
 </div>

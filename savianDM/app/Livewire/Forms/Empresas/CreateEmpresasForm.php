@@ -8,9 +8,9 @@ use Livewire\Form;
 
 class CreateEmpresasForm extends Form
 {
-    #[Validate(['strign', 'min:4', 'max:200'])]
+    #[Validate(['required', 'string', 'min:4', 'max:200'])]
     public string $nombre = '';
-    #[Validate(['float', 'min:0'])]
+    #[Validate(['numeric', 'min:0'])]
     public float $hectarea = 0.0;
 
 

@@ -18,6 +18,7 @@ class CreateEmpresas extends Component
     public function crearEmpresa(){
         $this->cform->createForm();
         $this->cancelar();
+        $this->dispatch('evtEmpresaAnadida')->to(IndexEmpresa::class);
     }
 
     public function cancelar(){
