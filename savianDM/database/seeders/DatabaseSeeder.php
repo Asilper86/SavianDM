@@ -36,9 +36,6 @@ class DatabaseSeeder extends Seeder
                 'empresa_id' => $empresa->id,
             ]);
 
-            // Asignamos el centro principal a la empresa
-            $empresa->update(['centroTrabajo_id' => $centros->first()->id]);
-
             // 5. Crear móviles para cada centro
             foreach ($centros as $centro) {
                 Movil::factory(10)->create([

@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->decimal('hectarea', 10, 2)->nullable();
-            // Solo creamos la columna, NO la relación todavía
-            $table->unsignedBigInteger('centroTrabajo_id')->nullable();
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('codigo')->unique();
             $table->enum('tipoCompra' , ['Propio' , 'Alquilado']);
-            $table->enum('estado' , ['Bien' , 'Roto']);
+            $table->enum('estado' , ['Stock' , 'Roto' , 'Campo' , 'Preparado'])->default('Stock');
             $table->foreignId('modelo_id')->constrained('modelos')->cascadeOnDelete();
             $table->foreignId('empresa_id')->constrained('empresas')->noActionOnDelete();
             $table->foreignId('proveedor_id')->constrained('proveedors')->noActionOnDelete();

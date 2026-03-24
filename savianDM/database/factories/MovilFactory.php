@@ -21,7 +21,7 @@ class MovilFactory extends Factory
         return [
             'codigo' => fake()->unique()->bothify('MOV-####'),
             'tipoCompra' => fake()->randomElement(['Propio', 'Alquilado']),
-            'estado' => fake()->randomElement(['Bien', 'Roto']),
+            'estado' => fake()->randomElement(['Stock' , 'Roto' , 'Campo' , 'Preparado']),
             'modelo_id' => 1, // O Modelo::factory()
             'empresa_id' => 1,
             'proveedor_id' => 1,
