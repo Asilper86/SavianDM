@@ -30,10 +30,7 @@
                     </select>
                 </div>
 
-                <div class="w-full md:w-56">
-                    <input type="date" wire:model.live="searchFecha"
-                        class="w-full px-4 py-3 bg-slate-50 border-none rounded-2xl text-sm text-slate-400">
-                </div>
+                
             </div>
         </div>
 
