@@ -13,7 +13,7 @@ class IndexEmpresa extends Component
     public function render()
     {
         $centros_trabajo = CentroTrabajo::all();
-        $empresas = Empresa::select()->paginate(5);
+        $empresas = Empresa::select()->paginate(4);
         return view('livewire.empresas.index-empresa', compact('centros_trabajo', 'empresas'));
     }
 }
