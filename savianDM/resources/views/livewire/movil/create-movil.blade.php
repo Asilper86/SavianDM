@@ -95,6 +95,7 @@
                             class="w-full bg-white border border-slate-200 rounded-2xl py-3.5 px-5 text-sm font-semibold text-slate-700 focus:ring-4 focus:ring-[#07B8AA]/10 focus:border-[#07B8AA] outline-none transition-all"
                         >
                     </div>
+                    <x-input-error for="cform.codigo"/>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div class="space-y-1.5">
@@ -109,7 +110,9 @@
                                 <option value="Propio">Propio</option>
                                 <option value="Alquilado">Alquilado</option>
                             </select>
+                            <x-input-error for="cform.tipoCompra"/>
                         </div>
+                        
 
                         <div class="space-y-1.5">
                             <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
@@ -125,7 +128,9 @@
                                 <option value="Campo">Campo</option>
                                 <option value="Preparado">Preparado</option>
                             </select>
+                             <x-input-error for="cform.estado"/>
                         </div>
+                       
                     </div>
 
                     <div class="space-y-1.5">
@@ -142,6 +147,7 @@
                             @endforeach
                             
                         </select>
+                        <x-input-error for="cform.modelo_id"/>
                     </div>
 
                     <div class="space-y-1.5">
@@ -157,6 +163,7 @@
                                 <option value="{{ $item->id }}">{{ $item->nombre }}</option>
                             @endforeach
                         </select>
+                        <x-input-error for="cform.empresa_id"/>
                     </div>
 
                     <div class="space-y-1.5">
@@ -173,6 +180,7 @@
                             @endforeach
                         </select>
                     </div>
+                    <x-input-error for="cform.proveedor_id"/>
                 </div>
 
                 <!-- Footer -->
