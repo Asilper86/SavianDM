@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Movil;
 
-use App\Models\CentroTrabajo;
 use App\Models\Empresa;
 use App\Models\Movil;
 use Livewire\Attributes\On;
@@ -20,6 +19,9 @@ class IndexMoviles extends Component
     public string $buscar = "";
 
     public ?int $idEmpresa = null;
+
+
+    public ?Movil $movil = null;
 
  
     #[On('evtMovilCreado')]
@@ -51,5 +53,24 @@ class IndexMoviles extends Component
     public function limpiarFiltros() {
         $this->reset(['buscar' , 'idEmpresa']);
       
+    }
+
+    public function updatedBuscar() {
+        $this->resetPage();
+    }
+
+   
+    // Borrar movil
+
+    public function mostrarMensajeBorrar(Movil $movil) {
+        $this->movil = $movil;
+        $this->dispatch('evtBorrarMovil', destino:'movil.index-moviles');    
+    }
+
+    #[On('evtBorrarOk')]
+    public function borrar() {
+        $this->movil->delete();
+        $this->dispatch('mensaje' , 'Movil Borrado Correctamente');
+        $this->reset('movil');
     }
 }
