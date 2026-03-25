@@ -36,27 +36,47 @@ class IndexEmpresa extends Component
         $this->campo = $campo;
     }
 
-    public function borrar($id)
+    public function lanzarAlerta(Empresa $empresa)
     {
-        $empresa = Empresa::find($id);
-        $empresa->movils()->delete();
-        $empresa->delete();
-        $this->dispatch('mensaje', 'Empresa Eliminada');
+        $this->empresa = $empresa;
+        $this->dispatch('evtEmpresaBorrado', destino: 'empresas.index-empresa');
     }
 
-    public function update(Empresa $empresa){
+    #[On('evtBorrarOk')]
+    public function borrar()
+    {
+        if ($this->empresa) {
+        
+            // 2. ARREGLO DE INTEGRIDAD: Borramos los móviles vinculados primero
+            // Esto elimina el conflicto con la FK "movils_centro_trabajo_id_foreign"
+            $this->empresa->movils()->delete(); 
+    
+            // 3. Ahora la empresa está "libre" y se puede borrar sin errores de SQL
+            $this->empresa->delete();
+    
+            $this->dispatch('mensaje', 'Empresa y sus móviles eliminados');
+            
+            // Limpiamos la propiedad para la siguiente acción
+            $this->empresa = null;
+        }
+    }
+
+    public function update(Empresa $empresa)
+    {
         $this->uform->setEmpresa($empresa);
         $this->openEditar = true;
     }
 
-    public function editar(){
+    public function editar()
+    {
         $this->uform->editarForm();
         $this->cancelar();
         $this->dispatch('mensaje', 'Empresa Actualizada');
     }
 
-    public function cancelar(){
+    public function cancelar()
+    {
         $this->uform->cancelarForm();
-        $this->openEditar=false;
+        $this->openEditar = false;
     }
 }

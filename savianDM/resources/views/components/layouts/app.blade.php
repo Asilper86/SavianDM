@@ -78,6 +78,9 @@
         }
 
         Livewire.on('evtBorrarMovil', ({destino})=>mostrarDialogoBorrado(destino));
+        Livewire.on('evtModeloBorrado', ({destino})=>mostrarDialogoBorrado(destino));
+        Livewire.on('evtProveedorBorrado', ({destino})=>mostrarDialogoBorrado(destino));
+        Livewire.on('evtEmpresaBorrado', ({destino})=>mostrarDialogoBorrado(destino));
     </script>
 </body>
 

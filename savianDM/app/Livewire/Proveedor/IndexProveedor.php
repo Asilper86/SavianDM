@@ -16,7 +16,7 @@ class IndexProveedor extends Component
     public string $orden = 'desc';
     public UpdateProveedorForm $uform;
     public bool $openEditar = false;
-    
+    public ?Proveedor $proveedors=null;
     #[On('evtProveedorCreate')]
     public function render()
     {
@@ -29,9 +29,14 @@ class IndexProveedor extends Component
         $this->campo=$campo;
     }
 
-    public function borrar(?int $id){
-        $proveedor = Proveedor::find($id);
-        $proveedor->delete();
+    public function lanzarAlerta(Proveedor $proveedor){
+        $this->proveedors=$proveedor;
+        $this->dispatch('evtProveedorBorrado', destino: 'proveedor.index-proveedor');
+    }
+    
+    #[On('evtBorrarOk')]
+    public function borrar(){
+        $this->proveedors->delete();
         $this->dispatch('mensaje', 'Proveedor Eliminado');
     }
 
