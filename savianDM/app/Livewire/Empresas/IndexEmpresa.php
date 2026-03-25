@@ -20,12 +20,16 @@ class IndexEmpresa extends Component
 
     public bool $openEditar = false;
 
+    public string $buscar = '';
+
     public UpdateEmpresasForm $uform;
 
     #[On('evtEmpresaAnadida')]
     public function render()
     {
-        $empresas = Empresa::orderBy($this->campo, $this->orden)->paginate(4);
+        $empresas = Empresa::where('nombre', 'like', '%'. $this->buscar . '%')
+            ->orderBy($this->campo, $this->orden)
+            ->paginate(4);
 
         return view('livewire.empresas.index-empresa', compact('empresas'));
     }
@@ -46,17 +50,8 @@ class IndexEmpresa extends Component
     public function borrar()
     {
         if ($this->empresa) {
-        
-            // 2. ARREGLO DE INTEGRIDAD: Borramos los móviles vinculados primero
-            // Esto elimina el conflicto con la FK "movils_centro_trabajo_id_foreign"
-            $this->empresa->movils()->delete(); 
-    
-            // 3. Ahora la empresa está "libre" y se puede borrar sin errores de SQL
-            $this->empresa->delete();
-    
+            $this->empresa->movils()->delete();
             $this->dispatch('mensaje', 'Empresa y sus móviles eliminados');
-            
-            // Limpiamos la propiedad para la siguiente acción
             $this->empresa = null;
         }
     }
@@ -78,5 +73,10 @@ class IndexEmpresa extends Component
     {
         $this->uform->cancelarForm();
         $this->openEditar = false;
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
     }
 }

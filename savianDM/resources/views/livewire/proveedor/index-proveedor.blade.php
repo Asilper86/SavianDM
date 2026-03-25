@@ -12,6 +12,10 @@
                 </p>
             </div>
 
+            <input type="text" wire:model.live="buscar" placeholder="Buscar proveedor por nombre..."
+            class="block w-full pl-12 pr-4 py-4 bg-slate-50/50 border-2 border-transparent rounded-2xl text-sm font-bold text-slate-700 outline-none focus:bg-white focus:border-[#07CBBB] focus:ring-4 focus:ring-[#07CBBB]/10 transition-all shadow-sm">
+
+
             <div class="w-full lg:w-auto">
                 @livewire('proveedor.create-proveedor')
             </div>

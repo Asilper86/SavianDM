@@ -14,11 +14,14 @@ class IndexModelos extends Component
     public ?Modelo $modelo = null;
     public UpdateModelosForm $uform;
     public bool $openEditar=false;
+    public string $buscar = '';
 
     #[On('evtModeloCreado')]
     public function render()
     {
-        $modelos = Modelo::orderBy($this->campo, $this->orden)->paginate(4);
+        $modelos = Modelo::where('nombre', 'like', '%'.$this->buscar.'%')
+            ->orderBy($this->campo, $this->orden)
+            ->paginate(4);
         return view('livewire.modelos.index-modelos', compact('modelos'));
     }
 
@@ -51,7 +54,7 @@ class IndexModelos extends Component
     }
 
     public function cancelar(){
-        $this->uform->cancelarForm();
+        $this->uform->cancelarForm(); 
         $this->openEditar=false;
     }
 }

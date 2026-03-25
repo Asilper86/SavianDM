@@ -17,10 +17,13 @@ class IndexProveedor extends Component
     public UpdateProveedorForm $uform;
     public bool $openEditar = false;
     public ?Proveedor $proveedors=null;
+    public string $buscar = '';
+
     #[On('evtProveedorCreate')]
     public function render()
     {
-        $proveedor = Proveedor::orderBy($this->campo, $this->orden)->paginate(4);
+        $proveedor = Proveedor::where('nombre', 'like', '%'.$this->buscar.'%')
+            ->orderBy($this->campo, $this->orden)->paginate(4);
         return view('livewire.proveedor.index-proveedor', compact('proveedor'));
     }
 
