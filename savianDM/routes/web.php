@@ -3,6 +3,7 @@
 use App\Livewire\Movil\IndexMoviles;
 use App\Livewire\Dashboard; // Importamos tu componente Livewire
 use App\Livewire\Empresas\IndexEmpresa;
+use App\Livewire\Proveedor\IndexProveedor;
 use App\Models\Historial;
 use App\Models\Movil;
 use Illuminate\Support\Facades\Route;
@@ -24,5 +25,6 @@ Route::middleware([
     // Tu ruta de móviles existente
     Route::get('/movil', IndexMoviles::class)->name('moviles');
     Route::get('/empresas', IndexEmpresa::class)->name('empresas');
+    Route::get('/proveedores', IndexProveedor::class)->name('proveedores');
 
 });

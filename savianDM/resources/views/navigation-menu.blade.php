@@ -37,6 +37,13 @@
             </div>
             <span>Empresas</span>
         </x-nav-link>
+        <x-nav-link href="{{ route('proveedores') }}" :active="request()->routeIs('proveedores')"
+            class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
+            <div class="flex items-center justify-center w-6 h-6 me-3">
+                <i class="fa-solid fa-truck-fast"></i>
+            </div>
+            <span>Proveedores</span>
+        </x-nav-link>
 
     </div>
 
