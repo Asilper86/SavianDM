@@ -9,14 +9,14 @@ use Livewire\Form;
 class CreateMovilForm extends Form
 {
 
-    #[Validate(['required', 'min:3' , 'max:150'])]
-    public string $marca = "";
+    #[Validate(['required', 'in:Stock,Roto,Campo,Preparado'])]
+    public string $estado = "";
 
     #[Validate(['required' , 'exists:modelos,id'])]
     public int $modelo_id = 0;
 
-    #[Validate(["required"])]
-    public int $codigo = 0;
+    #[Validate(["required" , 'min:3'])]
+    public string $codigo = "";
 
     #[Validate(['required' , 'exists:empresas,id'])]
     public int $empresa_id = 0;
@@ -31,6 +31,7 @@ class CreateMovilForm extends Form
     public function createMovilForm() {
         $datos = $this->validate();
         Movil::create($datos);
+        $this->reset('codigo');
     }
 
     public function cancelarMovilForm() {

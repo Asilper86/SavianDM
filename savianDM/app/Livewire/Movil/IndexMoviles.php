@@ -5,6 +5,7 @@ namespace App\Livewire\Movil;
 use App\Models\CentroTrabajo;
 use App\Models\Empresa;
 use App\Models\Movil;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,7 +14,7 @@ class IndexMoviles extends Component
 
      use WithPagination;
 
-    public string $campo = "codigo";
+    public string $campo = "id";
     public string $orden = "desc";
 
     public string $buscar = "";
@@ -21,7 +22,7 @@ class IndexMoviles extends Component
     public ?int $idEmpresa = null;
 
  
-
+    #[On('evtMovilCreado')]
     public function render()
     {
         $empresa = Empresa::select('id', 'nombre')->get();
