@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Empresas;
 
+use App\Livewire\Forms\Empresas\UpdateEmpresasForm;
 use App\Models\Empresa;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -16,6 +17,10 @@ class IndexEmpresa extends Component
     public string $campo = 'id';
 
     public ?Empresa $empresa = null;
+
+    public bool $openEditar = false;
+
+    public UpdateEmpresasForm $uform;
 
     #[On('evtEmpresaAnadida')]
     public function render()
@@ -36,5 +41,22 @@ class IndexEmpresa extends Component
         $empresa = Empresa::find($id);
         $empresa->movils()->delete();
         $empresa->delete();
+        $this->dispatch('mensaje', 'Empresa Eliminada');
+    }
+
+    public function update(Empresa $empresa){
+        $this->uform->setEmpresa($empresa);
+        $this->openEditar = true;
+    }
+
+    public function editar(){
+        $this->uform->editarForm();
+        $this->cancelar();
+        $this->dispatch('mensaje', 'Empresa Actualizada');
+    }
+
+    public function cancelar(){
+        $this->uform->cancelarForm();
+        $this->openEditar=false;
     }
 }
