@@ -38,7 +38,7 @@
                             <td class="bg-slate-50/50 px-6 py-4 rounded-r-3xl border-y border-r border-transparent text-right">
                                 <div class="flex justify-end gap-2">
                                     <button class="p-2 bg-white text-slate-400 hover:text-[#07CBBB] rounded-lg transition-colors border border-slate-50"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2"/></svg></button>
-                                    <button wire:click="borrar" onclick="confirm('¿Desea eliminar definitivamente?')" class="p-2 bg-white text-slate-400 hover:text-red-500 rounded-lg transition-colors border border-slate-50">
+                                    <button wire:click="borrar({{ $item->id }})" onclick="confirm('¿Desea eliminar definitivamente?')" class="p-2 bg-white text-slate-400 hover:text-red-500 rounded-lg transition-colors border border-slate-50">
                                         <i class='fas fa-trash'></i>
                                     </button>
                                 </div>
