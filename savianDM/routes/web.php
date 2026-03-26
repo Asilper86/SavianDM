@@ -1,7 +1,7 @@
 <?php
 
+use App\Livewire\Graficos\DashboardChart;
 use App\Livewire\Movil\IndexMoviles;
-use App\Livewire\Dashboard; // Importamos tu componente Livewire
 use App\Livewire\Empresas\IndexEmpresa;
 use App\Livewire\Modelos\IndexModelos;
 use App\Livewire\Proveedor\IndexProveedor;
@@ -21,7 +21,7 @@ Route::middleware([
 
     // CAMBIO CLAVE: Ahora el dashboard es una clase Livewire, no una función anónima
     // Esto permite que wire:model funcione y los números se actualicen solos.
-    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/dashboard', DashboardChart::class)->name('dashboard');
 
     // Tu ruta de móviles existente
     Route::get('/movil', IndexMoviles::class)->name('moviles');
