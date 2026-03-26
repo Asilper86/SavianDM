@@ -29,4 +29,7 @@ class Empresa extends Model
     {
         return $this->hasMany(Movil::class);
     }
+    public function albaran():HasMany{
+        return $this->hasMany(Albaran::class);
+    }
 }

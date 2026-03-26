@@ -3,8 +3,24 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Albaran extends Model
 {
-    //
+    protected $fillable = ['empresa_id', 'movil_id', 'centro_trabajo_id'];
+
+
+
+    public function empresas():BelongsTo{
+        return $this->belongsTo(Empresa::class);
+    }
+
+    public function centrosTrabajos():BelongsTo{
+        return $this->belongsTo(CentroTrabajo::class);
+    }
+
+    public function moviles():BelongsToMany{
+        return $this->belongsToMany(Movil::class);
+    }
 }

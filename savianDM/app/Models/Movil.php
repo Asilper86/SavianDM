@@ -6,6 +6,7 @@ use Database\Factories\MovilFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Movil extends Model
 {
@@ -35,5 +36,9 @@ class Movil extends Model
     {
         // El segundo parámetro es la clave foránea REAL de tu tabla
         return $this->belongsTo(CentroTrabajo::class, 'centro_trabajo_id');
+    }
+
+    public function albarans():BelongsToMany{
+        return $this->belongsToMany(Albaran::class);
     }
 }
