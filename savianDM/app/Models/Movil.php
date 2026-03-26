@@ -12,7 +12,7 @@ class Movil extends Model
 {
     /** @use HasFactory<MovilFactory> */
     use HasFactory;
-
+    protected $table = 'dbo.movils';
     protected $fillable = [
         'codigo', 'tipoCompra', 'estado', 'modelo_id', 
         'empresa_id', 'proveedor_id', 'centro_trabajo_id', 'comentario'
