@@ -24,5 +24,9 @@ class CentroTrabajo extends Model
         // Si tiene otro nombre, especifícalo como segundo parámetro.
         return $this->hasMany(Movil::class, 'centro_trabajo_id');
     }
+
+    public function albaran():HasMany{
+        return $this->hasMany(Albaran::class);
+    }
     
 }
