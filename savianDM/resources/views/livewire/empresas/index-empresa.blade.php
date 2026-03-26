@@ -18,58 +18,67 @@
                 @livewire('empresas.create-empresas')
             </div>
         </div>
-
-        <div class="flex-1 overflow-auto rounded-3xl custom-scrollbar">
-            <table class="w-full border-separate border-spacing-y-3">
-                <thead class="sticky top-0 bg-white/10 backdrop-blur-md z-10">
-                    <tr class="text-slate-400">
-                        <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left">ID</th>
-                        <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left">Empresa</th>
-                        <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-center">Hectáreas
-                        </th>
-                        <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-right">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($empresas as $item)
-                        <tr class="group">
-                            <td
-                                class="bg-slate-50/50 px-6 py-4 rounded-l-3xl border-y border-l border-transparent text-xs font-bold text-slate-400">
-                                #{{ $item->id }}</td>
-                            <td
-                                class="bg-slate-50/50 px-6 py-4 border-y border-transparent font-black text-slate-700 text-sm sm:text-base">
-                                {{ $item->nombre }}</td>
-                            <td class="bg-slate-50/50 px-6 py-4 border-y border-transparent text-center">
-                                <span
-                                    class="px-3 py-1 bg-white rounded-xl text-[#07CBBB] text-xs font-black shadow-sm border border-slate-100">
-                                    {{ $item->hectarea }} ha
-                                </span>
-                            </td>
-                            <td
-                                class="bg-slate-50/50 px-6 py-4 rounded-r-3xl border-y border-r border-transparent text-right">
-                                <div class="flex justify-end gap-2">
-                                    <button wire:click="update({{ $item->id }})"
-                                        class="p-2 bg-white text-slate-400 hover:text-[#07CBBB] rounded-lg transition-colors border border-slate-50"><svg
-                                            class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path
-                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                                                stroke-width="2" />
-                                        </svg></button>
-                                    <button wire:click="lanzarAlerta({{ $item->id }})"
-                                        class="p-2 bg-white text-slate-400 hover:text-red-500 rounded-lg transition-colors border border-slate-50">
-                                        <i class='fas fa-trash'></i>
-                                    </button>
-                                </div>
-                            </td>
+        @if ($empresas->count())
+            <div class="flex-1 overflow-auto rounded-3xl custom-scrollbar">
+                <table class="w-full border-separate border-spacing-y-3">
+                    <thead class="sticky top-0 bg-white/10 backdrop-blur-md z-10">
+                        <tr class="text-slate-400">
+                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left">ID</th>
+                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left">Empresa
+                            </th>
+                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-center">Hectáreas
+                            </th>
+                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-right">Acciones
+                            </th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($empresas as $item)
+                            <tr class="group">
+                                <td
+                                    class="bg-slate-50/50 px-6 py-4 rounded-l-3xl border-y border-l border-transparent text-xs font-bold text-slate-400">
+                                    #{{ $item->id }}</td>
+                                <td
+                                    class="bg-slate-50/50 px-6 py-4 border-y border-transparent font-black text-slate-700 text-sm sm:text-base">
+                                    {{ $item->nombre }}</td>
+                                <td class="bg-slate-50/50 px-6 py-4 border-y border-transparent text-center">
+                                    <span
+                                        class="px-3 py-1 bg-white rounded-xl text-[#07CBBB] text-xs font-black shadow-sm border border-slate-100">
+                                        {{ $item->hectarea }} ha
+                                    </span>
+                                </td>
+                                <td
+                                    class="bg-slate-50/50 px-6 py-4 rounded-r-3xl border-y border-r border-transparent text-right">
+                                    <div class="flex justify-end gap-2">
+                                        <button wire:click="update({{ $item->id }})"
+                                            class="p-2 bg-white text-slate-400 hover:text-[#07CBBB] rounded-lg transition-colors border border-slate-50"><svg
+                                                class="w-4 h-4" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path
+                                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                                    stroke-width="2" />
+                                            </svg></button>
+                                        <button wire:click="lanzarAlerta({{ $item->id }})"
+                                            class="p-2 bg-white text-slate-400 hover:text-red-500 rounded-lg transition-colors border border-slate-50">
+                                            <i class='fas fa-trash'></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
 
-            <div class="mb-4">
-                {{ $empresas->links() }}
+                <div class="mb-4">
+                    {{ $empresas->links() }}
+                </div>
             </div>
-        </div>
+        @else
+            <x-mios.advertencia>
+                No se encontró ninguna empresa llamada así.
+            </x-mios.advertencia>
+        @endif
+
     </div>
 
     <x-dialog-modal wire:model="openEditar">
