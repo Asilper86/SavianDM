@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Albaran\IndexAlbaran;
 use App\Livewire\Graficos\DashboardChart;
 use App\Livewire\Movil\IndexMoviles;
 use App\Livewire\Empresas\IndexEmpresa;
@@ -28,5 +29,6 @@ Route::middleware([
     Route::get('/empresas', IndexEmpresa::class)->name('empresas');
     Route::get('/proveedores', IndexProveedor::class)->name('proveedores');
     Route::get('/modelos', IndexModelos::class)->name('modelos');
+    Route::get('/albaran', IndexAlbaran::class)->name('albaran');
 
 });

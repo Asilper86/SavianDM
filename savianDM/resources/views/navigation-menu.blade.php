@@ -47,6 +47,13 @@
             </div>
             <span>Modelos</span>
         </x-nav-link>
+        <x-nav-link href="{{ route('albaran') }}" :active="request()->routeIs('albaran')"
+            class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
+            <div class="flex items-center justify-center w-6 h-6 me-3">
+                <i class="fa-solid fa-book"></i>
+            </div>
+            <span>Albaran</span>
+        </x-nav-link>
 
     </div>
 
