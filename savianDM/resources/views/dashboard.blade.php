@@ -8,7 +8,7 @@
                 <div class="relative flex-1 group">
                     <select wire:model.live="empresaId"
                         class="w-full bg-white dark:bg-gray-800 border-none text-gray-600 dark:text-gray-300 rounded-2xl shadow-sm focus:ring-2 focus:ring-cyan-500 py-3 px-4 transition-all cursor-pointer text-sm font-medium">
-                        <option value="">🌍 Todas las Empresas</option>
+                        <option value="">Todas las Empresas</option>
                         @foreach ($empresas as $empresa)
                             <option value="{{ $empresa->id }}">{{ $empresa->nombre }}</option>
                         @endforeach
@@ -23,7 +23,7 @@
 
                     <select wire:model.live="empresaId"
                         class="w-full bg-white dark:bg-gray-800 border-none text-gray-600 dark:text-gray-300 rounded-2xl shadow-sm focus:ring-2 focus:ring-cyan-500 py-3 pl-24 pr-4 transition-all cursor-pointer text-sm font-medium">
-                        <option value="">🌍 Todas las Sedes</option>
+                        <option value="">Todas las Sedes</option>
                         @foreach ($centros as $centro)
                             <option value="{{ $centro->id }}">{{ $centro->nombre }}</option>
                         @endforeach
@@ -47,7 +47,7 @@
             <div
                 class="md:col-span-6 bg-white p-8 rounded-[3rem] shadow-xl border border-white flex flex-col items-center">
                 <div class="w-full flex justify-between px-4 mb-6">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">🌍 Distribución</span>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Distribución</span>
                     <span class="text-xs font-bold text-cyan-500">SAVIAN STOCK</span>
                 </div>
 
