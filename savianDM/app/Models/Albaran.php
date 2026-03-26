@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Albaran extends Model
 {
-    protected $table = 'dbo.albarans';
+    
     protected $fillable = ['empresa_id', 'movil_id', 'centro_trabajo_id', 'path', 'estado'];
 
     public function empresas(): BelongsTo

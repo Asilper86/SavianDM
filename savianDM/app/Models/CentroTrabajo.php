@@ -14,7 +14,7 @@ class CentroTrabajo extends Model
 
     protected $fillable = ['nombre'];
 
-    protected $table = 'dbo.centro_trabajos';
+    
     public function empresa():BelongsTo{
         return $this->belongsTo(Empresa::class);
     }
