@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Forms\Albaran;
 
-use Livewire\Form;
 use App\Models\Albaran;
-use Livewire\Attributes\Validate;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\Validate;
+use Livewire\Form;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class UpdateAlbaranForm extends Form
 {
@@ -38,15 +40,28 @@ class UpdateAlbaranForm extends Form
         $this->validate();
 
         return DB::transaction(function () {
-            // Actualizar datos básicos
+            // 1. Actualizar datos en la DB
             $this->albaranModel->update([
                 'empresa_id' => $this->empresa_id,
                 'centro_trabajo_id' => $this->centro_trabajo_id,
                 'estado' => $this->estado,
             ]);
 
-            // Sincronizar tabla intermedia dbo.albaran_movil (borra lo viejo, mete lo nuevo)
             $this->albaranModel->moviles()->sync($this->moviles_ids);
+
+            // 2. REGENERAR EL PDF
+            // Cargamos las relaciones frescas para que el PDF tenga los nombres nuevos
+            $this->albaranModel->load(['empresas', 'centrosTrabajos', 'moviles.modelo']);
+
+            $pdf = Pdf::loadView('pdf.albaran-template', [
+                'albaran' => $this->albaranModel,
+                'fundas' => $this->albaranModel->fundas, // O la lógica que uses para fundas
+            ]);
+
+            // 3. Sobrescribir el archivo en el Storage
+            // Usamos el path que ya tiene guardado el modelo
+            $path = str_replace('storage/', '', $this->albaranModel->path);
+            Storage::disk('public')->put($path, $pdf->output());
 
             return $this->albaranModel;
         });
