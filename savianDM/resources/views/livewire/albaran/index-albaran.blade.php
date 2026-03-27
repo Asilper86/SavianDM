@@ -28,7 +28,7 @@
                 <thead class="sticky top-0 bg-white/10 backdrop-blur-md z-10">
                     <tr class="text-slate-400">
                         <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left w-24">Nº Albarán</th>
-                        <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left">Empresa / Centro</th>
+                        <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left">Fecha</th>
                         <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left">Estado</th>
                         <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-right">Acciones</th>
                     </tr>
@@ -41,8 +41,7 @@
                             </td>
                             <td class="bg-slate-50/50 px-6 py-5 border-y border-transparent">
                                 <div class="flex flex-col">
-                                    <span class="text-sm font-black text-slate-800">{{ $item->empresas->nombre ?? 'N/A' }}</span>
-                                    <span class="text-[10px] text-slate-400 font-bold uppercase">{{ $item->centrosTrabajos->nombre ?? 'Sin centro' }}</span>
+                                    <span class="text-sm font-black text-slate-800">{{ $item->created_at }}</span>
                                 </div>
                             </td>
                             <td class="bg-slate-50/50 px-6 py-5 border-y border-transparent">

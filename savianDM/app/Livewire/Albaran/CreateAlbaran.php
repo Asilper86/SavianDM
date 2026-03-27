@@ -59,6 +59,33 @@ class CreateAlbaran extends Component
         $this->search = '';
     }
 
+    // Esta es la función que te pide el error
+    public function abrirModalCrear()
+    {
+        $this->isEditing = false;
+        $this->createForm->reset(); // Limpiamos el formulario de creación
+        $this->openCrear = true;
+    }
+
+    // Y esta es recomendable para cerrar y limpiar
+    public function cerrarModal()
+    {
+        $this->openCrear = false;
+        $this->isEditing = false;
+        $this->createForm->reset();
+        $this->updateForm->reset();
+    }
+    
+    // También te falta el método para quitar móviles de la lista
+    public function quitarMovil($id)
+    {
+        if ($this->isEditing) {
+            $this->updateForm->moviles_ids = array_diff($this->updateForm->moviles_ids, [$id]);
+        } else {
+            $this->createForm->moviles_ids = array_diff($this->createForm->moviles_ids, [$id]);
+        }
+    }
+
     public function render()
     {
         // Determinamos qué IDs de móviles mostrar en la lista
