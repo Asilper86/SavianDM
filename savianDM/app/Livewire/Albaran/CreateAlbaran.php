@@ -3,61 +3,73 @@
 namespace App\Livewire\Albaran;
 
 use Livewire\Component;
+use App\Models\Albaran;
 use App\Models\Empresa;
 use App\Models\CentroTrabajo;
 use App\Models\Movil;
 use App\Livewire\Forms\Albaran\CreateAlbaranForm;
-use Illuminate\Support\Facades\Storage;
+use App\Livewire\Forms\Albaran\UpdateAlbaranForm;
+use Livewire\Attributes\On;
 
 class CreateAlbaran extends Component
 {
-    public CreateAlbaranForm $form;
+    public CreateAlbaranForm $createForm;
+    public UpdateAlbaranForm $updateForm;
     
-    public $openCrear = false;      
-    public $showMovilModal = false; 
-    public $search = '';            
+    public $isEditing = false;
+    public $openCrear = false;
+    public $showMovilModal = false;
+    public $search = '';
 
-    public function saveAlbaran()
+    // Escuchamos el evento desde el Index
+    #[On('editar-albaran')]
+    public function loadAlbaran($id)
     {
-        // Ejecuta el guardado, relación y generación de PDF
-        $albaran = $this->form->store();
-
-        $this->openCrear = false;
+        $this->isEditing = true;
+        $albaran = Albaran::with('moviles')->findOrFail($id);
         
-        // Emitimos evento para que el Index se refresque si es necesario
-        $this->dispatch('albaran-creado');
+        // Cargamos los datos en el formulario de UPDATE
+        $this->updateForm->setAlbaran($albaran);
+        $this->openCrear = true;
+    }
 
-        session()->flash('message', 'Albarán #' . $albaran->id . ' generado con éxito.');
-        
-        // No descargamos aquí, dejamos que el usuario lo haga desde el Index
+    public function save()
+    {
+        if ($this->isEditing) {
+            $this->updateForm->update();
+            session()->flash('message', 'Albarán actualizado con éxito.');
+        } else {
+            $this->createForm->store();
+            session()->flash('message', 'Albarán creado con éxito.');
+        }
+
+        $this->reset(['openCrear', 'isEditing']);
         return redirect()->to('/albaran');
     }
 
+    // Proxy para manejar los móviles según el modo
     public function addMovil($id)
     {
-        if (!in_array($id, $this->form->moviles_ids)) {
-            $this->form->moviles_ids[] = $id;
+        if ($this->isEditing) {
+            if (!in_array($id, $this->updateForm->moviles_ids)) $this->updateForm->moviles_ids[] = $id;
+        } else {
+            if (!in_array($id, $this->createForm->moviles_ids)) $this->createForm->moviles_ids[] = $id;
         }
         $this->showMovilModal = false;
         $this->search = '';
     }
 
-    public function quitarMovil($id)
-    {
-        $this->form->moviles_ids = array_diff($this->form->moviles_ids, [$id]);
-    }
-
     public function render()
     {
+        // Determinamos qué IDs de móviles mostrar en la lista
+        $currentIds = $this->isEditing ? $this->updateForm->moviles_ids : $this->createForm->moviles_ids;
+        $empresaId = $this->isEditing ? $this->updateForm->empresa_id : $this->createForm->empresa_id;
+
         return view('livewire.albaran.create-albaran', [
             'empresas' => Empresa::all(),
-            'centros' => $this->form->empresa_id 
-                ? CentroTrabajo::where('empresa_id', $this->form->empresa_id)->get() 
-                : [],
-            'search_results' => strlen($this->search) > 2 
-                ? Movil::where('codigo', 'like', "%{$this->search}%")->get() 
-                : [],
-            'movilesSeleccionados' => Movil::whereIn('id', $this->form->moviles_ids)->get(),
+            'centros' => $empresaId ? CentroTrabajo::where('empresa_id', $empresaId)->get() : [],
+            'search_results' => strlen($this->search) > 2 ? Movil::where('codigo', 'like', "%{$this->search}%")->get() : [],
+            'movilesSeleccionados' => Movil::whereIn('id', $currentIds)->get(),
         ]);
     }
 }
