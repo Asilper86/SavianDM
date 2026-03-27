@@ -10,16 +10,23 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('historials', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('movil_id')->constrained('movils')->cascadeOnDelete();
-            $table->foreignId('empresa_id')->constrained('empresas')->cascadeOnDelete();
-            $table->string('estado');
-            $table->foreignId('albaran_id')->constrained('albarans')->cascadeOnDelete();
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('historials', function (Blueprint $table) {
+        $table->id();
+        
+        // Mantén la cascada con el móvil si quieres
+        $table->foreignId('movil_id')->constrained('movils')->onDelete('cascade');
+        
+        // CAMBIA ESTO A 'no action'
+        $table->foreignId('albaran_id')
+              ->nullable() // Es buena idea que sea nullable por si el albarán se borra
+              ->constrained('albarans')
+              ->onDelete('no action'); 
+
+        $table->string('descripcion');
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.

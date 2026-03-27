@@ -25,5 +25,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('centro_trabajos');
+        Schema::disableForeignKeyConstraints();
+
+        
+
+        Schema::enableForeignKeyConstraints();
     }
 };
