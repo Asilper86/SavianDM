@@ -10,13 +10,7 @@
                 <p class="text-slate-400 text-xs sm:text-sm font-medium sm:ml-11">Gestión integral de entradas y salidas.</p>
             </div>
 
-            <div class="relative w-full lg:w-96 group">
-                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg class="w-5 h-5 text-slate-400 group-focus-within:text-slate-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                </div>
-                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Buscar por número, empresa o fecha..."
-                    class="block w-full pl-11 pr-4 py-4 bg-slate-50/50 border-2 border-transparent rounded-2xl text-sm font-bold text-slate-700 outline-none focus:bg-white focus:border-slate-800 focus:ring-4 focus:ring-slate-800/5 transition-all shadow-sm">
-            </div>
+           
 
             <div class="w-full lg:w-auto">
                 @livewire('albaran.create-albaran')
