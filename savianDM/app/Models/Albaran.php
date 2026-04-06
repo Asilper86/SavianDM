@@ -25,7 +25,7 @@ class Albaran extends Model
     {
         return $this->belongsToMany(
             Movil::class,
-            'dbo.albaran_movil', // Nombre de la tabla intermedia
+            'albaran_movil', // Nombre de la tabla intermedia
             'albaran_id',         // FK en la tabla intermedia que apunta a albarans
             'movil_id'           // FK en la tabla intermedia que apunta a movils
         );
