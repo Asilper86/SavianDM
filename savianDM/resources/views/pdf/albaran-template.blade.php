@@ -143,7 +143,6 @@
     <table class="header-table">
         <tr>
             <td class="logo-container">
-                {{-- public_path() es esencial para que DomPDF encuentre la imagen en Azure --}}
                 <img src="{{ public_path('assets/img/logo_savian.fw.png') }}" class="logo-img">
             </td>
             <td class="header-info">

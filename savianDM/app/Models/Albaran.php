@@ -13,12 +13,12 @@ class Albaran extends Model
 
     public function empresas(): BelongsTo
     {
-        return $this->belongsTo(Empresa::class);
+        return $this->belongsTo(Empresa::class, 'empresa_id');
     }
 
     public function centrosTrabajos(): BelongsTo
     {
-        return $this->belongsTo(CentroTrabajo::class);
+        return $this->belongsTo(CentroTrabajo::class, 'centro_trabajo_id');
     }
 
     public function moviles(): BelongsToMany
