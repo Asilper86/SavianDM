@@ -86,16 +86,16 @@
                 </div>
             </div>
         @else
-            <x-dialog-modal>
+            <x-mios.advertencia>
                 No se encontró ningun proveedor llamado así.
-            </x-dialog-modal>
+            </x-mios.advertencia>
         @endif
 
 
     </div>
 
-
-    <x-dialog-modal wire:model="openEditar">
+    @if ($proveedor)
+        <x-dialog-modal wire:model="openEditar">
         <x-slot name="title">
             <div class="flex items-center gap-4">
                 <div
@@ -156,4 +156,6 @@
             </div>
         </x-slot>
     </x-dialog-modal>
+    @endif
+    
 </div>

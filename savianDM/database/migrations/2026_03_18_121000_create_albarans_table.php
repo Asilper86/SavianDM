@@ -33,11 +33,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // En SQL Server/Azure es vital desactivar las llaves antes de borrar
-        Schema::disableForeignKeyConstraints();
+
         
         Schema::dropIfExists('albarans');
-        
-        Schema::enableForeignKeyConstraints();
+   
     }
 };

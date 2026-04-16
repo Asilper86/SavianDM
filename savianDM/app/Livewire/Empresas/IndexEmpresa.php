@@ -29,7 +29,7 @@ class IndexEmpresa extends Component
     {
         $empresas = Empresa::where('nombre', 'like', '%'. $this->buscar . '%')
             ->orderBy($this->campo, $this->orden)
-            ->paginate(4);
+            ->paginate(8);
 
         return view('livewire.empresas.index-empresa', compact('empresas'));
     }
