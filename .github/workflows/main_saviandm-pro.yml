@@ -20,9 +20,9 @@ jobs:
           extensions: mbstring, xml, ctype, iconv, mysql, zip
 
       - name: Install Composer dependencies
-        # Entramos en la carpeta con s minúscula
         working-directory: ./savianDM
-        run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        # Añadimos --ignore-platform-reqs para evitar el error de compatibilidad
+        run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
 
       - name: Install NPM and Build
         working-directory: ./savianDM
@@ -31,7 +31,6 @@ jobs:
           npm run build
 
       - name: Zip artifact for deployment
-        # Comprimimos el contenido de la carpeta savianDM
         run: |
           cd savianDM
           zip -r ../release.zip .
