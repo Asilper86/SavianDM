@@ -54,12 +54,6 @@
                 </x-button>
             </div>
 
-            <div class="relative flex py-3 items-center">
-                <div class="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
-                <span class="flex-shrink mx-4 text-gray-400 text-xs uppercase">o</span>
-                <div class="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
-            </div>
-
             
         </form>
     </x-authentication-card>
