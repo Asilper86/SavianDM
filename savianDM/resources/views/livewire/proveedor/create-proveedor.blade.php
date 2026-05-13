@@ -42,7 +42,7 @@
     
         <x-slot name="footer">
             <div class="flex items-center justify-between w-full">
-                <button wire:click="$set('open', false)" 
+                <button wire:click="cancelar" 
                         class="text-slate-400 hover:text-red-500 font-black text-[10px] uppercase tracking-widest flex items-center gap-2 transition-all group">
                     <span class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm border border-slate-100 group-hover:border-red-100">✕</span>
                     Cancelar
