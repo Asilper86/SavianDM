@@ -60,14 +60,7 @@
                 <div class="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
             </div>
 
-            <div class="text-center">
-                <p class="text-sm text-gray-600 dark:text-gray-400">
-                    ¿Aún no tienes cuenta? 
-                    <a href="{{ route('register') }}" class="font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 transition-colors">
-                        Regístrate aquí
-                    </a>
-                </p>
-            </div>
+            
         </form>
     </x-authentication-card>
 </x-layouts.guest>
