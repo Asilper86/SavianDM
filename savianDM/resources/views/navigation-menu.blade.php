@@ -54,15 +54,14 @@
             </div>
             <span>Albaran</span>
         </x-nav-link>
-
     </div>
 
-    <!-- Se ha añadido align="top" para que el menú abra hacia arriba y no se corte -->
     <div class="p-4 border-t border-white/10 bg-black/10">
-        <x-dropdown align="top" width="48">
+        <!-- El cambio principal está en align="top" y las clases de margen inferior mb-2 -->
+        <x-dropdown align="top" width="48" contentClasses="py-1 bg-white dark:bg-gray-800 mb-2 shadow-xl">
             <x-slot name="trigger">
                 <button
-                    class="flex items-center w-full text-sm font-medium text-white hover:bg-white/5 p-2 rounded-lg transition">
+                    class="flex items-center w-full text-sm font-medium text-white hover:bg-white/5 p-2 rounded-lg transition focus:outline-none">
                     @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                         <img class="size-8 rounded-full object-cover me-3 border border-white/20"
                             src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
