@@ -1,7 +1,7 @@
 <div x-data="{ open: @entangle('openCrear') }">
     <button @click="open = true" class="w-full sm:w-auto bg-[#E4F4F3] hover:bg-[#07B8AA] text-[#07B8AA] hover:text-white font-bold px-6 py-3 rounded-full transition-all flex items-center justify-center gap-2 text-sm">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
-        Añadir Finca
+        Añadir Empresa
     </button>
 
     <div x-show="open" class="fixed inset-0 z-[100] overflow-hidden" style="display: none;">
