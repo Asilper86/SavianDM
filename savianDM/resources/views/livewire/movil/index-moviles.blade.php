@@ -28,6 +28,13 @@
                         <option value="{{ $item->id }}">{{ $item->nombre }}</option>
                     @endforeach
                 </select>
+                <select wire:model.live="estados"
+                    class="bg-white border-none rounded-2xl py-3 px-5 text-sm font-bold shadow-sm focus:ring-2 focus:ring-cyan-100 outline-none appearance-none">
+                    <option value="">Estado</option>
+                    @foreach ($estado as $item)
+                        <option value="{{ $item }}">{{ $item }}</option>
+                    @endforeach
+                </select>
 
                 <button wire:click="limpiarFiltros"
                     class="bg-slate-800 text-white rounded-2xl font-bold text-sm hover:bg-black transition-all">Limpiar
