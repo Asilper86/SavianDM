@@ -17,7 +17,6 @@ class UpdateMovilForm extends Form
     #[Validate(['required' , 'exists:modelos,id'])]
     public int $modelo_id = 0;
 
-    #[Validate(["required" , 'min:3'])]
     public string $codigo = "";
 
     #[Validate(['required' , 'exists:empresas,id'])]
@@ -28,6 +27,14 @@ class UpdateMovilForm extends Form
 
     #[Validate(['required' , 'in:Propio,Alquilado'])]
     public string $tipoCompra = "";
+
+
+
+    public function rules(): array {
+        return [
+            'codigo' => ['required' , 'string' , 'min::3' , 'unique:movils,codigo,'.$this->movil->codigo],
+        ];
+    }
 
 
     public function setMovil(Movil $movil) {

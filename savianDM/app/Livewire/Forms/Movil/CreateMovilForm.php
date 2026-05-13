@@ -15,7 +15,7 @@ class CreateMovilForm extends Form
     #[Validate(['required' , 'exists:modelos,id'])]
     public int $modelo_id = 0;
 
-    #[Validate(["required" , 'min:3'])]
+    #[Validate(['unique:movils,codigo',"required" , 'min:3'])]
     public string $codigo = "";
 
     #[Validate(['required' , 'exists:empresas,id'])]
