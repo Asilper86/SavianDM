@@ -14,12 +14,13 @@ use Livewire\WithPagination;
 class IndexMoviles extends Component
 {
 
-     use WithPagination;
+    use WithPagination;
 
     public string $campo = "id";
     public string $orden = "desc";
 
     public string $buscar = "";
+    public string $estados = "";
 
     public ?int $idEmpresa = null;
 
@@ -31,13 +32,14 @@ class IndexMoviles extends Component
 
     public bool $openEditar = false;
 
- 
+
     #[On('evtMovilCreado')]
     public function render()
     {
         $empresa = Empresa::select('id', 'nombre')->get();
-        $modelo = Modelo::select('id','nombre')->get();
-        $proveedores = Proveedor::select('id','nombre')->get();
+        $modelo = Modelo::select('id', 'nombre')->get();
+        $proveedores = Proveedor::select('id', 'nombre')->get();
+        $estado = Movil::select('estado')->distinct()->pluck('estado');
         $moviles = Movil::with([
             'modelo',
             'proveedor',
@@ -45,12 +47,14 @@ class IndexMoviles extends Component
         ])
             ->where(function ($q) {
                 $q->where('codigo', 'like', "%{$this->buscar}%");
+            })->when($this->estados, function ($q) {
+                $q->where('estado', $this->estados);
             })
             ->when($this->idEmpresa, function ($q) {
                 $q->where('empresa_id', $this->idEmpresa);
             })->orderBy($this->campo, $this->orden)
             ->paginate(20);
-        return view('livewire.movil.index-moviles', compact('moviles', 'empresa', 'modelo' , 'proveedores'));
+        return view('livewire.movil.index-moviles', compact('moviles', 'empresa', 'modelo', 'proveedores', 'estado'));
     }
 
     public function ordenar(string $campo)
@@ -59,27 +63,31 @@ class IndexMoviles extends Component
         $this->orden = ($this->orden == "desc") ? "asc" : "desc";
     }
 
-    public function limpiarFiltros() {
-        $this->reset(['buscar' , 'idEmpresa']);
-      
+    public function limpiarFiltros()
+    {
+        $this->reset(['buscar', 'idEmpresa' , 'estados']);
+
     }
 
-    public function updatedBuscar() {
+    public function updatedBuscar()
+    {
         $this->resetPage();
     }
 
-   
+
     // Borrar movil
 
-    public function mostrarMensajeBorrar(Movil $movil) {
+    public function mostrarMensajeBorrar(Movil $movil)
+    {
         $this->movil = $movil;
-        $this->dispatch('evtBorrarMovil', destino:'movil.index-moviles');    
+        $this->dispatch('evtBorrarMovil', destino: 'movil.index-moviles');
     }
 
     #[On('evtBorrarOk')]
-    public function borrar() {
+    public function borrar()
+    {
         $this->movil->delete();
-        $this->dispatch('mensaje' , 'Movil Borrado Correctamente');
+        $this->dispatch('mensaje', 'Movil Borrado Correctamente');
         $this->reset('movil');
     }
 
@@ -87,18 +95,21 @@ class IndexMoviles extends Component
 
     //Editar Movil
 
-    public function editar(Movil $movil) {
+    public function editar(Movil $movil)
+    {
         $this->uform->setMovil($movil);
         $this->openEditar = true;
     }
 
-    public function actualizarMovil() {
+    public function actualizarMovil()
+    {
         $this->uform->updateMovilForm();
         $this->cancelar();
-        $this->dispatch('mensaje' , 'El movil se ha actualizado correctamente');
+        $this->dispatch('mensaje', 'El movil se ha actualizado correctamente');
     }
 
-    public function cancelar() {
+    public function cancelar()
+    {
         $this->openEditar = false;
         $this->uform->cancelarForm();
     }
