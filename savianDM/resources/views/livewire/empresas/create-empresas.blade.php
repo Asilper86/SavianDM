@@ -18,7 +18,7 @@
                             <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-width="1.5"/></svg>
                         </div>
                         <div>
-                            <h3 class="text-xl sm:text-3xl font-black text-slate-800 tracking-tight">Nueva Finca</h3>
+                            <h3 class="text-xl sm:text-3xl font-black text-slate-800 tracking-tight">Nueva Empresa</h3>
                             <p class="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Configuración de Activos</p>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
 
                 <div class="flex-1 overflow-y-auto p-6 sm:p-10 space-y-8 custom-scrollbar">
                     <div class="space-y-3">
-                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Nombre de la Finca</label>
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Nombre de la Empresa</label>
                         <input type="text"  wire:model.defer="cform.nombre" placeholder="Ej: Los Olivos" class="w-full bg-[#F9FAFB] border-2 border-[#E5E7EB] rounded-2xl py-4 px-6 text-lg font-bold outline-none focus:border-[#07CBBB] transition-all">
                         <x-input-error for="cform.nombre" />
                     </div>
