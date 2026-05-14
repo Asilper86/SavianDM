@@ -86,6 +86,24 @@ class CreateAlbaran extends Component
         }
     }
 
+    public function addTrabajador()
+    {
+        if ($this->isEditing) {
+            $this->updateForm->addTrabajador();
+        } else {
+            $this->createForm->addTrabajador();
+        }
+    }
+
+    public function quitarTrabajador($index)
+    {
+        if ($this->isEditing) {
+            $this->updateForm->removeTrabajador($index);
+        } else {
+            $this->createForm->removeTrabajador($index);
+        }
+    }
+
     public function render()
     {
         // Determinamos qué IDs de móviles mostrar en la lista

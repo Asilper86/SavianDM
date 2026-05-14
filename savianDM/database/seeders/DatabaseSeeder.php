@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
     {
         // Crear el usuario admin
         User::factory()->create(['email' => 'admin@savian.com']);
-       /*  
+       
         // 2. CREAR LOS PADRES (Esto evita el error de Foreign Key)
         // Creamos un modelo y un proveedor por defecto para que tengan el ID 1
         $modelo = Modelo::create(['nombre' => 'iPhone 15 Pro']);
@@ -45,6 +45,6 @@ class DatabaseSeeder extends Seeder
                     'proveedor_id' => $proveedor->id, // Usamos el ID del proveedor que creamos arriba
                 ]);
             } 
-        });   */
+        });   
     }
 }
