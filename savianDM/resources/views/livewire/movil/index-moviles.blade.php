@@ -2,17 +2,18 @@
     <div
         class="bg-white/80 backdrop-blur-xl rounded-[3.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.03)] border border-white p-6 sm:p-10 flex-1 flex flex-col">
 
-        <div class="flex flex-col gap-8 mb-10 px-4">
-            <div class="flex justify-between items-end">
+        <div class="flex flex-col gap-6 sm:gap-8 mb-8 sm:mb-10 px-1 sm:px-4">
+            <div class="flex flex-row justify-between items-center sm:items-end gap-2 sm:gap-4">
                 <div>
-                    <div class="flex items-center gap-4 mb-2">
-                        <span class="w-10 h-1.5 bg-[#07CBBB] rounded-full"></span>
-                        <h3 class="text-4xl font-black text-slate-800 tracking-tighter">Gestión de Móviles</h3>
+                    <div class="flex items-center gap-2 sm:gap-4 mb-1 sm:mb-2">
+                        <span class="hidden sm:block w-8 sm:w-10 h-1.5 bg-[#07CBBB] rounded-full"></span>
+                        <h3 class="text-xl sm:text-4xl font-black text-slate-800 tracking-tighter">Gestión de Móviles</h3>
                     </div>
-                    <p class="text-slate-400 text-base font-medium ml-14">Control de inventario y estado de
-                        dispositivos.</p>
+                    <p class="hidden sm:block text-slate-400 text-xs sm:text-base font-medium sm:ml-14">Control de inventario y estado de dispositivos.</p>
                 </div>
-                @livewire('movil.create-movil')
+                <div class="shrink-0">
+                    @livewire('movil.create-movil')
+                </div>
             </div>
 
             <div
@@ -45,41 +46,40 @@
             <div class="overflow-x-auto flex-1">
                 <table class="w-full border-separate border-spacing-y-4">
                     <thead>
-                        <tr class="text-slate-400">
-                            <th class="px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left">SN</th>
-                            <th class="px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left">Tipo Compra
+                            <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">SN</th>
+                            <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">Tipo Compra
                             </th>
-                            <th class="px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left">Modelo</th>
-                            <th class="px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left">Empresa</th>
-                            <th class="px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-center">Estado</th>
-                            <th class="px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left">Proveedor</th>
-                            <th class="px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-right">Acciones</th>
+                            <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">Modelo</th>
+                            <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">Empresa</th>
+                            <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-center whitespace-nowrap">Estado</th>
+                            <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">Proveedor</th>
+                            <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-right whitespace-nowrap">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($moviles as $item)
                             <tr class="group">
                                 <td
-                                    class="bg-slate-50/50 group-hover:bg-white px-6 py-5 rounded-l-[2rem] transition-all border-y border-l border-transparent group-hover:border-slate-100 text-sm font-black text-slate-700">
+                                    class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 rounded-l-[1.5rem] sm:rounded-l-[2rem] transition-all border-y border-l border-transparent group-hover:border-slate-100 text-sm font-black text-slate-700 whitespace-nowrap">
                                     {{ $item->codigo }}
                                 </td>
                                 <td
-                                    class="bg-slate-50/50 group-hover:bg-white px-6 py-5 transition-all border-y border-transparent group-hover:border-slate-100">
+                                    class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 transition-all border-y border-transparent group-hover:border-slate-100 whitespace-nowrap">
                                     <span
                                         class="px-3 py-1.5 rounded-xl text-[10px] font-black uppercase {{ $item->tipo_compra == 'Propio' ? 'bg-blue-50 text-blue-500' : 'bg-indigo-50 text-indigo-500' }}">
                                         {{ $item->tipoCompra }}
                                     </span>
                                 </td>
                                 <td
-                                    class="bg-slate-50/50 group-hover:bg-white px-6 py-5 transition-all border-y border-transparent group-hover:border-slate-100 font-bold text-slate-600">
+                                    class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 transition-all border-y border-transparent group-hover:border-slate-100 font-bold text-slate-600 whitespace-nowrap">
                                     {{ $item->modelo->nombre }}
                                 </td>
                                 <td
-                                    class="bg-slate-50/50 group-hover:bg-white px-6 py-5 transition-all border-y border-transparent group-hover:border-slate-100 font-bold text-slate-500">
+                                    class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 transition-all border-y border-transparent group-hover:border-slate-100 font-bold text-slate-500 whitespace-nowrap">
                                     {{ $item->empresa->nombre }}
                                 </td>
                                 <td
-                                    class="bg-slate-50/50 group-hover:bg-white px-6 py-5 transition-all border-y border-transparent group-hover:border-slate-100 text-center">
+                                    class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 transition-all border-y border-transparent group-hover:border-slate-100 text-center whitespace-nowrap">
                                     @php
                                         // Definimos los colores para cada estado
                                         $config = match ($item->estado) {
@@ -98,11 +98,11 @@
                                     </span>
                                 </td>
                                 <td
-                                    class="bg-slate-50/50 group-hover:bg-white px-6 py-5 transition-all border-y border-transparent group-hover:border-slate-100 text-xs font-medium text-slate-400">
+                                    class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 transition-all border-y border-transparent group-hover:border-slate-100 text-xs font-medium text-slate-400 whitespace-nowrap">
                                     {{ $item->proveedor->nombre }}
                                 </td>
                                 <td
-                                    class="bg-slate-50/50 group-hover:bg-white px-6 py-5 rounded-r-[2rem] transition-all border-y border-r border-transparent group-hover:border-slate-100 text-right">
+                                    class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 rounded-r-[1.5rem] sm:rounded-r-[2rem] transition-all border-y border-r border-transparent group-hover:border-slate-100 text-right whitespace-nowrap">
                                     <div class="flex justify-end gap-2 opacity-30 group-hover:opacity-100 transition-all">
                                         <button wire:click="editar({{ $item->id }})"
                                             class="p-2.5 bg-white text-slate-400 hover:text-[#07CBBB] rounded-xl shadow-sm border border-slate-50 transition-all">

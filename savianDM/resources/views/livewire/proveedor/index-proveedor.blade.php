@@ -2,21 +2,26 @@
     <div
         class="bg-white/80 backdrop-blur-xl rounded-[2rem] sm:rounded-[3.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.03)] border border-white p-4 sm:p-10 flex-1 flex flex-col overflow-hidden">
 
-        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 gap-4 px-2">
-            <div>
-                <div class="flex items-center gap-3 mb-1">
-                    <span class="hidden sm:block w-8 h-1 bg-indigo-500 rounded-full"></span>
-                    <h3 class="text-2xl sm:text-4xl font-black text-slate-800 tracking-tighter">Panel de Proveedores</h3>
+        <div class="flex flex-col lg:flex-row justify-between lg:items-center mb-6 sm:mb-8 gap-4 px-1 sm:px-2">
+            <div class="flex flex-row justify-between items-center w-full lg:w-auto">
+                <div>
+                    <div class="flex items-center gap-2 sm:gap-3 mb-1">
+                        <span class="hidden sm:block w-8 h-1 bg-indigo-500 rounded-full"></span>
+                        <h3 class="text-xl sm:text-4xl font-black text-slate-800 tracking-tighter">Panel de Proveedores</h3>
+                    </div>
+                    <p class="hidden sm:block text-slate-400 text-xs sm:text-sm font-medium sm:ml-11">Directorio logístico y de suministros.</p>
                 </div>
-                <p class="text-slate-400 text-xs sm:text-sm font-medium sm:ml-11">Directorio logístico y de suministros.
-                </p>
+                <div class="lg:hidden shrink-0">
+                    @livewire('proveedor.create-proveedor')
+                </div>
             </div>
 
-            <input type="text" wire:model.live="buscar" placeholder="Buscar proveedor por nombre..."
-                class="block w-full pl-12 pr-4 py-4 bg-slate-50/50 border-2 border-transparent rounded-2xl text-sm font-bold text-slate-700 outline-none focus:bg-white focus:border-[#07CBBB] focus:ring-4 focus:ring-[#07CBBB]/10 transition-all shadow-sm">
+            <div class="w-full lg:flex-1 lg:max-w-md lg:mx-4">
+                <input type="text" wire:model.live="buscar" placeholder="Buscar proveedor por nombre..."
+                    class="block w-full pl-12 pr-4 py-4 bg-slate-50/50 border-2 border-transparent rounded-2xl text-sm font-bold text-slate-700 outline-none focus:bg-white focus:border-[#07CBBB] focus:ring-4 focus:ring-[#07CBBB]/10 transition-all shadow-sm">
+            </div>
 
-
-            <div class="w-full lg:w-auto">
+            <div class="hidden lg:block shrink-0">
                 @livewire('proveedor.create-proveedor')
             </div>
         </div>
@@ -25,10 +30,10 @@
                 <table class="w-full border-separate border-spacing-y-3">
                     <thead class="sticky top-0 bg-white/10 backdrop-blur-md z-10">
                         <tr class="text-slate-400">
-                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left w-20">ID
+                            <th class="px-4 sm:px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left w-20 whitespace-nowrap">ID
                             </th>
-                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left">Nombre</th>
-                            <th class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-right">Acciones
+                            <th class="px-4 sm:px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left whitespace-nowrap">Nombre</th>
+                            <th class="px-4 sm:px-6 py-3 text-[10px] font-black uppercase tracking-widest text-right whitespace-nowrap">Acciones
                             </th>
                         </tr>
                     </thead>
@@ -36,10 +41,10 @@
                         @foreach ($proveedor as $item)
                             <tr class="group">
                                 <td
-                                    class="bg-slate-50/50 px-6 py-5 rounded-l-3xl border-y border-l border-transparent text-xs font-bold text-slate-400">
+                                    class="bg-slate-50/50 px-4 sm:px-6 py-4 sm:py-5 rounded-l-2xl sm:rounded-l-3xl border-y border-l border-transparent text-xs font-bold text-slate-400 whitespace-nowrap">
                                     #{{ $item->id }} </td>
                                 <td
-                                    class="bg-slate-50/50 px-6 py-5 border-y border-transparent font-black text-slate-700">
+                                    class="bg-slate-50/50 px-4 sm:px-6 py-4 sm:py-5 border-y border-transparent font-black text-slate-700 whitespace-nowrap">
                                     <div class="flex items-center gap-3">
                                         <div
                                             class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm border border-slate-100 text-indigo-500">
@@ -54,7 +59,7 @@
                                     </div>
                                 </td>
                                 <td
-                                    class="bg-slate-50/50 px-6 py-5 rounded-r-3xl border-y border-r border-transparent text-right">
+                                    class="bg-slate-50/50 px-4 sm:px-6 py-4 sm:py-5 rounded-r-2xl sm:rounded-r-3xl border-y border-r border-transparent text-right whitespace-nowrap">
                                     <div class="flex justify-end gap-2">
                                         <button wire:click="update({{ $item->id }})"
                                             class="p-2 bg-white text-slate-400 hover:text-indigo-500 rounded-lg transition-colors border border-slate-100 shadow-sm"><svg
