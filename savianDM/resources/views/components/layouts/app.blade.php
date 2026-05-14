@@ -25,7 +25,7 @@
 <body class="font-sans antialiased">
     <x-banner />
 
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900" x-data="{ sidebarOpen: false }">
+    <div class="min-h-screen bg-gray-100 dark:bg-gray-900" x-data>
         <!-- Sidebar Navigation -->
         @livewire('navigation-menu')
 
@@ -36,7 +36,7 @@
                     <img src="{{ asset('assets/img/logo_savian_blanco_v2.fw.png') }}" class="h-8 w-auto" />
                 </a>
             </div>
-            <button @click="sidebarOpen = !sidebarOpen" class="text-white hover:text-white/80 focus:outline-none transition-colors">
+            <button @click="$store.sidebar.open = !$store.sidebar.open" class="text-white hover:text-white/80 focus:outline-none transition-colors">
                 <i class="fa-solid fa-bars text-2xl"></i>
             </button>
         </div>
@@ -56,13 +56,19 @@
         </main>
 
         <!-- Overlay -->
-        <div x-show="sidebarOpen" x-transition.opacity @click="sidebarOpen = false" class="fixed inset-0 bg-black/50 z-40 lg:hidden"></div>
+        <div x-show="$store.sidebar.open" style="display: none;" x-transition.opacity @click="$store.sidebar.open = false" class="fixed inset-0 bg-black/50 z-40 lg:hidden"></div>
     </div>
 
     @stack('modals')
 
     @livewireScripts
     <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('sidebar', {
+                open: false
+            });
+        });
+
         Livewire.on('mensaje', txt => {
             Swal.fire({
                 icon: "success",
