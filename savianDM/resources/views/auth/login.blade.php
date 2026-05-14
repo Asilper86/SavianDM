@@ -27,6 +27,15 @@
                          placeholder="correo@ejemplo.com" />
             </div>
 
+            <div>
+                <div class="flex items-center justify-between">
+                    <x-label for="password" value="{{ __('Contraseña') }}" class="text-xs uppercase tracking-widest font-semibold" />
+                </div>
+                <x-input id="password" class="block mt-1 w-full bg-gray-50 dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm" 
+                         type="password" name="password" required autocomplete="current-password" 
+                         placeholder="••••••••" />
+            </div>
+
             <div class="flex items-center justify-between">
                 <label for="remember_me" class="flex items-center cursor-pointer group">
                     <x-checkbox id="remember_me" name="remember" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
