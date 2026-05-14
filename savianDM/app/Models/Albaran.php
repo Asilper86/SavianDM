@@ -9,7 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Albaran extends Model
 {
     
-    protected $fillable = ['empresa_id', 'movil_id', 'centro_trabajo_id', 'path', 'estado'];
+    protected $fillable = ['empresa_id', 'movil_id', 'centro_trabajo_id', 'path', 'estado', 'lugar', 'fecha', 'nombre_firmante', 'trabajadores_datos', 'tipo_trabajo', 'descripcion', 'firma_trabajador', 'firma_cliente'];
+
+    protected $casts = [
+        'trabajadores_datos' => 'array',
+    ];
 
     public function empresas(): BelongsTo
     {

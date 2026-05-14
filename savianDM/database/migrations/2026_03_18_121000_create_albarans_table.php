@@ -23,6 +23,7 @@ return new class extends Migration
                 ->onDelete('no action'); // <--- IMPORTANTE PARA AZURE/SQL SERVER
             
             $table->enum('estado', ['pendiente', 'entregado', 'retirado', 'enviado'])->default('pendiente');
+            $table->string('nombre_firmante');
             $table->string('path')->nullable();
             $table->timestamps();
         });
