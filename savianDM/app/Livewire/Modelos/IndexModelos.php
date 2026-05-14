@@ -38,6 +38,9 @@ class IndexModelos extends Component
 
     #[On('evtBorrarOk')]
     public function borrar(){
+        if ($this->modelo->moviles()->exists()) {
+            return redirect()->route('modelos')->with('mensajeerror', 'No se puede eliminar este modelo porque tiene móviles asociados.');
+        }
         $this->modelo->delete();
         $this->dispatch('mensaje', 'Modelo Eliminado');
     }
