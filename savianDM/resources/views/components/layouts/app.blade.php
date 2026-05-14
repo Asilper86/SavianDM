@@ -50,6 +50,7 @@
     @stack('modals')
 
     @livewireScripts
+    <x-mios.mensajeerror/>
     <script>
         Livewire.on('mensaje', txt => {
             Swal.fire({
@@ -81,6 +82,17 @@
         Livewire.on('evtModeloBorrado', ({destino})=>mostrarDialogoBorrado(destino));
         Livewire.on('evtProveedorBorrado', ({destino})=>mostrarDialogoBorrado(destino));
         Livewire.on('evtEmpresaBorrado', ({destino})=>mostrarDialogoBorrado(destino));
+
+
+
+        Livewire.on('mensajeerror', txt => {
+            Swal.fire({
+                icon: "error",
+                title: txt,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        })
     </script>
 </body>
 

@@ -39,6 +39,9 @@ class IndexProveedor extends Component
     
     #[On('evtBorrarOk')]
     public function borrar(){
+        if ($this->proveedors->moviles()->exists()) {
+            return redirect()->route('proveedores')->with('mensajeerror', 'No se puede eliminar este proveedor porque tiene móviles asociados.');
+        }
         $this->proveedors->delete();
         $this->dispatch('mensaje', 'Proveedor Eliminado');
     }
