@@ -1,5 +1,6 @@
-<nav x-data="{ open: false }"
-    class="fixed inset-y-0 left-0 w-64 bg-[#07CBBB] dark:bg-gray-900 border-r border-white/10 z-50 flex flex-col transition-all duration-300">
+<nav
+    :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+    class="fixed inset-y-0 left-0 w-64 bg-[#07CBBB] dark:bg-gray-900 border-r border-white/10 z-50 flex flex-col transition-transform duration-300 lg:translate-x-0">
 
     <div class="flex items-center justify-center h-20 shrink-0 border-b border-white/10">
         <a href="{{ route('dashboard') }}">
