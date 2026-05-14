@@ -43,11 +43,21 @@
                 </label>
             </div>
 
+            <div class="text-center">
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                    ¿Aún no tienes cuenta? 
+                    <a href="{{ route('register') }}" class="font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 transition-colors">
+                        Regístrate aquí
+                    </a>
+                </p>
+            </div>
+
             <div class="pt-2">
                 <x-button class="w-full justify-center py-3 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-900 focus:ring-indigo-500 shadow-lg shadow-indigo-500/30 transition-all duration-200 text-sm font-bold uppercase tracking-widest">
                     {{ __('Iniciar Sesión') }}
                 </x-button>
             </div>
+
 
             
         </form>
