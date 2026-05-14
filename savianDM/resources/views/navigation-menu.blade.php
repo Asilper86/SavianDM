@@ -9,44 +9,46 @@
 
     <div class="flex-grow overflow-y-auto py-6 px-4 space-y-2">
         <p class="text-[10px] uppercase tracking-widest text-white/50 font-bold px-4 mb-2">Menú Principal</p>
+        @if (Auth::user()->rol == 'admin' || Auth::user()->rol == 'finanzas')
+            <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')"
+                class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
+                <div class="flex items-center justify-center w-6 h-6 me-3">
+                    <i class="fa-solid fa-house"></i>
+                </div>
+                <span>Panel</span>
+            </x-nav-link>
 
-        <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')"
-            class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
-            <div class="flex items-center justify-center w-6 h-6 me-3">
-                <i class="fa-solid fa-house"></i>
-            </div>
-            <span>Panel</span>
-        </x-nav-link>
+            <x-nav-link href="{{ route('moviles') }}" :active="request()->routeIs('moviles')"
+                class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
+                <div class="flex items-center justify-center w-6 h-6 me-3">
+                    <i class="fa-solid fa-mobile text-lg"></i>
+                </div>
+                <span>Moviles</span>
+            </x-nav-link>
 
-        <x-nav-link href="{{ route('moviles') }}" :active="request()->routeIs('moviles')"
-            class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
-            <div class="flex items-center justify-center w-6 h-6 me-3">
-                <i class="fa-solid fa-mobile text-lg"></i>
-            </div>
-            <span>Moviles</span>
-        </x-nav-link>
+            <x-nav-link href="{{ route('empresas') }}" :active="request()->routeIs('empresas')"
+                class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
+                <div class="flex items-center justify-center w-6 h-6 me-3">
+                    <i class="fa-solid fa-building text-lg"></i>
+                </div>
+                <span>Empresas</span>
+            </x-nav-link>
+            <x-nav-link href="{{ route('proveedores') }}" :active="request()->routeIs('proveedores')"
+                class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
+                <div class="flex items-center justify-center w-6 h-6 me-3">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+                <span>Proveedores</span>
+            </x-nav-link>
+            <x-nav-link href="{{ route('modelos') }}" :active="request()->routeIs('modelos')"
+                class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
+                <div class="flex items-center justify-center w-6 h-6 me-3">
+                    <i class="fa-solid fa-bolt-lightning"></i>
+                </div>
+                <span>Modelos</span>
+            </x-nav-link>
+        @endif
 
-        <x-nav-link href="{{ route('empresas') }}" :active="request()->routeIs('empresas')"
-            class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
-            <div class="flex items-center justify-center w-6 h-6 me-3">
-                <i class="fa-solid fa-building text-lg"></i>
-            </div>
-            <span>Empresas</span>
-        </x-nav-link>
-        <x-nav-link href="{{ route('proveedores') }}" :active="request()->routeIs('proveedores')"
-            class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
-            <div class="flex items-center justify-center w-6 h-6 me-3">
-                <i class="fa-solid fa-truck-fast"></i>
-            </div>
-            <span>Proveedores</span>
-        </x-nav-link>
-        <x-nav-link href="{{ route('modelos') }}" :active="request()->routeIs('modelos')"
-            class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
-            <div class="flex items-center justify-center w-6 h-6 me-3">
-                <i class="fa-solid fa-bolt-lightning"></i>
-            </div>
-            <span>Modelos</span>
-        </x-nav-link>
         <x-nav-link href="{{ route('albaran') }}" :active="request()->routeIs('albaran')"
             class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
             <div class="flex items-center justify-center w-6 h-6 me-3">
