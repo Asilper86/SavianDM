@@ -66,9 +66,9 @@
         .footer-note { font-size: 9px; color: #475569; padding: 12px; background: #eff6ff; border-radius: 10px; margin-top: 30px; border: 1px solid #dbeafe; }
         
         /* Firmas */
-        .signatures-table { width: 100%; margin-top: 50px; border-collapse: collapse; }
+        .signatures-table { width: 100%; margin-top: 40px; border-collapse: collapse; }
         .signature-box { width: 45%; text-align: center; vertical-align: bottom; padding: 0 15px; }
-        .signature-img { width: 100%; height: auto; margin: 0 auto 8px; display: block; }
+        .signature-img { max-width: 200px; max-height: 80px; width: auto; height: auto; margin: 0 auto 8px; display: block; object-fit: contain; }
         .signature-label { font-size: 9px; font-weight: bold; color: #94a3b8; text-transform: uppercase; border-top: 2px solid #e2e8f0; padding-top: 8px; display: block; letter-spacing: 1px; }
     </style>
 </head>
