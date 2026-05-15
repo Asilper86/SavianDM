@@ -354,243 +354,117 @@
                         @endforeach
                         <x-input-error for="{{ $formPath }}.moviles_ids" />
                     </div>
-                    <!-- Sección de Firmas -->
-                    <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 mt-8"
+
+                    <!-- ═══════════════════════════════════════════ -->
+                    <!-- SECCIÓN DE FIRMAS                          -->
+                    <!-- ═══════════════════════════════════════════ -->
+                    <div class="bg-white p-6 sm:p-8 rounded-[2.5rem] shadow-sm border border-slate-100 mt-8"
                         x-data="{
-                            showOverlay: false,
-                            currentPad: null,
-                            signaturePadInstance: null,
                             firmaSavian: '',
                             firmaCliente: '',
 
                             init() {
                                 this.loadFirmas();
-
-                                this.$watch('$wire.openCrear', (value) => {
-                                    if (value) {
+                                this.$watch('$wire.openCrear', (val) => {
+                                    if (val) {
                                         setTimeout(() => this.loadFirmas(), 300);
                                     } else {
                                         this.firmaSavian = '';
                                         this.firmaCliente = '';
                                     }
                                 });
-                            },
 
-                            loadFirmas() {
-                                const isEditing = $wire.get('isEditing');
-                                const form = isEditing ? 'updateForm' : 'createForm';
-                                this.firmaSavian = $wire.get(form + '.firma_trabajador') || '';
-                                this.firmaCliente = $wire.get(form + '.firma_cliente') || '';
-                            },
-
-                            openPad(type) {
-                                this.currentPad = type;
-                                this.showOverlay = true;
-                                document.body.style.overflow = 'hidden';
-
-                                this.$nextTick(() => {
-                                    setTimeout(() => {
-                                        const canvas = document.getElementById('sig-canvas');
-                                        if (!canvas) return;
-
-                                        const ratio = Math.max(window.devicePixelRatio || 1, 1);
-                                        canvas.width = canvas.offsetWidth * ratio;
-                                        canvas.height = canvas.offsetHeight * ratio;
-                                        canvas.getContext('2d').scale(ratio, ratio);
-
-                                        this.signaturePadInstance = new SignaturePad(canvas, {
-                                            backgroundColor: 'rgb(255, 255, 255)',
-                                            penColor: 'rgb(0, 0, 0)',
-                                            minWidth: 1,
-                                            maxWidth: 3
-                                        });
-                                    }, 150);
+                                window.addEventListener('firma-guardada', (e) => {
+                                    const f = $wire.get('isEditing') ? 'updateForm' : 'createForm';
+                                    if (e.detail.tipo === 'savian') {
+                                        this.firmaSavian = e.detail.dataUrl;
+                                        $wire.set(f + '.firma_trabajador', e.detail.dataUrl);
+                                    } else {
+                                        this.firmaCliente = e.detail.dataUrl;
+                                        $wire.set(f + '.firma_cliente', e.detail.dataUrl);
+                                    }
                                 });
                             },
 
-                            closePad() {
-                                this.showOverlay = false;
-                                document.body.style.overflow = '';
-                                this.signaturePadInstance = null;
+                            loadFirmas() {
+                                const editing = $wire.get('isEditing');
+                                const f = editing ? 'updateForm' : 'createForm';
+                                this.firmaSavian = $wire.get(f + '.firma_trabajador') || '';
+                                this.firmaCliente = $wire.get(f + '.firma_cliente') || '';
                             },
 
-                            clearCanvas() {
-                                if (this.signaturePadInstance) this.signaturePadInstance.clear();
+                            abrirFirma(tipo) {
+                                window._firmaOverlay.abrir(tipo);
                             },
 
-                            savePad() {
-                                if (!this.signaturePadInstance || this.signaturePadInstance.isEmpty()) {
-                                    alert('Por favor, realiza la firma antes de guardar.');
-                                    return;
-                                }
-                                const dataUrl = this.getTrimmedDataUrl();
-                                const form = $wire.get('isEditing') ? 'updateForm' : 'createForm';
-                                if (this.currentPad === 'savian') {
-                                    this.firmaSavian = dataUrl;
-                                    $wire.set(form + '.firma_trabajador', dataUrl);
-                                } else {
-                                    this.firmaCliente = dataUrl;
-                                    $wire.set(form + '.firma_cliente', dataUrl);
-                                }
-                                this.closePad();
-                            },
-
-                            getTrimmedDataUrl() {
-                                const canvas = document.getElementById('sig-canvas');
-                                const ctx = canvas.getContext('2d');
-                                const w = canvas.width;
-                                const h = canvas.height;
-                                const imgData = ctx.getImageData(0, 0, w, h);
-                                const data = imgData.data;
-
-                                let top = h, bottom = 0, left = w, right = 0;
-
-                                for (let y = 0; y < h; y++) {
-                                    for (let x = 0; x < w; x++) {
-                                        const i = (y * w + x) * 4;
-                                        const r = data[i], g = data[i+1], b = data[i+2];
-                                        if (r < 250 || g < 250 || b < 250) {
-                                            if (y < top) top = y;
-                                            if (y > bottom) bottom = y;
-                                            if (x < left) left = x;
-                                            if (x > right) right = x;
-                                        }
-                                    }
-                                }
-
-                                if (top >= bottom) return this.signaturePadInstance.toDataURL('image/png');
-
-                                const pad = 40;
-                                top = Math.max(0, top - pad);
-                                bottom = Math.min(h - 1, bottom + pad);
-                                left = Math.max(0, left - pad);
-                                right = Math.min(w - 1, right + pad);
-
-                                const trimW = right - left + 1;
-                                const trimH = bottom - top + 1;
-                                const trimmed = ctx.getImageData(left, top, trimW, trimH);
-
-                                const tmpCanvas = document.createElement('canvas');
-                                tmpCanvas.width = trimW;
-                                tmpCanvas.height = trimH;
-                                const tmpCtx = tmpCanvas.getContext('2d');
-                                tmpCtx.fillStyle = '#ffffff';
-                                tmpCtx.fillRect(0, 0, trimW, trimH);
-                                tmpCtx.putImageData(trimmed, 0, 0);
-
-                                return tmpCanvas.toDataURL('image/png');
-                            },
-
-                            borrarFirma(type) {
-                                const form = $wire.get('isEditing') ? 'updateForm' : 'createForm';
-                                if (type === 'savian') {
+                            borrarFirma(tipo) {
+                                const f = $wire.get('isEditing') ? 'updateForm' : 'createForm';
+                                if (tipo === 'savian') {
                                     this.firmaSavian = '';
-                                    $wire.set(form + '.firma_trabajador', '');
+                                    $wire.set(f + '.firma_trabajador', '');
                                 } else {
                                     this.firmaCliente = '';
-                                    $wire.set(form + '.firma_cliente', '');
+                                    $wire.set(f + '.firma_cliente', '');
                                 }
                             }
                         }">
-                        
+
                         <!-- Título -->
-                        <div class="flex items-center justify-between mb-8">
-                            <div class="flex items-center gap-3">
-                                <div class="h-8 w-1.5 bg-[#07CBBB] rounded-full"></div>
-                                <h3 class="text-lg font-black text-[#07CBBB] tracking-tight uppercase">Firmas</h3>
-                            </div>
+                        <div class="flex items-center gap-3 mb-6 sm:mb-8">
+                            <div class="h-8 w-1.5 bg-[#07CBBB] rounded-full"></div>
+                            <h3 class="text-lg font-black text-[#07CBBB] tracking-tight uppercase">Firmas</h3>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <!-- Botón Firma Representante -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                            <!-- Cuadro Firma Representante -->
                             <div class="flex flex-col items-center">
-                                <button type="button" @click="openPad('savian')"
-                                    class="relative w-full h-44 bg-white border-2 border-dashed border-slate-200 rounded-3xl overflow-hidden group hover:border-[#07CBBB]/40 transition-all shadow-inner flex flex-col items-center justify-center cursor-pointer">
+                                <button type="button" @click="abrirFirma('savian')"
+                                    class="relative w-full h-40 sm:h-44 bg-white border-2 border-dashed border-slate-200 rounded-3xl overflow-hidden group hover:border-[#07CBBB]/40 transition-all shadow-inner flex flex-col items-center justify-center cursor-pointer">
                                     <template x-if="firmaSavian">
-                                        <img :src="firmaSavian" class="max-h-full max-w-full p-4 object-contain">
+                                        <img :src="firmaSavian" class="max-h-full max-w-full p-3 object-contain">
                                     </template>
                                     <template x-if="!firmaSavian">
-                                        <div class="flex flex-col items-center">
-                                            <span class="text-slate-500 font-black text-[11px] uppercase tracking-[0.2em]">Representante Savian</span>
+                                        <div class="flex flex-col items-center pointer-events-none">
+                                            <span class="text-slate-500 font-black text-[10px] sm:text-[11px] uppercase tracking-[0.15em] sm:tracking-[0.2em]">Representante Savian</span>
                                             <span class="text-slate-400 text-[9px] font-bold mt-2 opacity-60">Toca para firmar</span>
                                         </div>
                                     </template>
                                 </button>
                                 <button x-show="firmaSavian" x-cloak type="button" @click="borrarFirma('savian')"
-                                    class="mt-4 text-red-500 text-[10px] font-black uppercase tracking-widest hover:underline">
+                                    class="mt-3 text-red-500 text-[10px] font-black uppercase tracking-widest hover:underline">
                                     Borrar firma
                                 </button>
                             </div>
 
-                            <!-- Botón Firma Cliente -->
+                            <!-- Cuadro Firma Cliente -->
                             <div class="flex flex-col items-center">
-                                <button type="button" @click="openPad('cliente')"
-                                    class="relative w-full h-44 bg-white border-2 border-dashed border-slate-200 rounded-3xl overflow-hidden group hover:border-[#07CBBB]/40 transition-all shadow-inner flex flex-col items-center justify-center cursor-pointer">
+                                <button type="button" @click="abrirFirma('cliente')"
+                                    class="relative w-full h-40 sm:h-44 bg-white border-2 border-dashed border-slate-200 rounded-3xl overflow-hidden group hover:border-[#07CBBB]/40 transition-all shadow-inner flex flex-col items-center justify-center cursor-pointer">
                                     <template x-if="firmaCliente">
-                                        <img :src="firmaCliente" class="max-h-full max-w-full p-4 object-contain">
+                                        <img :src="firmaCliente" class="max-h-full max-w-full p-3 object-contain">
                                     </template>
                                     <template x-if="!firmaCliente">
-                                        <div class="flex flex-col items-center">
-                                            <span class="text-slate-500 font-black text-[11px] uppercase tracking-[0.2em]">Cliente</span>
+                                        <div class="flex flex-col items-center pointer-events-none">
+                                            <span class="text-slate-500 font-black text-[10px] sm:text-[11px] uppercase tracking-[0.15em] sm:tracking-[0.2em]">Cliente</span>
                                             <span class="text-slate-400 text-[9px] font-bold mt-2 opacity-60">Toca para firmar</span>
                                         </div>
                                     </template>
                                 </button>
                                 <button x-show="firmaCliente" x-cloak type="button" @click="borrarFirma('cliente')"
-                                    class="mt-4 text-red-500 text-[10px] font-black uppercase tracking-widest hover:underline">
+                                    class="mt-3 text-red-500 text-[10px] font-black uppercase tracking-widest hover:underline">
                                     Borrar firma
                                 </button>
                             </div>
                         </div>
 
-                        <!-- PANTALLA COMPLETA DE FIRMA -->
-                        <div x-show="showOverlay"
-                            x-transition:enter="transition ease-out duration-200"
-                            x-transition:enter-start="opacity-0"
-                            x-transition:enter-end="opacity-100"
-                            x-transition:leave="transition ease-in duration-150"
-                            x-transition:leave-start="opacity-100"
-                            x-transition:leave-end="opacity-0"
-                            class="fixed inset-0 z-[9999] bg-white flex flex-col"
-                            style="display: none;">
-
-                            <!-- Header -->
-                            <div class="bg-[#2A8E7E] px-4 py-3 sm:px-6 sm:py-4 flex items-center justify-between text-white shadow-md flex-shrink-0">
-                                <div class="flex items-center gap-2 sm:gap-3 font-black uppercase tracking-[0.1em] text-[10px] sm:text-xs">
-                                    <span class="text-base sm:text-lg">✍️</span>
-                                    <span x-text="currentPad === 'savian' ? 'Firma del representante' : 'Firma del cliente'"></span>
-                                </div>
-                                <button type="button" @click="clearCanvas()"
-                                    class="flex items-center gap-2 bg-[#23786A] px-3 py-2 sm:px-5 sm:py-2.5 rounded-xl text-[9px] sm:text-[10px] font-black uppercase tracking-widest hover:bg-[#1b5d52] transition-all">
-                                    <i class="fa-solid fa-trash-can"></i> Borrar
-                                </button>
-                            </div>
-
-                            <!-- Canvas -->
-                            <div class="flex-1 relative bg-white">
-                                <canvas id="sig-canvas" class="absolute inset-0 w-full h-full touch-none cursor-crosshair"></canvas>
-                            </div>
-
-                            <!-- Footer -->
-                            <div class="px-4 py-4 sm:px-6 sm:py-6 grid grid-cols-2 gap-3 sm:gap-4 border-t border-slate-100 bg-slate-50 flex-shrink-0">
-                                <button type="button" @click="closePad()"
-                                    class="py-4 sm:py-5 bg-white border-2 border-slate-200 rounded-2xl text-slate-600 font-black uppercase text-[10px] tracking-widest hover:bg-slate-100 transition-all">
-                                    Cancelar
-                                </button>
-                                <button type="button" @click="savePad()"
-                                    class="py-4 sm:py-5 bg-[#2A8E7E] text-white rounded-2xl font-black uppercase text-[10px] tracking-widest shadow-xl shadow-[#2A8E7E]/20 hover:bg-[#1b5d52] transition-all flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-check text-xs"></i> Hecho
-                                </button>
-                            </div>
-                        </div>
-
                         <!-- Texto Legal -->
-                        <div class="pt-8 border-t border-slate-100 mt-10">
+                        <div class="pt-6 sm:pt-8 border-t border-slate-100 mt-8 sm:mt-10">
                             <p class="text-[10px] text-slate-400 leading-relaxed text-justify font-medium italic opacity-80">
                                 Con la firma de este documento, el cliente reconoce haber sido informado de los trabajos realizados y/o de la entrega o retirada de los dispositivos mencionados en las condiciones especificadas anteriormente. *En caso de entrega, el cliente reconoce haber recibido los dispositivos mencionados, asumiendo la responsabilidad de su uso, conservación y devolución en las condiciones establecidas por Savian.
                             </p>
                         </div>
                     </div>
+
                 </div>
             </div>
         </x-slot>
@@ -610,3 +484,5 @@
         </x-slot>
     </x-dialog-modal>
 </div>
+
+
