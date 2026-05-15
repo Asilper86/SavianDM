@@ -35,16 +35,21 @@ class CreateAlbaran extends Component
 
     public function save()
     {
-        if ($this->isEditing) {
-            $this->updateForm->update();
-            session()->flash('message', 'Albarán actualizado con éxito.');
-        } else {
-            $this->createForm->store();
-            session()->flash('message', 'Albarán creado con éxito.');
-        }
+        try {
+            if ($this->isEditing) {
+                $this->updateForm->update();
+                session()->flash('message', 'Albarán actualizado con éxito.');
+            } else {
+                $this->createForm->store();
+                session()->flash('message', 'Albarán creado con éxito.');
+            }
 
-        $this->reset(['openCrear', 'isEditing']);
-        return redirect()->to('/albaran');
+            $this->reset(['openCrear', 'isEditing']);
+            return redirect()->to('/albaran');
+        } catch (\Exception $e) {
+            // Dispatch a sweetalert with the exact error message so we can debug production
+            $this->dispatch('mensajeerror', 'Error: ' . $e->getMessage() . ' (' . $e->getLine() . ')');
+        }
     }
 
     // Proxy para manejar los móviles según el modo
