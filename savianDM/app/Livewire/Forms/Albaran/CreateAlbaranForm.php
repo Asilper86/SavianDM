@@ -85,6 +85,9 @@ class CreateAlbaranForm extends Form
             $albaran->moviles()->attach($this->moviles_ids);
             $albaran->load(['empresas', 'centrosTrabajos', 'moviles.modelo']);
 
+            ini_set('memory_limit', '512M');
+            ini_set('max_execution_time', '300');
+
             $pdfContent = Pdf::loadView('pdf.albaran-template', [
                 'albaran' => $albaran,
                 'fundas' => $this->fundas,

@@ -105,6 +105,9 @@ class UpdateAlbaranForm extends Form
             // Cargamos las relaciones frescas para que el PDF tenga los nombres nuevos
             $this->albaranModel->load(['empresas', 'centrosTrabajos', 'moviles.modelo']);
 
+            ini_set('memory_limit', '512M');
+            ini_set('max_execution_time', '300');
+
             $pdf = Pdf::loadView('pdf.albaran-template', [
                 'albaran' => $this->albaranModel,
                 'fundas' => $this->albaranModel->fundas, // O la lógica que uses para fundas
