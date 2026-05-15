@@ -21,7 +21,7 @@
         </x-slot>
 
         <x-slot name="content">
-            <div class="space-y-8 py-4 pb-32 sm:pb-4">
+            <div class="space-y-8 py-4 pb-4">
 
                 <div class="bg-white dark:bg-gray-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-gray-700 transition-colors">
                     <!-- Encabezado con línea decorativa -->
