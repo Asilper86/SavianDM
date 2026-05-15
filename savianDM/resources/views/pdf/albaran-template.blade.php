@@ -76,7 +76,15 @@
 
     <table class="header-table">
         <tr>
-            <td><img src="{{ public_path('assets/img/logo_savian.fw.png') }}" class="logo-img"></td>
+            <td>
+                @php
+                    $logoPath = public_path('assets/img/logo_savian.fw.png');
+                    $logoData = file_exists($logoPath) ? base64_encode(file_get_contents($logoPath)) : '';
+                @endphp
+                @if($logoData)
+                    <img src="data:image/png;base64,{{ $logoData }}" class="logo-img">
+                @endif
+            </td>
             <td class="document-title-container">
                 <div class="document-type">Albarán de Stock</div>
                 <div class="document-number">#{{ str_pad($albaran->id, 5, '0', STR_PAD_LEFT) }}</div>
