@@ -20,36 +20,36 @@
 
             @if (Auth::user()->rol == 'admin')
                 <x-nav-link href="{{ route('moviles') }}" :active="request()->routeIs('moviles')"
-                class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
-                <div class="flex items-center justify-center w-6 h-6 me-3">
-                    <i class="fa-solid fa-mobile text-lg"></i>
-                </div>
-                <span>Moviles</span>
-            </x-nav-link>
+                    class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
+                    <div class="flex items-center justify-center w-6 h-6 me-3">
+                        <i class="fa-solid fa-mobile text-lg"></i>
+                    </div>
+                    <span>Moviles</span>
+                </x-nav-link>
 
-            <x-nav-link href="{{ route('empresas') }}" :active="request()->routeIs('empresas')"
-                class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
-                <div class="flex items-center justify-center w-6 h-6 me-3">
-                    <i class="fa-solid fa-building text-lg"></i>
-                </div>
-                <span>Empresas</span>
-            </x-nav-link>
-            <x-nav-link href="{{ route('proveedores') }}" :active="request()->routeIs('proveedores')"
-                class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
-                <div class="flex items-center justify-center w-6 h-6 me-3">
-                    <i class="fa-solid fa-truck-fast"></i>
-                </div>
-                <span>Proveedores</span>
-            </x-nav-link>
-            <x-nav-link href="{{ route('modelos') }}" :active="request()->routeIs('modelos')"
-                class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
-                <div class="flex items-center justify-center w-6 h-6 me-3">
-                    <i class="fa-solid fa-bolt-lightning"></i>
-                </div>
-                <span>Modelos</span>
-            </x-nav-link>
+                <x-nav-link href="{{ route('empresas') }}" :active="request()->routeIs('empresas')"
+                    class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
+                    <div class="flex items-center justify-center w-6 h-6 me-3">
+                        <i class="fa-solid fa-building text-lg"></i>
+                    </div>
+                    <span>Empresas</span>
+                </x-nav-link>
+                <x-nav-link href="{{ route('proveedores') }}" :active="request()->routeIs('proveedores')"
+                    class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
+                    <div class="flex items-center justify-center w-6 h-6 me-3">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <span>Proveedores</span>
+                </x-nav-link>
+                <x-nav-link href="{{ route('modelos') }}" :active="request()->routeIs('modelos')"
+                    class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
+                    <div class="flex items-center justify-center w-6 h-6 me-3">
+                        <i class="fa-solid fa-bolt-lightning"></i>
+                    </div>
+                    <span>Modelos</span>
+                </x-nav-link>
             @endif
-            
+
         @endif
 
         <x-nav-link href="{{ route('albaran') }}" :active="request()->routeIs('albaran')"
@@ -73,7 +73,7 @@
                     @endif
                     <div class="text-left overflow-hidden">
                         <p class="truncate w-32">{{ Auth::user()->name }}</p>
-                        <p class="text-[10px] text-white/60 truncate italic">Administrador</p>
+                        
                     </div>
                 </button>
             </x-slot>
