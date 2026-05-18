@@ -50,8 +50,10 @@ class IndexEmpresa extends Component
     public function borrar()
     {
         if ($this->empresa) {
+            $this->empresa->centrosTrabajo()->delete();
             $this->empresa->movils()->delete();
-            $this->dispatch('mensaje', 'Empresa y sus móviles eliminados');
+            $this->empresa->delete();
+            $this->dispatch('mensaje', 'Empresa eliminada correctamente');
             $this->empresa = null;
         }
     }
@@ -60,6 +62,15 @@ class IndexEmpresa extends Component
     {
         $this->uform->setEmpresa($empresa);
         $this->openEditar = true;
+    }
+
+    public function addCentroUpdate() {
+        $this->uform->centros_trabajo[] = ['id' => null, 'nombre' => ''];
+    }
+
+    public function removeCentroUpdate($index) {
+        unset($this->uform->centros_trabajo[$index]);
+        $this->uform->centros_trabajo = array_values($this->uform->centros_trabajo);
     }
 
     public function editar()

@@ -14,10 +14,9 @@ class Empresa extends Model
 
     protected $fillable = ['nombre', 'centroTrabajo_id', 'hectarea'];
 
-    public function centroTrabajo()
+    public function centrosTrabajo(): HasMany
     {
-        // Usamos el nombre exacto de la columna en la base de datos: centroTrabajo_id
-        return $this->belongsTo(CentroTrabajo::class, 'centroTrabajo_id');
+        return $this->hasMany(CentroTrabajo::class);
     }
 
     public function Historial(): HasMany
