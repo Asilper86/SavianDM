@@ -311,8 +311,8 @@
                     <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-gray-400">Móviles
                         Vinculados</span>
                     <button type="button" wire:click="$toggle('showMovilModal')"
-                        class="text-[10px] font-black text-[#07CBBB] uppercase tracking-widest hover:underline">+
-                        BUSCAR</button>
+                        class="text-[15px] text-bold font-black text-[#07CBBB] uppercase tracking-widest hover:underline">+
+                        AÑADIR</button>
                 </div>
                 <div class="bg-slate-50/50 dark:bg-gray-800/50 rounded-[2rem] p-6 border border-slate-100 dark:border-gray-700 transition-colors">
                     
