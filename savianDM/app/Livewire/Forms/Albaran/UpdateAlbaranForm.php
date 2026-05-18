@@ -3,6 +3,7 @@
 namespace App\Livewire\Forms\Albaran;
 
 use App\Models\Albaran;
+use App\Models\Movil;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Validate;
@@ -100,6 +101,35 @@ class UpdateAlbaranForm extends Form
             ]);
 
             $this->albaranModel->moviles()->sync($this->moviles_ids);
+
+            // Update mobile states and create history entries
+            foreach ($this->moviles_ids as $movilId) {
+                $movil = Movil::find($movilId);
+                if ($movil) {
+                    $nuevoEstado = $movil->estado;
+                    if ($this->estado === 'entregado') {
+                        $nuevoEstado = 'Campo';
+                    } elseif ($this->estado === 'retirado') {
+                        $nuevoEstado = 'Stock';
+                    } elseif ($this->estado === 'pendiente') {
+                        $nuevoEstado = 'Preparado';
+                    }
+
+                    $movil->update([
+                        'empresa_id' => $this->empresa_id,
+                        'centro_trabajo_id' => $this->centro_trabajo_id,
+                        'estado' => $nuevoEstado,
+                    ]);
+
+                    \App\Models\Historial::create([
+                        'movil_id' => $movil->id,
+                        'albaran_id' => $this->albaranModel->id,
+                        'estado' => $nuevoEstado,
+                        'empresa_id' => $this->empresa_id,
+                        'descripcion' => 'Actualización de Albarán #' . $this->albaranModel->id . ' (' . ucfirst($this->estado) . ')',
+                    ]);
+                }
+            }
 
             // 2. REGENERAR EL PDF
             // Cargamos las relaciones frescas para que el PDF tenga los nombres nuevos

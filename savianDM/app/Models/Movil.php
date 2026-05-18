@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Movil extends Model
 {
@@ -40,5 +41,9 @@ class Movil extends Model
 
     public function albarans():BelongsToMany{
         return $this->belongsToMany(Albaran::class);
+    }
+
+    public function historials(): HasMany{
+        return $this->hasMany(Historial::class)->orderBy('created_at', 'desc');
     }
 }

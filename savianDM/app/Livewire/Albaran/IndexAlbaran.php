@@ -15,6 +15,13 @@ class IndexAlbaran extends Component
 
     public string $buscar = '';
 
+    public function mount()
+    {
+        if (request()->has('edit')) {
+            $this->dispatch('editar-albaran', id: request()->query('edit'))->to('albaran.create-albaran');
+        }
+    }
+
     public function render()
     {
         $albaran = Albaran::orderBy($this->campo, $this->orden)->paginate(10);

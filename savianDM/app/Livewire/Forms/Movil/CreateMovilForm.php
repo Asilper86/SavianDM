@@ -30,7 +30,13 @@ class CreateMovilForm extends Form
 
     public function createMovilForm() {
         $datos = $this->validate();
-        Movil::create($datos);
+        $movil = Movil::create($datos);
+        \App\Models\Historial::create([
+            'movil_id' => $movil->id,
+            'estado' => $movil->estado,
+            'empresa_id' => $movil->empresa_id,
+            'descripcion' => 'Creación de dispositivo',
+        ]);
         $this->reset('codigo');
     }
 

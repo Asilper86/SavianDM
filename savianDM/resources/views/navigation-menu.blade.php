@@ -60,6 +60,14 @@
             </div>
             <span>Albaran</span>
         </x-nav-link>
+
+        <x-nav-link href="{{ route('historial') }}" :active="request()->routeIs('historial')"
+            class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
+            <div class="flex items-center justify-center w-6 h-6 me-3">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+            <span>Historial</span>
+        </x-nav-link>
     </div>
 
     <div class="p-4 border-t border-white/10 bg-black/10">
