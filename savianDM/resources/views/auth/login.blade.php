@@ -21,10 +21,10 @@
             @csrf
 
             <div>
-                <x-label for="email" value="{{ __('Email') }}" class="text-xs uppercase tracking-widest font-semibold" />
-                <x-input id="email" class="block mt-1 w-full bg-gray-50 dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm" 
-                         type="email" name="email" :value="old('email')" required autofocus autocomplete="username" 
-                         placeholder="correo@ejemplo.com" />
+                <x-label for="username" value="{{ __('Usuario') }}" class="text-xs uppercase tracking-widest font-semibold" />
+                <x-input id="username" class="block mt-1 w-full bg-gray-50 dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm" 
+                         type="text" name="username" :value="old('username')" required autofocus autocomplete="username" 
+                         placeholder="Ingresa tu usuario" />
             </div>
 
             <div>
