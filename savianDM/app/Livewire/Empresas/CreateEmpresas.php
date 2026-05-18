@@ -15,6 +15,15 @@ class CreateEmpresas extends Component
         return view('livewire.empresas.create-empresas');
     }
 
+    public function addCentro() {
+        $this->cform->centros_trabajo[] = '';
+    }
+
+    public function removeCentro($index) {
+        unset($this->cform->centros_trabajo[$index]);
+        $this->cform->centros_trabajo = array_values($this->cform->centros_trabajo);
+    }
+
     public function crearEmpresa(){
         $this->cform->createForm();
         $this->cancelar();

@@ -14,13 +14,26 @@ class CreateEmpresasForm extends Form
     public float $hectarea = 0.0;
 
 
+    public array $centros_trabajo = [''];
+
     public function createForm(){
         $this->validate();
-        Empresa::create($this->all());
+        
+        $empresa = Empresa::create([
+            'nombre' => $this->nombre,
+            'hectarea' => $this->hectarea,
+        ]);
+        
+        foreach($this->centros_trabajo as $centro) {
+            if(!empty(trim($centro))) {
+                $empresa->centrosTrabajo()->create(['nombre' => trim($centro)]);
+            }
+        }
     }
 
     public function cancelarForm(){
         $this->reset('nombre', 'hectarea');
+        $this->centros_trabajo = [''];
         $this->resetValidation();
     }
 

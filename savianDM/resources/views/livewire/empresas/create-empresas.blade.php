@@ -39,6 +39,38 @@
                         </div>
                         <x-input-error for="cform.hectarea" />
                     </div>
+
+                    <div class="space-y-3 pt-4 border-t border-slate-100">
+                        <div class="flex items-center justify-between ml-1">
+                            <div>
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Centros de Trabajo</label>
+                                <p class="text-[10px] text-slate-400 font-medium mt-0.5">Añade los centros que pertenecen a esta empresa</p>
+                            </div>
+                            <button wire:click="addCentro" type="button" class="bg-[#F0FDFA] text-[#07CBBB] hover:bg-[#07CBBB] hover:text-white rounded-full w-8 h-8 flex items-center justify-center transition-all shadow-sm shrink-0">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/></svg>
+                            </button>
+                        </div>
+
+                        <div class="space-y-3 mt-4">
+                            @foreach($cform->centros_trabajo as $index => $centro)
+                                <div class="flex items-center gap-3 group" wire:key="centro-{{ $index }}">
+                                    <div class="relative flex-1">
+                                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                            <svg class="h-5 w-5 text-slate-300 group-focus-within:text-[#07CBBB] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                                        </div>
+                                        <input type="text" wire:model.defer="cform.centros_trabajo.{{ $index }}" placeholder="Ej: Sede Norte" class="w-full bg-[#F9FAFB] border-2 border-[#E5E7EB] rounded-2xl py-3 pl-11 pr-5 text-sm font-bold text-slate-700 outline-none focus:border-[#07CBBB] transition-all">
+                                    </div>
+                                    @if(count($cform->centros_trabajo) > 1)
+                                        <button wire:click="removeCentro({{ $index }})" type="button" class="text-slate-300 hover:text-red-500 hover:bg-red-50 p-3 rounded-2xl transition-all border-2 border-transparent hover:border-red-100 shrink-0" title="Eliminar centro">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                        </button>
+                                    @else
+                                        <div class="w-[52px] shrink-0"></div> <!-- Placeholder to keep inputs aligned when there's only one -->
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
 
                 <div class="p-6 sm:p-10 bg-[#F8FAFC] flex items-center justify-between border-t border-slate-100">
