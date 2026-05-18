@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Historial extends Model
 {
-    protected $fillable = ['movil_id', 'fecha', 'empresa_id', 'estado', 'albaran_id'];
+    protected $fillable = ['movil_id', 'albaran_id', 'estado', 'empresa_id', 'descripcion'];
 
     public function movil():BelongsTo{
         return $this->belongsTo(Movil::class);
@@ -15,7 +15,7 @@ class Historial extends Model
     public function albaran():BelongsTo{
         return $this->belongsTo(Albaran::class);
     }
-    public function empresas():BelongsTo{
-        return $this->belongsTo(Empresa::class);
+    public function empresa():BelongsTo{
+        return $this->belongsTo(Empresa::class, 'empresa_id');
     }
 }

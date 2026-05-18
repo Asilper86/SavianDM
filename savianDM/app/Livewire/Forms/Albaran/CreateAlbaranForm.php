@@ -3,6 +3,7 @@
 namespace App\Livewire\Forms\Albaran;
 
 use App\Models\Albaran;
+use App\Models\Movil;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -83,6 +84,36 @@ class CreateAlbaranForm extends Form
             ]);
 
             $albaran->moviles()->attach($this->moviles_ids);
+
+            // Update mobile states and create history entries
+            foreach ($this->moviles_ids as $movilId) {
+                $movil = Movil::find($movilId);
+                if ($movil) {
+                    $nuevoEstado = $movil->estado;
+                    if ($this->estado === 'entregado') {
+                        $nuevoEstado = 'Campo';
+                    } elseif ($this->estado === 'retirado') {
+                        $nuevoEstado = 'Stock';
+                    } elseif ($this->estado === 'pendiente') {
+                        $nuevoEstado = 'Preparado';
+                    }
+
+                    $movil->update([
+                        'empresa_id' => $this->empresa_id,
+                        'centro_trabajo_id' => $this->centro_trabajo_id,
+                        'estado' => $nuevoEstado,
+                    ]);
+
+                    \App\Models\Historial::create([
+                        'movil_id' => $movil->id,
+                        'albaran_id' => $albaran->id,
+                        'estado' => $nuevoEstado,
+                        'empresa_id' => $this->empresa_id,
+                        'descripcion' => 'Movimiento asociado a Albarán #' . $albaran->id . ' (' . ucfirst($this->estado) . ')',
+                    ]);
+                }
+            }
+
             $albaran->load(['empresas', 'centrosTrabajos', 'moviles.modelo']);
 
             ini_set('memory_limit', '512M');

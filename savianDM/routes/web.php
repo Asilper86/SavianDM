@@ -6,6 +6,7 @@ use App\Livewire\Movil\IndexMoviles;
 use App\Livewire\Empresas\IndexEmpresa;
 use App\Livewire\Modelos\IndexModelos;
 use App\Livewire\Proveedor\IndexProveedor;
+use App\Livewire\Historial\IndexHistorial;
 use App\Models\Historial;
 use App\Models\Movil;
 use Illuminate\Support\Facades\Route;
@@ -30,5 +31,6 @@ Route::middleware([
     Route::get('/proveedores', IndexProveedor::class)->name('proveedores');
     Route::get('/modelos', IndexModelos::class)->name('modelos');
     Route::get('/albaran', IndexAlbaran::class)->name('albaran');
+    Route::get('/historial', IndexHistorial::class)->name('historial');
 
 });

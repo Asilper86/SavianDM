@@ -49,7 +49,19 @@ class UpdateMovilForm extends Form
 
     public function updateMovilForm() {
         $datos = $this->validate();
+        $oldEstado = $this->movil->estado;
+        $oldEmpresaId = $this->movil->empresa_id;
+
         $this->movil->update($datos);
+
+        if ($oldEstado !== $this->movil->estado || $oldEmpresaId !== $this->movil->empresa_id) {
+            \App\Models\Historial::create([
+                'movil_id' => $this->movil->id,
+                'estado' => $this->movil->estado,
+                'empresa_id' => $this->movil->empresa_id,
+                'descripcion' => 'Actualización manual de estado/empresa',
+            ]);
+        }
     }
 
     public function cancelarForm() {
