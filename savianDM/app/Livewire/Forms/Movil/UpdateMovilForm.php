@@ -32,7 +32,7 @@ class UpdateMovilForm extends Form
 
     public function rules(): array {
         return [
-            'codigo' => ['required' , 'string' , 'min::3' , 'unique:movils,codigo,'.$this->movil->codigo],
+            'codigo' => ['required' , 'string' , 'min:3' , 'unique:movils,codigo,'.$this->movil->id],
         ];
     }
 
