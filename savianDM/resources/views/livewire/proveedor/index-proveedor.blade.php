@@ -33,7 +33,7 @@
                             <th class="px-4 sm:px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left w-20 whitespace-nowrap">ID
                             </th>
                             <th class="px-4 sm:px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left whitespace-nowrap">Nombre</th>
-                            <th class="sticky right-0 z-10 bg-white/10 backdrop-blur-md px-4 sm:px-6 py-3 text-[10px] font-black uppercase tracking-widest text-right whitespace-nowrap">Acciones
+                            <th class="px-4 sm:px-6 py-3 text-[10px] font-black uppercase tracking-widest text-right whitespace-nowrap">Acciones
                             </th>
                         </tr>
                     </thead>
@@ -59,7 +59,7 @@
                                     </div>
                                 </td>
                                 <td
-                                    class="sticky right-0 z-10 bg-white/90 backdrop-blur-md px-4 sm:px-6 py-4 sm:py-5 rounded-r-2xl sm:rounded-r-3xl border-y border-r border-transparent text-right whitespace-nowrap shadow-[-10px_0_15px_-3px_rgba(0,0,0,0.02)]">
+                                    class="bg-slate-50/50 px-4 sm:px-6 py-4 sm:py-5 rounded-r-2xl sm:rounded-r-3xl border-y border-r border-transparent text-right whitespace-nowrap">
                                     <div class="flex justify-end gap-2">
                                         <button wire:click="update({{ $item->id }})"
                                             class="p-2 bg-white text-slate-400 hover:text-indigo-500 rounded-lg transition-colors border border-slate-100 shadow-sm"><svg
