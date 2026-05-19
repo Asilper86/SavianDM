@@ -3,6 +3,7 @@
 namespace App\Livewire\Historial;
 
 use App\Models\Historial;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -10,6 +11,7 @@ class IndexHistorial extends Component
 {
     use WithPagination;
 
+    #[Url]
     public string $buscar = '';
     public string $estados = '';
     

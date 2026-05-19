@@ -104,12 +104,12 @@
                                 <td
                                     class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 rounded-r-[1.5rem] sm:rounded-r-[2rem] transition-all border-y border-r border-transparent group-hover:border-slate-100 text-right whitespace-nowrap">
                                     <div class="flex justify-end gap-2 opacity-30 group-hover:opacity-100 transition-all">
-                                        <button wire:click="verHistorial({{ $item->id }})" title="Ver Historial"
+                                        <a href="{{ route('historial', ['buscar' => $item->codigo]) }}" title="Ver Historial"
                                             class="p-2.5 bg-white text-slate-400 hover:text-indigo-600 rounded-xl shadow-sm border border-slate-50 transition-all">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
-                                        </button>
+                                        </a>
                                         <button wire:click="editar({{ $item->id }})"
                                             class="p-2.5 bg-white text-slate-400 hover:text-[#07CBBB] rounded-xl shadow-sm border border-slate-50 transition-all">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -259,107 +259,4 @@
         </x-dialog-modal>
     @endif
 
-    <!------------------------------------ Modal para historial  ------------------------------------------>
-    @if ($openHistorial && $selectedMovil)
-        <x-dialog-modal wire:model="openHistorial" maxWidth="4xl">
-            <x-slot name="title">
-                <div class="flex items-center gap-4 p-4 border-b border-slate-100">
-                    <div
-                        class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-sm">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-black text-slate-800 tracking-tight">Historial de Movimientos</h3>
-                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mt-0.5">Dispositivo: <span class="text-[#07CBBB]">{{ $selectedMovil->codigo }}</span> ({{ $selectedMovil->modelo->nombre }})</p>
-                    </div>
-                </div>
-            </x-slot>
-
-            <x-slot name="content">
-                <div class="px-4 py-6 max-h-[500px] overflow-y-auto custom-scrollbar">
-                    @if($selectedMovil->historials->count())
-                        <div class="flow-root">
-                            <ul role="list" class="-mb-8">
-                                @foreach($selectedMovil->historials as $index => $history)
-                                    <li>
-                                        <div class="relative pb-8">
-                                            @if($index !== count($selectedMovil->historials) - 1)
-                                                <span class="absolute left-6 top-6 -ml-px h-full w-0.5 bg-slate-200" aria-hidden="true"></span>
-                                            @endif
-                                            <div class="relative flex space-x-4 items-start">
-                                                <div>
-                                                    @php
-                                                        $bulletColor = match ($history->estado) {
-                                                            'Stock' => 'bg-emerald-500 ring-emerald-100',
-                                                            'Roto' => 'bg-red-500 ring-red-100',
-                                                            'Campo' => 'bg-blue-500 ring-blue-100',
-                                                            'Preparado' => 'bg-amber-500 ring-amber-100',
-                                                            default => 'bg-slate-500 ring-slate-100',
-                                                        };
-                                                    @endphp
-                                                    <span class="h-12 w-12 rounded-full flex items-center justify-center ring-8 {{ $bulletColor }} text-white font-black text-xs shadow-sm">
-                                                        {{ strtoupper(substr($history->estado ?? 'ST', 0, 2)) }}
-                                                    </span>
-                                                </div>
-                                                <div class="flex-1 min-w-0 pt-1.5">
-                                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                                                        <div>
-                                                            <p class="text-sm font-black text-slate-700">
-                                                                {{ $history->descripcion }}
-                                                            </p>
-                                                            <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-slate-400">
-                                                                <span class="font-bold">Estado:</span>
-                                                                <span class="px-2 py-0.5 bg-slate-100 rounded-md font-black text-slate-600 text-[10px] uppercase">{{ $history->estado ?? 'N/A' }}</span>
-                                                                
-                                                                @if($history->empresa)
-                                                                    <span class="text-slate-300">|</span>
-                                                                    <span class="font-bold">Empresa:</span>
-                                                                    <span class="text-slate-600 font-bold">{{ $history->empresa->nombre }}</span>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                        <div class="text-right shrink-0">
-                                                            <time datetime="{{ $history->created_at }}" class="block text-xs font-black text-slate-400 whitespace-nowrap">
-                                                                {{ $history->created_at->format('d/m/Y H:i') }}
-                                                            </time>
-                                                            @if($history->albaran_id)
-                                                                <div class="mt-1 flex justify-start sm:justify-end gap-2 items-center">
-                                                                    <a href="{{ route('albaran', ['edit' => $history->albaran_id]) }}" class="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-indigo-600 hover:text-indigo-800 transition-colors" title="Ver y editar Albarán">
-                                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                                                                        Albarán #{{ $history->albaran_id }}
-                                                                    </a>
-                                                                    <button wire:click="descargarPDF({{ $history->albaran_id }})" type="button" class="text-slate-400 hover:text-blue-600 transition-colors" title="Descargar PDF">
-                                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                                                                    </button>
-                                                                </div>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @else
-                        <div class="text-center py-12 text-slate-400 italic">
-                            No se han registrado movimientos para este dispositivo.
-                        </div>
-                    @endif
-                </div>
-            </x-slot>
-
-            <x-slot name="footer">
-                <div class="flex justify-end w-full px-4 pb-4">
-                    <button wire:click="cerrarHistorial" type="button"
-                        class="bg-[#111827] hover:bg-slate-800 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition-all text-xs active:scale-95">
-                        Cerrar Historial
-                    </button>
-                </div>
-            </x-slot>
-        </x-dialog-modal>
-    @endif
 </div>
