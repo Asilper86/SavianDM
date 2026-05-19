@@ -101,6 +101,7 @@
         Livewire.on('evtModeloBorrado', ({destino})=>mostrarDialogoBorrado(destino));
         Livewire.on('evtProveedorBorrado', ({destino})=>mostrarDialogoBorrado(destino));
         Livewire.on('evtEmpresaBorrado', ({destino})=>mostrarDialogoBorrado(destino));
+        Livewire.on('evtBorrarMaterial', ({destino})=>mostrarDialogoBorrado(destino));
 
 
 
