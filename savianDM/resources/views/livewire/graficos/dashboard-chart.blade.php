@@ -92,20 +92,53 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            @foreach ($empresas as $item)
-                <div class="space-y-4">
-                    <div class="flex justify-between items-end">
-                        <span class="text-sm font-black text-slate-700 uppercase">{{ $item->nombre }}</span>
-                        <span
-                            class="text-xl font-black text-slate-900 tracking-tighter">{{ $item->movils_count }}</span>
+                    @foreach ($empresas as $item)
+                <!-- 1. Inicializamos un estado interactivo simple para cada tarjeta de empresa (abierto/cerrado) -->
+                <div class="space-y-4 bg-slate-50/30 p-4 rounded-3xl border border-slate-100/50" x-data="{ abierto: false }">
+                    
+                    <!-- 2. Hacemos clicable toda la fila del título -->
+                    <div class="flex justify-between items-end cursor-pointer group" @click="abierto = !abierto">
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm font-black text-slate-700 uppercase group-hover:text-[#07CBBB] transition-colors">
+                                {{ $item->nombre }}
+                            </span>
+                            <!-- Flecha indicadora que gira al abrir/cerrar -->
+                            <svg class="w-4 h-4 text-slate-400 transition-transform duration-300" :class="abierto ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                        <span class="text-xl font-black text-slate-900 tracking-tighter">{{ $item->movils_count }}</span>
                     </div>
+
+                    <!-- Barra de progreso (visualización rápida) -->
                     <div class="w-full bg-slate-100 h-4 rounded-full overflow-hidden p-1">
                         <div class="bg-[#07CBBB] h-full rounded-full shadow-[0_0_15px_rgba(7,203,187,0.4)]"
                             style="width: {{ count($moviles) > 0 ? ($item->movils_count / count($moviles)) * 100 : 0 }}%">
                         </div>
                     </div>
+
+                    <!-- 3. Listado desplegable de los Centros de Trabajo con efecto de transición suave -->
+                    <div x-show="abierto" x-transition.opacity x-cloak class="pt-2 mt-2 bg-white rounded-2xl p-3 shadow-sm border border-slate-100/50">
+                        <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-2">Centros de Trabajo:</h4>
+                        
+                        @if($item->centrosTrabajo->count() > 0)
+                            <ul class="space-y-2 pl-1">
+                                @foreach ($item->centrosTrabajo as $centro)
+                                    <li class="flex justify-between items-center text-xs font-bold">
+                                        <span class="text-slate-600">{{ $centro->nombre }}</span>
+                                        <span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded-lg text-[10px]">
+                                            {{ $centro->movils_count }} {{ $centro->movils_count == 1 ? 'móvil' : 'móviles' }}
+                                        </span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-[11px] text-slate-400 italic">No hay centros de trabajo asociados.</p>
+                        @endif
+                    </div>
                 </div>
             @endforeach
+
         </div>
     </div>
 
