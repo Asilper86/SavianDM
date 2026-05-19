@@ -93,33 +93,7 @@ class IndexMoviles extends Component
 
 
 
-    // Historial
-    public ?Movil $selectedMovil = null;
-    public bool $openHistorial = false;
 
-    public function verHistorial(Movil $movil)
-    {
-        $this->selectedMovil = Movil::with(['historials.empresa', 'historials.albaran'])->findOrFail($movil->id);
-        $this->openHistorial = true;
-    }
-
-    public function cerrarHistorial()
-    {
-        $this->openHistorial = false;
-        $this->selectedMovil = null;
-    }
-
-    public function descargarPDF(int $id)
-    {
-        $albaran = \App\Models\Albaran::findOrFail($id);
-
-        if (! \Illuminate\Support\Facades\Storage::disk('public')->exists(str_replace('storage/', '', $albaran->path))) {
-            $this->dispatch('mensajeerror', 'El archivo no se encuentra en el servidor.');
-            return;
-        }
-
-        return \Illuminate\Support\Facades\Storage::disk('public')->download(str_replace('storage/', '', $albaran->path));
-    }
 
     //Editar Movil
 
