@@ -42,7 +42,7 @@
                             <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">Movimiento / Descripción</th>
                             <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-center whitespace-nowrap">Estado</th>
                             <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">Empresa Destino</th>
-                            <th class="sticky right-0 z-10 bg-white/80 backdrop-blur-xl px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-right whitespace-nowrap">Acciones</th>
+                            <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-right whitespace-nowrap">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,7 +78,7 @@
                                 <td class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 transition-all border-y border-transparent group-hover:border-slate-100 font-bold text-slate-500 whitespace-nowrap">
                                     {{ $item->empresa->nombre ?? 'N/A' }}
                                 </td>
-                                <td class="sticky right-0 z-10 bg-white/90 backdrop-blur-md px-4 sm:px-6 py-4 sm:py-5 rounded-r-[1.5rem] sm:rounded-r-[2rem] transition-all border-y border-r border-transparent group-hover:border-slate-100 text-right whitespace-nowrap shadow-[-10px_0_15px_-3px_rgba(0,0,0,0.02)]">
+                                <td class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 rounded-r-[1.5rem] sm:rounded-r-[2rem] transition-all border-y border-r border-transparent group-hover:border-slate-100 text-right whitespace-nowrap">
                                     <div class="flex justify-end gap-2 opacity-30 group-hover:opacity-100 transition-all">
                                         @if($item->albaran_id)
                                             <a href="{{ route('albaran', ['edit' => $item->albaran_id]) }}" title="Ver/Editar Albarán"

@@ -314,6 +314,9 @@
                         class="text-[15px] text-bold font-black text-[#07CBBB] uppercase tracking-widest hover:underline">+
                         AÑADIR</button>
                 </div>
+                <div class="bg-slate-50/50 dark:bg-gray-800/50 rounded-[2rem] p-6 border border-slate-100 dark:border-gray-700 transition-colors">
+                    
+
                     @if ($showMovilModal)
                         <div class="relative animate-in slide-in-from-top-2">
                             <input type="text" wire:model.live.debounce.300ms="search" placeholder="IMEI..."
