@@ -14,7 +14,10 @@ class DashboardChart extends Component
     {
 
         $moviles = Movil::with('empresa' , 'modelo' )->get();
-        $empresas = Empresa::withCount('movils')->get();
+        $empresas = Empresa::with(['centrosTrabajo' => function ($query) {
+            $query->withCount('movils');
+        }])->withCount('movils')->get();
+
         return view('livewire.graficos.dashboard-chart',compact('moviles' , 'empresas'));
     }
 }
