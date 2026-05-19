@@ -1,75 +1,89 @@
-<div class="w-full min-h-screen bg-[#F3F4F6] p-2 sm:p-4 md:p-8 flex flex-col font-sans">
-    <div class="bg-white/80 backdrop-blur-xl rounded-[2rem] sm:rounded-[3.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.03)] border border-white p-4 sm:p-10 flex-1 flex flex-col overflow-hidden">
+<div class="w-full min-h-screen bg-slate-100 p-3 sm:p-6 md:p-10 flex flex-col font-sans antialiased">
+    <!-- Contenedor Principal Ultra Redondeado con Efecto Glass y Sombra Profunda -->
+    <div class="bg-white/90 backdrop-blur-2xl rounded-[2.5rem] sm:rounded-[4rem] shadow-[0_25px_70px_rgba(0,0,0,0.04)] border border-white p-5 sm:p-12 flex-1 flex flex-col overflow-hidden">
 
-        <div class="flex flex-row justify-between items-center mb-6 sm:mb-8 gap-2 sm:gap-4 px-1 sm:px-2">
+        <!-- Encabezado de la Vista -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 sm:mb-12 gap-6 px-1 sm:px-3">
             <div>
-                <div class="flex items-center gap-2 sm:gap-3 mb-1">
-                    <span class="hidden sm:block w-8 h-1 bg-slate-800 rounded-full"></span>
-                    <h3 class="text-xl sm:text-4xl font-black text-slate-800 tracking-tighter">Registro de Albaranes</h3>
+                <div class="flex items-center gap-4 mb-2">
+                    <span class="w-10 h-2 bg-slate-800 rounded-full"></span>
+                    <h3 class="text-2xl sm:text-4xl font-black text-slate-800 tracking-wide uppercase">Registro de Albaranes</h3>
                 </div>
-                <p class="hidden sm:block text-slate-400 text-xs sm:text-sm font-medium sm:ml-11">Gestión integral de entradas y salidas.</p>
+                <p class="text-slate-400 text-xs sm:text-sm font-bold tracking-wider uppercase ml-14">Gestión integral de entradas y salidas.</p>
             </div>
 
-            <div class="w-auto shrink-0">
+            <div class="w-full sm:w-auto shrink-0 flex justify-end">
                 @livewire('albaran.create-albaran')
             </div>
         </div>
 
-        <div class="flex-1 overflow-auto rounded-3xl custom-scrollbar">
-            <table class="w-full border-separate border-spacing-y-3">
-                <thead class="sticky top-0 bg-white/10 backdrop-blur-md z-10">
-                    <tr class="text-slate-400">
-                        <th class="px-4 sm:px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left whitespace-nowrap">Nº Albarán</th>
-                        <th class="px-4 sm:px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left whitespace-nowrap">Fecha</th>
-                        <th class="px-4 sm:px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left whitespace-nowrap">Estado</th>
-                        <th class="px-4 sm:px-6 py-3 text-[10px] font-black uppercase tracking-widest text-right whitespace-nowrap">Acciones</th>
+        <!-- Contenedor de Tabla con Scroll Suave y Esquinas Redondeadas -->
+        <div class="flex-1 overflow-auto rounded-[2rem] custom-scrollbar bg-slate-50/50 p-2 border border-slate-100">
+            <table class="w-full border-separate border-spacing-y-3 px-2">
+                <thead class="sticky top-0 bg-white/80 backdrop-blur-md z-10">
+                    <tr class="text-slate-500">
+                        <th class="bg-white px-6 py-4 text-[11px] font-black uppercase tracking-widest text-left whitespace-nowrap rounded-l-2xl">Nº Albarán</th>
+                        <th class="bg-white px-6 py-4 text-[11px] font-black uppercase tracking-widest text-left whitespace-nowrap">Fecha</th>
+                        <th class="bg-white px-6 py-4 text-[11px] font-black uppercase tracking-widest text-left whitespace-nowrap">Estado</th>
+                        <th class="bg-white px-6 py-4 text-[11px] font-black uppercase tracking-widest text-right whitespace-nowrap rounded-r-2xl">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($albaran as $item)
-                        <tr class="group">
-                            <td class="bg-slate-50/50 px-4 sm:px-6 py-4 sm:py-5 rounded-l-2xl sm:rounded-l-3xl border-y border-l border-transparent text-xs font-black text-slate-500 italic whitespace-nowrap">
+                        <tr class="group transition-all duration-300">
+                            <!-- ID / Nº Albarán -->
+                            <td class="bg-white group-hover:bg-slate-50/80 px-6 py-5 rounded-l-3xl border-y border-l border-transparent text-xs font-black text-slate-600 italic whitespace-nowrap transition-colors">
                                 #{{ $item->id }}
                             </td>
-                            <td class="bg-slate-50/50 px-4 sm:px-6 py-4 sm:py-5 border-y border-transparent whitespace-nowrap">
+                            <!-- Fecha -->
+                            <td class="bg-white group-hover:bg-slate-50/80 px-6 py-5 border-y border-transparent whitespace-nowrap transition-colors">
                                 <div class="flex flex-col">
-                                    <span class="text-sm font-black text-slate-800">{{ $item->created_at }}</span>
+                                    <span class="text-sm font-black text-slate-800 tracking-tight">{{ $item->created_at }}</span>
                                 </div>
                             </td>
-                            <td class="bg-slate-50/50 px-4 sm:px-6 py-4 sm:py-5 border-y border-transparent whitespace-nowrap">
+                            <!-- Estado (Píldoras Dinámicas con Colores Seguros) -->
+                            <td class="bg-white group-hover:bg-slate-50/80 px-6 py-5 border-y border-transparent whitespace-nowrap transition-colors">
                                 @php
-                                    $color = match($item->estado) {
-                                        'entregado' => 'emerald',
-                                        'retirado' => 'rose',
-                                        default => 'amber',
+                                    $bgClass = match($item->estado) {
+                                        'entregado' => 'bg-emerald-100 text-emerald-800',
+                                        'retirado' => 'bg-rose-100 text-rose-800',
+                                        default => 'bg-amber-100 text-amber-800',
                                     };
                                 @endphp
-                                <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter bg-{{$color}}-100 text-{{$color}}-700">
+                                <span class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest {{ $bgClass }} shadow-sm">
                                     {{ $item->estado }}
                                 </span>
                             </td>
-                            <td class="bg-slate-50/50 px-4 sm:px-6 py-4 sm:py-5 rounded-r-2xl sm:rounded-r-3xl border-y border-r border-transparent text-right whitespace-nowrap">
-                                <div class="flex justify-end gap-2">
-                                    <button wire:click="descargarPDF({{ $item->id }})" title="Descargar" class="p-3 bg-white text-blue-600 hover:bg-blue-600 hover:text-white rounded-xl transition-all border border-slate-100 shadow-sm">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            <!-- Acciones -->
+                            <td class="bg-white group-hover:bg-slate-50/80 px-6 py-5 rounded-r-3xl border-y border-r border-transparent text-right whitespace-nowrap transition-colors">
+                                <div class="flex justify-end items-center gap-3">
+                                    <!-- PDF -->
+                                    <button wire:click="descargarPDF({{ $item->id }})" title="Descargar PDF" class="p-3 bg-slate-50 text-slate-700 hover:bg-[#07CBBB] hover:text-white rounded-2xl transition-all duration-200 border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                                     </button>
-
-                                    <button wire:click="$dispatchTo('albaran.create-albaran', 'editar-albaran', { id: {{ $item->id }} })" title="Editar" class="p-3 bg-white text-amber-500 hover:bg-amber-500 hover:text-white rounded-xl transition-all border border-slate-100 shadow-sm">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                    <!-- Editar -->
+                                    <button wire:click="$dispatchTo('albaran.create-albaran', 'editar-albaran', { id: {{ $item->id }} })" title="Editar Registro" class="p-3 bg-slate-50 text-slate-700 hover:bg-slate-800 hover:text-white rounded-2xl transition-all duration-200 border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                     </button>
-
-                                    <button wire:click="eliminarAlbaran({{ $item->id }})" wire:confirm="¿Seguro que deseas eliminar este albarán y su PDF?" title="Eliminar" class="p-3 bg-white text-red-500 hover:bg-red-500 hover:text-white rounded-xl transition-all border border-slate-100 shadow-sm">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    <!-- Eliminar -->
+                                    <button wire:click="eliminarAlbaran({{ $item->id }})" wire:confirm="¿Seguro que deseas eliminar este albarán y su PDF?" title="Eliminar Albarán" class="p-3 bg-slate-50 text-rose-600 hover:bg-rose-600 hover:text-white rounded-2xl transition-all duration-200 border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                     </button>
                                 </div>
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="4" class="text-center py-20 text-slate-400 italic">No hay registros.</td></tr>
+                        <tr>
+                            <td colspan="4" class="text-center py-24 text-slate-400 font-bold uppercase tracking-wider text-xs italic bg-white rounded-[2rem]">
+                                No hay registros en el sistema.
+                            </td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
-        <div class="mt-6">{{ $albaran->links() }}</div>
+
+        <!-- Paginación con amplitud -->
+        <div class="mt-8 px-2">{{ $albaran->links() }}</div>
     </div>
 </div>

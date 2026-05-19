@@ -21,10 +21,26 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Crear el usuario admin
-        User::factory()->create([
-            'email' => 'admin@savian.com',
-            'username' => 'admin',
-        ]);
+       User::factory()->create([
+    'name' => 'Administrador',
+    'username' => 'admin',
+    'email' => 'admin@savian.com',
+    'rol' => 'admin',
+]);
+
+User::factory()->create([
+    'name' => 'Usuario Campo',
+    'username' => 'campo',
+    'email' => 'campo@savian.com',
+    'rol' => 'campo',
+]);
+
+User::factory()->create([
+    'name' => 'Usuario Finanzas',
+    'username' => 'finanzas',
+    'email' => 'finanzas@savian.com',
+    'rol' => 'finanzas',
+]);
        
         // 2. CREAR LOS PADRES (Esto evita el error de Foreign Key)
         // Creamos un modelo y un proveedor por defecto para que tengan el ID 1

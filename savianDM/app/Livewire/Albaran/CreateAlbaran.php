@@ -7,6 +7,7 @@ use App\Models\Albaran;
 use App\Models\Empresa;
 use App\Models\CentroTrabajo;
 use App\Models\Movil;
+use App\Models\Material;
 use App\Livewire\Forms\Albaran\CreateAlbaranForm;
 use App\Livewire\Forms\Albaran\UpdateAlbaranForm;
 use Livewire\Attributes\On;
@@ -109,6 +110,24 @@ class CreateAlbaran extends Component
         }
     }
 
+    public function addMaterial()
+    {
+        if ($this->isEditing) {
+            $this->updateForm->addMaterial();
+        } else {
+            $this->createForm->addMaterial();
+        }
+    }
+
+    public function quitarMaterial($index)
+    {
+        if ($this->isEditing) {
+            $this->updateForm->removeMaterial($index);
+        } else {
+            $this->createForm->removeMaterial($index);
+        }
+    }
+
     public function render()
     {
         // Determinamos qué IDs de móviles mostrar en la lista
@@ -120,6 +139,7 @@ class CreateAlbaran extends Component
             'centros' => $empresaId ? CentroTrabajo::where('empresa_id', $empresaId)->get() : [],
             'search_results' => strlen($this->search) > 2 ? Movil::where('codigo', 'like', "%{$this->search}%")->get() : [],
             'movilesSeleccionados' => Movil::whereIn('id', $currentIds)->get(),
+            'materialesDisponibles' => Material::all(),
         ]);
     }
 }

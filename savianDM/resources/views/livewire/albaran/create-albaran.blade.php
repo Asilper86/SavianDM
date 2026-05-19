@@ -219,6 +219,78 @@
                     </div>
 
                 </div>
+                
+                <div class="bg-white dark:bg-gray-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-gray-700 mt-6 transition-colors">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="flex items-center gap-3">
+                            <div class="h-8 w-1.5 bg-[#07CBBB] rounded-full"></div>
+                            <h3 class="text-lg font-bold text-slate-800 dark:text-white tracking-tight uppercase transition-colors">Materiales</h3>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-slate-400 dark:text-gray-400 text-sm"></i>
+                    </div>
+
+                    <div class="space-y-6">
+                        @foreach ($isEditing ? $updateForm->materiales : $createForm->materiales as $index => $material)
+                            <div class="p-5 rounded-2xl bg-slate-50/50 dark:bg-gray-800/50 border border-slate-100 dark:border-gray-600/50 relative group transition-all hover:bg-white dark:hover:bg-slate-800 hover:shadow-md"
+                                wire:key="material-{{ $index }}">
+
+                                <div class="flex items-center justify-between mb-4">
+                                    <span
+                                        class="text-[10px] font-black uppercase tracking-widest text-[#07CBBB]">Material
+                                        {{ $index + 1 }}</span>
+
+                                    <button type="button" wire:click="quitarMaterial({{ $index }})"
+                                        class="text-slate-300 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors">
+                                        <i class="fa-solid fa-circle-xmark text-lg"></i>
+                                    </button>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                                    <div class="{{ empty($material['material_id']) ? 'md:col-span-4' : 'md:col-span-8' }} space-y-2">
+                                        <label
+                                            class="inline-block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-gray-300 ml-1">Seleccionar Material</label>
+                                        <div class="relative">
+                                            <select wire:model.live="{{ $formPath }}.materiales.{{ $index }}.material_id"
+                                                class="w-full bg-white dark:bg-gray-900 border-slate-200 dark:border-gray-600 rounded-2xl py-3.5 px-4 text-sm font-semibold text-slate-700 dark:text-slate-200 focus:border-[#07CBBB] focus:ring-4 focus:ring-[#07CBBB]/5 transition-all outline-none">
+                                                <option value="">Ocasional (escribir nombre)</option>
+                                                @foreach ($materialesDisponibles as $md)
+                                                    <option value="{{ $md->id }}">{{ $md->nombre }} (Stock: {{ $md->cantidad }})</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    @if(empty($material['material_id']))
+                                        <div class="md:col-span-4 space-y-2">
+                                            <label
+                                                class="inline-block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-gray-300 ml-1">Nombre (Ocasional)</label>
+                                            <input type="text" placeholder="Escribir material..."
+                                                wire:model="{{ $formPath }}.materiales.{{ $index }}.material_ocasional"
+                                                class="w-full bg-white dark:bg-gray-900 border-slate-200 dark:border-gray-600 rounded-2xl py-3.5 px-4 text-sm font-semibold text-slate-700 dark:text-slate-200 focus:border-[#07CBBB] focus:ring-4 focus:ring-[#07CBBB]/5 transition-all outline-none" />
+                                        </div>
+                                    @endif
+
+                                    <div class="md:col-span-4 space-y-2">
+                                        <label
+                                            class="inline-block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-gray-300 ml-1">Cantidad</label>
+                                        <input type="number" min="1"
+                                            wire:model="{{ $formPath }}.materiales.{{ $index }}.cantidad"
+                                            class="w-full bg-white dark:bg-gray-900 border-slate-200 dark:border-gray-600 rounded-2xl py-3.5 px-4 text-sm font-semibold text-slate-700 dark:text-slate-200 focus:border-[#07CBBB] focus:ring-4 focus:ring-[#07CBBB]/5 transition-all outline-none" />
+                                        <x-input-error
+                                            for="{{ $formPath }}.materiales.{{ $index }}.cantidad" />
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <button type="button" wire:click="addMaterial"
+                            class="w-full py-4 border-2 border-dashed border-slate-200 dark:border-gray-600 rounded-2xl text-slate-400 dark:text-gray-400 font-bold text-sm hover:border-[#07CBBB] dark:hover:border-[#07CBBB] hover:text-[#07CBBB] hover:bg-[#07CBBB]/5 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                            Añadir material
+                        </button>
+                    </div>
+                </div>
+                
                 <div class="bg-white dark:bg-gray-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-gray-700 mt-6 transition-colors">
                     <!-- Encabezado con línea decorativa corporativa -->
                     <div class="flex items-center justify-between mb-8">
@@ -290,23 +362,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="space-y-3">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-gray-400 ml-1">Estado</label>
-                    <div class="grid grid-cols-3 gap-3">
-                        @foreach (['pendiente', 'entregado', 'retirado'] as $est)
-                            <label class="relative cursor-pointer group text-center">
-                                <input type="radio" wire:model="{{ $formPath }}.estado"
-                                    value="{{ $est }}" class="peer sr-only">
-                                <div
-                                    class="p-4 rounded-2xl border-2 border-slate-100 dark:border-gray-700 bg-slate-50/50 dark:bg-gray-800/50 transition-all peer-checked:border-slate-800 dark:peer-checked:border-white peer-checked:bg-slate-800 dark:peer-checked:bg-white peer-checked:text-white dark:peer-checked:text-slate-900 text-slate-600 dark:text-gray-300">
-                                    <p class="text-[10px] font-black uppercase tracking-tighter">{{ $est }}
-                                    </p>
-                                </div>
-                            </label>
-                        @endforeach
-                    </div>
-                </div>
 
+                <!-- SECCIÓN: ESTADO Y VINCULACIONES -->
+                <div class="bg-white dark:bg-gray-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-gray-700 mt-6 transition-colors">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="flex items-center gap-3">
+                            <div class="h-8 w-1.5 bg-[#07CBBB] rounded-full"></div>
+                            <h3 class="text-lg font-black text-slate-800 dark:text-white tracking-widest uppercase transition-colors">Estado y Vinculaciones</h3>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-slate-400 dark:text-gray-400 text-sm"></i>
+                    </div>
+
+                    <div class="space-y-8">
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-gray-400 ml-1">Estado del Albarán</label>
+                            <div class="grid grid-cols-3 gap-3">
+                                @foreach (['pendiente', 'entregado', 'retirado'] as $est)
+                                    <label class="relative cursor-pointer group text-center">
+                                        <input type="radio" wire:model="{{ $formPath }}.estado" value="{{ $est }}" class="peer sr-only">
+                                        <div class="p-4 rounded-2xl border-2 border-slate-100 dark:border-gray-700 bg-slate-50/50 dark:bg-gray-800/50 transition-all peer-checked:border-slate-800 dark:peer-checked:border-white peer-checked:bg-slate-800 dark:peer-checked:bg-white peer-checked:text-white dark:peer-checked:text-slate-900 text-slate-600 dark:text-gray-300">
+                                            <p class="text-[10px] font-black uppercase tracking-widest">{{ $est }}</p>
+                                        </div>
+                                    </label>
+                                @endforeach
+                            </div>
                 <div class="flex justify-between items-center mb-4 px-2">
                     <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-gray-400">Móviles
                         Vinculados</span>
@@ -332,24 +411,50 @@
                                 </div>
                             @endif
                         </div>
-                    @endif
 
-                    <div class="grid grid-cols-1 gap-2 mt-4">
-                        @foreach ($movilesSeleccionados as $m)
-                            <div
-                                class="flex justify-between items-center bg-white dark:bg-gray-900 p-4 rounded-2xl border border-slate-100 dark:border-gray-600 shadow-sm transition-all hover:shadow-md">
-                                <span
-                                    class="text-xs font-black italic text-slate-700 dark:text-gray-200 tracking-tighter">{{ $m->codigo }}</span>
-                                <button wire:click="quitarMovil({{ $m->id }})"
-                                    class="text-rose-400 hover:text-rose-600 font-bold p-1">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M6 18L18 6M6 6l12 12"></path>
-                                    </svg>
+                        <div class="pt-4 border-t border-slate-100 dark:border-gray-700">
+                            <div class="flex justify-between items-center mb-4 px-2">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-gray-400">
+                                    Móviles Vinculados
+                                </span>
+                                <button type="button" wire:click="$toggle('showMovilModal')"
+                                    class="text-xs font-black text-[#07CBBB] uppercase tracking-widest hover:underline">
+                                    + Añadir
                                 </button>
                             </div>
-                        @endforeach
-                        <x-input-error for="{{ $formPath }}.moviles_ids" />
+
+                            @if ($showMovilModal)
+                                <div class="relative animate-in slide-in-from-top-2">
+                                    <input type="text" wire:model.live.debounce.300ms="search" placeholder="Buscar por IMEI..."
+                                        class="w-full mb-2 p-3.5 border-2 border-slate-200 dark:border-gray-600 bg-white dark:bg-gray-900 rounded-2xl text-sm font-semibold text-slate-700 dark:text-slate-200 outline-none focus:border-[#07CBBB] transition-all">
+                                    
+                                    @if (count($search_results) > 0)
+                                        <div class="absolute z-50 w-full bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-600 rounded-2xl shadow-xl max-h-40 overflow-auto mb-4">
+                                            @foreach ($search_results as $res)
+                                                <div wire:click="addMovil({{ $res->id }})"
+    class="p-3 hover:bg-[#07CBBB]/10 dark:hover:bg-[#07CBBB]/20 cursor-pointer text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">
+    {{ $res->codigo }}
+</div>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
+                            @endif
+
+                            <div class="grid grid-cols-1 gap-2 mt-4">
+                                @foreach ($movilesSeleccionados as $m)
+                                    <div class="flex justify-between items-center bg-white dark:bg-gray-900 p-4 rounded-2xl border border-slate-100 dark:border-gray-600 shadow-sm transition-all hover:shadow-md">
+                                        <span class="text-xs font-black italic text-slate-700 dark:text-gray-200 tracking-tighter">{{ $m->codigo }}</span>
+                                        <button wire:click="quitarMovil({{ $m->id }})" class="text-rose-400 hover:text-rose-600 font-bold p-1">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                @endforeach
+                                <x-input-error for="{{ $formPath }}.moviles_ids" />
+                            </div>
+                        </div>
                     </div>
                 </div>
 

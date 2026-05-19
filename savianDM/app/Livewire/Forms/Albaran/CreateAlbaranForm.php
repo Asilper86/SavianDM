@@ -4,6 +4,7 @@ namespace App\Livewire\Forms\Albaran;
 
 use App\Models\Albaran;
 use App\Models\Movil;
+use App\Models\Material;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -48,6 +49,14 @@ class CreateAlbaranForm extends Form
     ])]
     public array $trabajadores = [];
 
+    #[Validate([
+        'materiales' => 'nullable|array',
+        'materiales.*.material_id' => 'nullable|exists:materiales,id',
+        'materiales.*.material_ocasional' => 'nullable|string|max:255',
+        'materiales.*.cantidad' => 'required|integer|min:1',
+    ])]
+    public array $materiales = [];
+
     public string $firma_trabajador = '';
     public string $firma_cliente = '';
 
@@ -60,6 +69,17 @@ class CreateAlbaranForm extends Form
     {
         unset($this->trabajadores[$index]);
         $this->trabajadores = array_values($this->trabajadores);
+    }
+
+    public function addMaterial()
+    {
+        $this->materiales[] = ['material_id' => '', 'material_ocasional' => '', 'cantidad' => 1];
+    }
+
+    public function removeMaterial($index)
+    {
+        unset($this->materiales[$index]);
+        $this->materiales = array_values($this->materiales);
     }
 
     public function store()
@@ -84,6 +104,36 @@ class CreateAlbaranForm extends Form
             ]);
 
             $albaran->moviles()->attach($this->moviles_ids);
+
+            // Insert materiales and update stock if needed
+            $pivotData = [];
+            foreach ($this->materiales as $mat) {
+                // Determine material_id (null if ocasional)
+                $matId = empty($mat['material_id']) ? null : $mat['material_id'];
+                $pivotData[] = [
+                    'albaran_id' => $albaran->id,
+                    'material_id' => $matId,
+                    'material_ocasional' => $mat['material_ocasional'],
+                    'cantidad' => $mat['cantidad'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+
+                // Update stock logic
+                if ($matId && in_array($this->estado, ['entregado', 'retirado'])) {
+                    $materialModel = Material::find($matId);
+                    if ($materialModel) {
+                        if ($this->estado === 'entregado') {
+                            $materialModel->decrement('cantidad', $mat['cantidad']);
+                        } elseif ($this->estado === 'retirado') {
+                            $materialModel->increment('cantidad', $mat['cantidad']);
+                        }
+                    }
+                }
+            }
+            if (!empty($pivotData)) {
+                DB::table('albaran_materiales')->insert($pivotData);
+            }
 
             // Update mobile states and create history entries
             foreach ($this->moviles_ids as $movilId) {
