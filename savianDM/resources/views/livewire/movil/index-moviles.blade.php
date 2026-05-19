@@ -7,7 +7,7 @@
                 <div>
                     <div class="flex items-center gap-2 sm:gap-4 mb-1 sm:mb-2">
                         <span class="hidden sm:block w-8 sm:w-10 h-1.5 bg-[#07CBBB] rounded-full"></span>
-                        <h3 class="text-xl sm:text-4xl font-black text-slate-800 tracking-tighter">Gesti├│n de M├│viles</h3>
+                        <h3 class="text-xl sm:text-4xl font-black text-slate-800 tracking-tighter">Gestion de Moviles</h3>
                     </div>
                     <p class="hidden sm:block text-slate-400 text-xs sm:text-base font-medium sm:ml-14">Control de inventario y estado de dispositivos.</p>
                 </div>
