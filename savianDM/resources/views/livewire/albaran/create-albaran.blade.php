@@ -386,6 +386,30 @@
                                     </label>
                                 @endforeach
                             </div>
+                <div class="flex justify-between items-center mb-4 px-2">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-gray-400">Móviles
+                        Vinculados</span>
+                    <button type="button" wire:click="$toggle('showMovilModal')"
+                        class="text-[15px] text-bold font-black text-[#07CBBB] uppercase tracking-widest hover:underline">+
+                        AÑADIR</button>
+                </div>
+                <div class="bg-slate-50/50 dark:bg-gray-800/50 rounded-[2rem] p-6 border border-slate-100 dark:border-gray-700 transition-colors">
+                    
+
+                    @if ($showMovilModal)
+                        <div class="relative animate-in slide-in-from-top-2">
+                            <input type="text" wire:model.live.debounce.300ms="search" placeholder="IMEI..."
+                                class="w-full mb-2 p-3 border-2 border-slate-200 dark:border-gray-600 bg-white dark:bg-gray-900 rounded-xl text-sm font-bold text-slate-700 dark:text-slate-200 outline-none focus:border-[#07CBBB]">
+                            @if (count($search_results) > 0)
+                                <div
+                                    class="absolute z-50 w-full bg-white dark:bg-gray-800 border dark:border-gray-600 rounded-xl shadow-xl max-h-40 overflow-auto mb-4">
+                                    @foreach ($search_results as $res)
+                                        <div wire:click="addMovil({{ $res->id }})"
+                                            class="p-3 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer text-xs font-bold border-b dark:border-gray-600 text-slate-700 dark:text-gray-200">
+                                            {{ $res->codigo }}</div>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
 
                         <div class="pt-4 border-t border-slate-100 dark:border-gray-700">
