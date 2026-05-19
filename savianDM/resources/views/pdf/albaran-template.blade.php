@@ -40,6 +40,7 @@
         .main-table th:first-child { border-radius: 10px 0 0 0; }
         .main-table th:last-child { border-radius: 0 10px 0 0; }
         .main-table td { padding: 10px 15px; border-bottom: 1px solid #f1f5f9; font-size: 11px; color: #475569; }
+        .row-even { background-color: #f8fafc; }
         .emphasis { font-weight: bold; color: #0f172a; font-family: 'Courier', monospace; }
 
         /* Section Titles */
@@ -136,6 +137,37 @@
             @endforeach
         </tbody>
     </table>
+
+    <!-- SECCIÓN DE MATERIALES UTILIZADOS -->
+    @php
+        $materiales = \DB::table('albaran_materiales')
+            ->leftJoin('materiales', 'albaran_materiales.material_id', '=', 'materiales.id')
+            ->where('albaran_materiales.albaran_id', $albaran->id)
+            ->select('albaran_materiales.*', 'materiales.nombre as material_nombre')
+            ->get();
+    @endphp
+
+    @if($materiales && count($materiales) > 0)
+    <div class="section-title">Materiales Utilizados</div>
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th style="width: 70%;">Material</th>
+                <th style="width: 30%; text-align: right;">Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($materiales as $index => $mat)
+            <tr class="{{ $index % 2 == 0 ? '' : 'row-even' }}">
+                <td class="emphasis">
+                    {{ $mat->material_id ? $mat->material_nombre : $mat->material_ocasional }}
+                </td>
+                <td style="text-align: right; font-weight: bold; color: #0f172a;">{{ $mat->cantidad }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    @endif
 
     <!-- SECCIÓN DE TRABAJADORES COMO BLOQUES DE TEXTO -->
     @if($albaran->trabajadores_datos && count($albaran->trabajadores_datos) > 0)
