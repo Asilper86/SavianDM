@@ -49,6 +49,14 @@
                     </div>
                     <span>Modelos</span>
                 </x-nav-link>
+                
+                <x-nav-link href="{{ route('materiales') }}" :active="request()->routeIs('materiales')"
+                    class="flex items-center w-full px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all border-none">
+                    <div class="flex items-center justify-center w-6 h-6 me-3">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </div>
+                    <span>Materiales</span>
+                </x-nav-link>
             @endif
 
         @endif

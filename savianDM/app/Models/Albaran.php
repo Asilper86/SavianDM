@@ -34,4 +34,11 @@ class Albaran extends Model
             'movil_id'           // FK en la tabla intermedia que apunta a movils
         );
     }
+
+    public function materiales(): BelongsToMany
+    {
+        return $this->belongsToMany(Material::class, 'albaran_materiales')
+                    ->withPivot('cantidad', 'material_ocasional')
+                    ->withTimestamps();
+    }
 }

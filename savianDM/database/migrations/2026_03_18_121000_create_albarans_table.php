@@ -22,7 +22,7 @@ return new class extends Migration
                 ->constrained('centro_trabajos')
                 ->onDelete('no action'); // <--- IMPORTANTE PARA AZURE/SQL SERVER
             
-            $table->enum('estado', ['pendiente', 'entregado', 'retirado', 'enviado'])->default('pendiente');
+            $table->enum('estado', ['pendiente', 'entregado', 'retirado'])->default('pendiente');
             $table->string('nombre_firmante');
             $table->string('path')->nullable();
             $table->timestamps();
