@@ -22,7 +22,7 @@
                         <th class="px-4 sm:px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left whitespace-nowrap">Nº Albarán</th>
                         <th class="px-4 sm:px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left whitespace-nowrap">Fecha</th>
                         <th class="px-4 sm:px-6 py-3 text-[10px] font-black uppercase tracking-widest text-left whitespace-nowrap">Estado</th>
-                        <th class="px-4 sm:px-6 py-3 text-[10px] font-black uppercase tracking-widest text-right whitespace-nowrap">Acciones</th>
+                        <th class="sticky right-0 z-10 bg-white/10 backdrop-blur-md px-4 sm:px-6 py-3 text-[10px] font-black uppercase tracking-widest text-right whitespace-nowrap">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,7 +48,7 @@
                                     {{ $item->estado }}
                                 </span>
                             </td>
-                            <td class="bg-slate-50/50 px-4 sm:px-6 py-4 sm:py-5 rounded-r-2xl sm:rounded-r-3xl border-y border-r border-transparent text-right whitespace-nowrap">
+                            <td class="sticky right-0 z-10 bg-white/90 backdrop-blur-md px-4 sm:px-6 py-4 sm:py-5 rounded-r-2xl sm:rounded-r-3xl border-y border-r border-transparent text-right whitespace-nowrap shadow-[-10px_0_15px_-3px_rgba(0,0,0,0.02)]">
                                 <div class="flex justify-end gap-2">
                                     <button wire:click="descargarPDF({{ $item->id }})" title="Descargar" class="p-3 bg-white text-blue-600 hover:bg-blue-600 hover:text-white rounded-xl transition-all border border-slate-100 shadow-sm">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>

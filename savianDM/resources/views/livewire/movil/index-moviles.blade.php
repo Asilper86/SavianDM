@@ -1,6 +1,6 @@
-<div class="w-full min-h-screen bg-[#F3F4F6] p-4 md:p-8 flex flex-col">
+<div class="w-full min-h-screen bg-[#F3F4F6] p-2 sm:p-4 md:p-6 flex flex-col">
     <div
-        class="bg-white/80 backdrop-blur-xl rounded-[3.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.03)] border border-white p-6 sm:p-10 flex-1 flex flex-col">
+        class="bg-white/80 backdrop-blur-xl rounded-[2rem] sm:rounded-[3.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.03)] border border-white p-4 sm:p-6 md:p-8 flex-1 flex flex-col">
 
         <div class="flex flex-col gap-6 sm:gap-8 mb-8 sm:mb-10 px-1 sm:px-4">
             <div class="flex flex-row justify-between items-center sm:items-end gap-2 sm:gap-4">
@@ -19,18 +19,23 @@
             <div
                 class="grid grid-cols-1 md:grid-cols-4 gap-4 bg-slate-50/50 p-4 rounded-[2rem] border border-slate-100">
                 <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
                     <input wire:model.live="buscar" type="text" placeholder="Buscar SN..."
-                        class="w-full bg-white border-none rounded-2xl py-3 px-5 text-sm font-bold shadow-sm focus:ring-2 focus:ring-cyan-100 outline-none">
+                        class="w-full bg-white border border-slate-200/60 pl-11 pr-5 rounded-2xl py-3 text-sm font-semibold text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-[#07CBBB]/10 focus:border-[#07CBBB] transition-all shadow-sm">
                 </div>
                 <select wire:model.live="idEmpresa"
-                    class="bg-white border-none rounded-2xl py-3 px-5 text-sm font-bold shadow-sm focus:ring-2 focus:ring-cyan-100 outline-none appearance-none">
+                    class="bg-white border border-slate-200/60 rounded-2xl py-3 px-5 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-4 focus:ring-[#07CBBB]/10 focus:border-[#07CBBB] transition-all shadow-sm">
                     <option value="">Empresa</option>
                     @foreach ($empresa as $item)
                         <option value="{{ $item->id }}">{{ $item->nombre }}</option>
                     @endforeach
                 </select>
                 <select wire:model.live="estados"
-                    class="bg-white border-none rounded-2xl py-3 px-5 text-sm font-bold shadow-sm focus:ring-2 focus:ring-cyan-100 outline-none appearance-none">
+                    class="bg-white border border-slate-200/60 rounded-2xl py-3 px-5 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-4 focus:ring-[#07CBBB]/10 focus:border-[#07CBBB] transition-all shadow-sm">
                     <option value="">Estado</option>
                     @foreach ($estado as $item)
                         <option value="{{ $item }}">{{ $item }}</option>
@@ -38,89 +43,98 @@
                 </select>
 
                 <button wire:click="limpiarFiltros"
-                    class="bg-slate-800 text-white rounded-2xl font-bold text-sm hover:bg-black transition-all">Limpiar
-                    Filtros</button>
+                    class="bg-slate-800 text-white rounded-2xl font-bold text-sm hover:bg-slate-900 transition-all py-3 active:scale-[0.98]">Limpiar Filtros</button>
             </div>
         </div>
         @if ($moviles->count())
-            <div class="overflow-x-auto flex-1">
+            <!-- Vista de Escritorio / Tablet (Tabla limpia con scroll) -->
+            <div class="hidden lg:block overflow-x-auto flex-1">
                 <table class="w-full border-separate border-spacing-y-4">
                     <thead>
-                            <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">SN</th>
-                            <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">Tipo Compra
-                            </th>
-                            <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">Modelo</th>
-                            <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">Empresa</th>
-                            <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-center whitespace-nowrap">Estado</th>
-                            <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">Proveedor</th>
-                            <th class="px-4 sm:px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-right whitespace-nowrap">Acciones</th>
+                        <tr class="text-slate-400">
+                            <th class="px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">SN</th>
+                            <th class="px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">Tipo Compra</th>
+                            <th class="px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">Modelo</th>
+                            <th class="px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">Empresa</th>
+                            <th class="px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-center whitespace-nowrap">Estado</th>
+                            <th class="px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-left whitespace-nowrap">Proveedor</th>
+                            <th class="sticky right-0 z-10 bg-white/80 backdrop-blur-xl px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-right whitespace-nowrap">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($moviles as $item)
                             <tr class="group">
-                                <td
-                                    class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 rounded-l-[1.5rem] sm:rounded-l-[2rem] transition-all border-y border-l border-transparent group-hover:border-slate-100 text-sm font-black text-slate-700 whitespace-nowrap">
+                                <td class="bg-[#F8FAFC] group-hover:bg-slate-100/70 px-6 py-5 rounded-l-[2rem] transition-colors font-bold text-slate-700 whitespace-nowrap">
                                     {{ $item->codigo }}
                                 </td>
-                                <td
-                                    class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 transition-all border-y border-transparent group-hover:border-slate-100 whitespace-nowrap">
-                                    <span
-                                        class="px-3 py-1.5 rounded-xl text-[10px] font-black uppercase {{ $item->tipo_compra == 'Propio' ? 'bg-blue-50 text-blue-500' : 'bg-indigo-50 text-indigo-500' }}">
+                                <td class="bg-[#F8FAFC] group-hover:bg-slate-100/70 px-6 py-5 transition-colors whitespace-nowrap">
+                                    <span class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider {{ $item->tipo_compra == 'Propio' ? 'bg-blue-50 text-blue-500' : 'bg-indigo-50 text-indigo-500' }}">
                                         {{ $item->tipoCompra }}
                                     </span>
                                 </td>
-                                <td
-                                    class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 transition-all border-y border-transparent group-hover:border-slate-100 font-bold text-slate-600 whitespace-nowrap">
-                                    {{ $item->modelo->nombre }}
+                                <td class="bg-[#F8FAFC] group-hover:bg-slate-100/70 px-6 py-5 transition-colors font-bold text-slate-600 whitespace-nowrap" x-data="{ open: false }">
+                                    @if (mb_strlen($item->modelo->nombre) > 10)
+                                        <div @click="open = !open" class="cursor-pointer inline-flex items-center gap-1 text-[#07CBBB] hover:text-[#06b5a7] transition-colors">
+                                            <span x-show="!open" class="text-slate-600">{{ mb_substr($item->modelo->nombre, 0, 10) }}...</span>
+                                            <span x-show="open" style="display: none;" class="text-slate-600">{{ $item->modelo->nombre }}</span>
+                                            <svg x-show="!open" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                                            <svg x-show="open" style="display: none;" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"></path></svg>
+                                        </div>
+                                    @else
+                                        {{ $item->modelo->nombre }}
+                                    @endif
                                 </td>
-                                <td
-                                    class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 transition-all border-y border-transparent group-hover:border-slate-100 font-bold text-slate-500 whitespace-nowrap">
+                                <td class="bg-[#F8FAFC] group-hover:bg-slate-100/70 px-6 py-5 transition-colors font-bold text-slate-500">
                                     {{ $item->empresa->nombre }}
                                 </td>
-                                <td
-                                    class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 transition-all border-y border-transparent group-hover:border-slate-100 text-center whitespace-nowrap">
+                                <td class="bg-[#F8FAFC] group-hover:bg-slate-100/70 px-6 py-5 transition-colors text-center whitespace-nowrap">
                                     @php
                                         // Definimos los colores para cada estado
                                         $config = match ($item->estado) {
-                                            'Stock' => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-600', 'dot' => 'bg-emerald-500'],
-                                            'Roto' => ['bg' => 'bg-red-50', 'text' => 'text-red-600', 'dot' => 'bg-red-500'],
-                                            'Campo' => ['bg' => 'bg-blue-50', 'text' => 'text-blue-600', 'dot' => 'bg-blue-500'],
-                                            'Preparado' => ['bg' => 'bg-amber-50', 'text' => 'text-amber-600', 'dot' => 'bg-amber-500'],
-                                            default => ['bg' => 'bg-slate-50', 'text' => 'text-slate-600', 'dot' => 'bg-slate-500'],
+                                            'Stock' => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-500', 'dot' => 'bg-emerald-400'],
+                                            'Roto' => ['bg' => 'bg-red-50', 'text' => 'text-red-500', 'dot' => 'bg-red-400'],
+                                            'Campo' => ['bg' => 'bg-blue-50', 'text' => 'text-blue-500', 'dot' => 'bg-blue-400'],
+                                            'Preparado' => ['bg' => 'bg-amber-50', 'text' => 'text-amber-500', 'dot' => 'bg-amber-400'],
+                                            default => ['bg' => 'bg-slate-50', 'text' => 'text-slate-500', 'dot' => 'bg-slate-400'],
                                         };
                                     @endphp
 
-                                    <span
-                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black uppercase {{ $config['bg'] }} {{ $config['text'] }}">
+                                    <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider {{ $config['bg'] }} {{ $config['text'] }}">
                                         <span class="w-1.5 h-1.5 rounded-full {{ $config['dot'] }}"></span>
                                         {{ $item->estado }}
                                     </span>
                                 </td>
-                                <td
-                                    class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 transition-all border-y border-transparent group-hover:border-slate-100 text-xs font-medium text-slate-400 whitespace-nowrap">
-                                    {{ $item->proveedor->nombre }}
+                                <td class="bg-[#F8FAFC] group-hover:bg-slate-100/70 px-6 py-5 transition-colors text-sm font-semibold text-slate-400 whitespace-nowrap" x-data="{ open: false }">
+                                    @if (mb_strlen($item->proveedor->nombre) > 10)
+                                        <div @click="open = !open" class="cursor-pointer inline-flex items-center gap-1 text-[#07CBBB] hover:text-[#06b5a7] transition-colors">
+                                            <span x-show="!open" class="text-slate-400">{{ mb_substr($item->proveedor->nombre, 0, 10) }}...</span>
+                                            <span x-show="open" style="display: none;" class="text-slate-400">{{ $item->proveedor->nombre }}</span>
+                                            <svg x-show="!open" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                                            <svg x-show="open" style="display: none;" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"></path></svg>
+                                        </div>
+                                    @else
+                                        {{ $item->proveedor->nombre }}
+                                    @endif
                                 </td>
-                                <td
-                                    class="bg-slate-50/50 group-hover:bg-white px-4 sm:px-6 py-4 sm:py-5 rounded-r-[1.5rem] sm:rounded-r-[2rem] transition-all border-y border-r border-transparent group-hover:border-slate-100 text-right whitespace-nowrap">
-                                    <div class="flex justify-end gap-2 opacity-30 group-hover:opacity-100 transition-all">
+                                <td class="sticky right-0 z-10 bg-[#F8FAFC]/90 backdrop-blur-md group-hover:bg-slate-100/90 px-6 py-5 rounded-r-[2rem] transition-colors text-right whitespace-nowrap">
+                                    <div class="flex justify-end gap-2 opacity-40 group-hover:opacity-100 transition-all duration-300">
                                         <a href="{{ route('historial', ['buscar' => $item->codigo]) }}" title="Ver Historial"
-                                            class="p-2.5 bg-white text-slate-400 hover:text-indigo-600 rounded-xl shadow-sm border border-slate-50 transition-all">
+                                            class="w-9 h-9 flex items-center justify-center bg-white text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 hover:scale-110 rounded-full shadow-sm transition-all">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
                                         </a>
                                         <button wire:click="editar({{ $item->id }})"
-                                            class="p-2.5 bg-white text-slate-400 hover:text-[#07CBBB] rounded-xl shadow-sm border border-slate-50 transition-all">
+                                            class="w-9 h-9 flex items-center justify-center bg-white text-slate-400 hover:text-[#07CBBB] hover:bg-[#E4F4F3] hover:scale-110 rounded-full shadow-sm transition-all">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-width="2"
+                                                <path stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
                                                     d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                             </svg>
                                         </button>
                                         <button wire:click="mostrarMensajeBorrar({{ $item->id }})"
-                                            class="p-2.5 bg-white text-slate-400 hover:text-red-500 rounded-xl shadow-sm border border-slate-50 transition-all">
+                                            class="w-9 h-9 flex items-center justify-center bg-white text-slate-400 hover:text-red-500 hover:bg-red-50 hover:scale-110 rounded-full shadow-sm transition-all">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-width="2"
+                                                <path stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
                                                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                             </svg>
                                         </button>
@@ -130,7 +144,83 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $moviles->links() }}
+                <div class="mt-4">
+                    {{ $moviles->links() }}
+                </div>
+            </div>
+
+            <!-- Vista de Móvil / Tablet Estilo Cards Premium -->
+            <div class="block lg:hidden flex-1 space-y-4">
+                @foreach ($moviles as $item)
+                    @php
+                        // Definimos los colores para cada estado
+                        $config = match ($item->estado) {
+                            'Stock' => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-600', 'dot' => 'bg-emerald-500'],
+                            'Roto' => ['bg' => 'bg-red-50', 'text' => 'text-red-600', 'dot' => 'bg-red-500'],
+                            'Campo' => ['bg' => 'bg-blue-50', 'text' => 'text-blue-600', 'dot' => 'bg-blue-500'],
+                            'Preparado' => ['bg' => 'bg-amber-50', 'text' => 'text-amber-600', 'dot' => 'bg-amber-500'],
+                            default => ['bg' => 'bg-slate-50', 'text' => 'text-slate-600', 'dot' => 'bg-slate-500'],
+                        };
+                    @endphp
+                    <div class="bg-slate-50/50 border border-slate-100 rounded-3xl p-5 shadow-sm space-y-4 hover:bg-white transition-all duration-300">
+                        <div class="flex justify-between items-start gap-2">
+                            <div>
+                                <span class="text-[9px] font-black uppercase tracking-widest text-slate-400">Número de Serie (SN)</span>
+                                <h4 class="text-base font-black text-slate-800 tracking-tight break-all">{{ $item->codigo }}</h4>
+                            </div>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[9px] font-black uppercase shrink-0 {{ $config['bg'] }} {{ $config['text'] }}">
+                                <span class="w-1.5 h-1.5 rounded-full {{ $config['dot'] }}"></span>
+                                {{ $item->estado }}
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 py-3 border-y border-slate-100 text-xs">
+                            <div>
+                                <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Modelo</span>
+                                <span class="font-extrabold text-slate-700">{{ $item->modelo->nombre }}</span>
+                            </div>
+                            <div>
+                                <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Tipo Compra</span>
+                                <span class="inline-block px-2.5 py-0.5 rounded-md text-[9px] font-black uppercase {{ $item->tipo_compra == 'Propio' ? 'bg-blue-50/80 text-blue-600' : 'bg-indigo-50/80 text-indigo-600' }}">
+                                    {{ $item->tipoCompra }}
+                                </span>
+                            </div>
+                            <div>
+                                <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Empresa</span>
+                                <span class="font-extrabold text-slate-600">{{ $item->empresa->nombre }}</span>
+                            </div>
+                            <div>
+                                <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Proveedor</span>
+                                <span class="font-extrabold text-slate-500">{{ $item->proveedor->nombre }}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-2 pt-1">
+                            <a href="{{ route('historial', ['buscar' => $item->codigo]) }}" title="Ver Historial"
+                                class="flex-1 py-3 px-4 bg-white text-slate-500 hover:text-indigo-600 rounded-2xl text-center text-xs font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 border border-slate-100 shadow-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Historial
+                            </a>
+                            <button wire:click="editar({{ $item->id }})"
+                                class="p-3 bg-white text-slate-400 hover:text-[#07CBBB] rounded-2xl border border-slate-100 shadow-sm transition-all">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                </svg>
+                            </button>
+                            <button wire:click="mostrarMensajeBorrar({{ $item->id }})"
+                                class="p-3 bg-white text-slate-400 hover:text-red-500 rounded-2xl border border-slate-100 shadow-sm transition-all">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                @endforeach
+                <div class="pt-4">
+                    {{ $moviles->links() }}
+                </div>
             </div>
         @else
             <x-mios.advertencia>
